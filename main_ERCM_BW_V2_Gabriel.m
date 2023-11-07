@@ -10,11 +10,13 @@ disp(' ');
 
 % nom du fichier de mesures de deplacement
 %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep.don';
-nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement.don';
+% nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement.don';
 %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz.don';
 %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_bis.don';
 %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_het.don';
-%nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/MRI/donnees_dep.don';
+
+nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep.don';
+
 liste_LdC = creation_LdC_anisotrope_repere_global();
 
 % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
@@ -219,6 +221,9 @@ disp('LECTURE FICHIERS MESURES');
 t_ini = cputime;
 
 mat_data = load(nom_fichier_deplacement);
+
+cd /users/bionanomri/nohra/Documents/MATLAB/code;
+
 mat_pos_mes = mat_data(:,1:3)';
 mat_U_mes = mat_data(:,4:2:9)'+1i*mat_data(:,5:2:9)';
 % prise en compte eventuelle du bruit rajoute
