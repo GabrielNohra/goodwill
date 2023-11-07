@@ -35,9 +35,12 @@ end
 
 %%%%%%%% suppression des lignes et des colonnes associees aux DDL_supprimes
 if ( ~isempty(vec_n_DDL_conserves) )
+% matrice
  Ks = K(:,vec_n_DDL_conserves);
  Ks = Ks(vec_n_DDL_conserves,:);
-% normalisation de toute la matrice Ks
+% second membre
+ Fs = Fs(vec_n_DDL_conserves,1);
+% normalisation du systeme : matrice Ks et vecteur Fs
 %  vec_normalisation_Ks = ones(size(Ks,1),1);
 %  vec_normalisation_Ks = zeros(size(Ks,1),1)+max(abs(vec_s));
  vec_normalisation_Ks = max(abs(Ks),[],2);
@@ -46,8 +49,6 @@ if ( ~isempty(vec_n_DDL_conserves) )
  vec_s = vec_s./vec_normalisation_s;
 % creation de la matrice sparse Ks normee 
  Ks = sparse(vec_i,vec_j,vec_s,size(Ks,1),size(Ks,2));
-% second membre
- Fs = Fs(vec_n_DDL_conserves,1);
  Fs = Fs./vec_normalisation_Ks;
 else
  Ks = [];

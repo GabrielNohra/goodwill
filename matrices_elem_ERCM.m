@@ -1,5 +1,5 @@
 % function [Ke,Me,mat_pha] = matrices_elem_ERCM (liste_elem_pha,elem_sig,mat_pos_sig,liste_elem_ref,lump,nb_DDL_par_noeud,champ_proprietes)
-function [Ke,Me,d_K_d_p] = matrices_elem_ERCM (liste_elem_ref,liste_elem_pha,struct_param_masse_raideur,elem_sig,mat_pos_sig,vec_correspondance_n_noeud_pha_global_n_noeud_pha_local,nb_DDL_par_noeud,struct_param_comportement)
+function [Ke,Me,De,d_K_d_p] = matrices_elem_ERCM (liste_elem_ref,liste_elem_pha,struct_param_masse_raideur,elem_sig,mat_pos_sig,vec_correspondance_n_noeud_pha_global_n_noeud_pha_local,nb_DDL_par_noeud,struct_param_comportement)
 
 n_integration_K = struct_param_masse_raideur.n_integration_K;
 n_integration_M = struct_param_masse_raideur.n_integration_M;
@@ -16,7 +16,10 @@ L_mat = nb_DDL_par_noeud*elem_sig.nb_noeuds; % taille matrice raideur
 nb_param_pha = max(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local>0));
 Ke = zeros(L_mat,L_mat);
 Me = zeros(L_mat,L_mat);
-d_K_d_p = zeros(nb_param_pha,L_mat,length(struct_param_comportement.vec_numeros_parametres_a_identifier));
+De = zeros(L_mat,L_mat);
+if ( nargout == 4 )
+ d_K_d_p = zeros(nb_param_pha,L_mat,length(struct_param_comportement.vec_numeros_parametres_a_identifier));
+end
 
 mat_pos_noeuds = mat_pos_sig(elem_sig.vec_n_noeuds,:);
   
@@ -73,14 +76,16 @@ for k = 1:size(p_G,1)
 % (i,:)
 % Calcul de la "contribution materielle" sur le noeud de phase "elem_pha.vec_n_noeuds"
 % => vec_f_formes_pha
- d_A_dp = struct_param_comportement.d_f_C_d_p(struct_param_comportement.mat_param(struct_param_comportement.vec_numeros_parametres_comportement,elem_pha.vec_n_noeuds)*vec_f_formes_pha);
- for l = 1:length(struct_param_comportement.vec_numeros_parametres_a_identifier)
-  d_K_d_p(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local(elem_pha.vec_n_noeuds),:,l) = d_K_d_p(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local(elem_pha.vec_n_noeuds),:,l)+(w(k)*J*sum(Be.*(squeeze(d_A_dp(:,:,l))*Be),1)); % remarque on change le "'*" en ".*"
+ if ( nargout == 4 )
+  d_A_dp = struct_param_comportement.d_f_C_d_p(struct_param_comportement.mat_param(struct_param_comportement.vec_numeros_parametres_comportement,elem_pha.vec_n_noeuds)*vec_f_formes_pha);
+  for l = 1:length(struct_param_comportement.vec_numeros_parametres_a_identifier)
+   d_K_d_p(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local(elem_pha.vec_n_noeuds),:,l) = d_K_d_p(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local(elem_pha.vec_n_noeuds),:,l)+(w(k)*J*sum(Be.*(squeeze(d_A_dp(:,:,l))*Be),1)); % remarque on change le "'*" en ".*"
+  end
  end
 end
 
 
-if nargout == 2
+if (nargout >= 2) 
 % Masse
  w = liste_elem_ref{elem_sig.n_elem_ref}.liste_parametres_integration{n_integration_M}.poids_Gauss;
  p_G = liste_elem_ref{elem_sig.n_elem_ref}.liste_parametres_integration{n_integration_M}.pos_Gauss;
@@ -118,6 +123,7 @@ if nargout == 2
   vec_rho_G(k) = rho_G;
  % Calcul de la matrice de masse élémentaire
   Me = Me+(w(k)*J*rho_G*(mat_Nf')*mat_Nf);
+  De = De+(w(k)*J*(mat_Nf')*mat_Nf);
  end
  
  if ( test_lump ) % lumping - Masse

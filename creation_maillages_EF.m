@@ -13,6 +13,11 @@ vec_y_G_ref_sig_M = elem_sig_ref.liste_parametres_integration{n_integration_M}.p
 vec_z_G_ref_sig_M = elem_sig_ref.liste_parametres_integration{n_integration_M}.pos_Gauss(:,3);
 
 % caracteristiques du maillage de mesure
+s_mes = size(mat_X_mes_3D);
+ni_mes = s_mes(1);
+nj_mes = s_mes(2);
+nk_mes = s_mes(3);
+clear s_mes;
 dx_mes = struct_grille_mes.dx;
 x_mes_min = struct_grille_mes.x_min;
 x_mes_max = x_mes_min+(size(mat_X_mes_3D,1)-1)*dx_mes;
@@ -225,20 +230,26 @@ else
 end
 
 %%% Creation du maillage de contraintes
-nb_elem_sig = struct_parametres_maillage_EF.nb_elem_sig_x*struct_parametres_maillage_EF.nb_elem_sig_y*struct_parametres_maillage_EF.nb_elem_sig_z;
-
 % determination du maillage sig
-nb_elem_sig_i = struct_parametres_maillage_EF.nb_elem_sig_x;
-nb_elem_sig_j = struct_parametres_maillage_EF.nb_elem_sig_y;
-nb_elem_sig_k = struct_parametres_maillage_EF.nb_elem_sig_z;
+% nb_elem_sig_i = struct_parametres_maillage_EF.nb_elem_sig_x;
+% nb_elem_sig_j = struct_parametres_maillage_EF.nb_elem_sig_y;
+% nb_elem_sig_k = struct_parametres_maillage_EF.nb_elem_sig_z;
+% nb_elem_sig = struct_parametres_maillage_EF.nb_elem_sig_x*struct_parametres_maillage_EF.nb_elem_sig_y*struct_parametres_maillage_EF.nb_elem_sig_z;
+nb_elem_sig_i = floor((ni_mes-1)/step_noeuds_sig_elem_i);
+nb_elem_sig_j = floor((nj_mes-1)/step_noeuds_sig_elem_j);
+nb_elem_sig_k = floor((nk_mes-1)/step_noeuds_sig_elem_k);
+nb_elem_sig = nb_elem_sig_i*nb_elem_sig_j*nb_elem_sig_k;
 
 nb_noeuds_sig_i = nb_elem_sig_i*step_noeuds_sig_elem_i+1;
 nb_noeuds_sig_j = nb_elem_sig_j*step_noeuds_sig_elem_j+1;
 nb_noeuds_sig_k = nb_elem_sig_k*step_noeuds_sig_elem_k+1;
 
-dx_sig = (x_EF_max-x_EF_min)/nb_elem_sig_i;
-dy_sig = (y_EF_max-y_EF_min)/nb_elem_sig_j;
-dz_sig = (z_EF_max-z_EF_min)/nb_elem_sig_k;
+% dx_sig = (x_EF_max-x_EF_min)/nb_elem_sig_i;
+% dy_sig = (y_EF_max-y_EF_min)/nb_elem_sig_j;
+% dz_sig = (z_EF_max-z_EF_min)/nb_elem_sig_k;
+dx_sig = step_noeuds_sig_elem_i*dx_mes;
+dy_sig = step_noeuds_sig_elem_j*dy_mes;
+dz_sig = step_noeuds_sig_elem_k*dz_mes;
 
 nb_noeuds_sig = nb_noeuds_sig_i*nb_noeuds_sig_j*nb_noeuds_sig_k;
 if (elem_sig_ref.n_elem == 1 )
@@ -373,6 +384,7 @@ for i = 1:nb_elem_sig_i
    vec_k_mes_elem = reshape(squeeze(mat_k_mes_3D(i_min_elem_sig_mes:i_max_elem_sig_mes,j_min_elem_sig_mes:j_max_elem_sig_mes,k_min_elem_sig_mes:k_max_elem_sig_mes,1)),1,[]);
    vec_no_nan_mes_elem = find ( ~isnan(vec_x_mes_elem) & ~isnan(vec_y_mes_elem) & ~isnan(vec_z_mes_elem) );
    if ( (length(vec_no_nan_mes_elem) >= elem.nb_noeuds) && (length(unique(vec_x_mes_elem(vec_no_nan_mes_elem))) >= ni_noeuds_sig_max) && (length(unique(vec_y_mes_elem(vec_no_nan_mes_elem))) >= nj_noeuds_sig_max) && (length(unique(vec_z_mes_elem(vec_no_nan_mes_elem))) >= nk_noeuds_sig_max) )
+%    if ( (length(vec_no_nan_mes_elem) >= 1) )
     n_elem_sig = n_elem_sig+1;
     if (elem_sig_ref.n_elem == 1 )
      vec_x_support_DDL_sig(n_elem_sig) = (min(vec_x_noeuds_sig(vec_n_noeud_local))+max(vec_x_noeuds_sig(vec_n_noeud_local)))/2;
