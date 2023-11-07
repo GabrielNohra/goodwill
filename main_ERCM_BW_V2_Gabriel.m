@@ -15,7 +15,7 @@ disp(' ');
 %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_bis.don';
 %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_het.don';
 
-nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep.don';
+nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don';
 
 liste_LdC = creation_LdC_anisotrope_repere_global();
 
