@@ -222,7 +222,7 @@ t_ini = cputime;
 
 mat_data = load(nom_fichier_deplacement);
 
-cd /users/bionanomri/nohra/Documents/MATLAB/goodwill;
+cd ..; cd goodwill;
 
 mat_pos_mes = mat_data(:,1:3)';
 mat_U_mes = mat_data(:,4:2:9)'+1i*mat_data(:,5:2:9)';
@@ -1868,7 +1868,17 @@ for n_iter_LDC = 1:n_iter_LDC_max
 end
 for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
  nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
- figure;hold on;plot(real(vec_param_identifie_moyen(n_param,:)),'-r');plot(imag(vec_param_identifie_moyen(n_param,:)),'-b');grid;xlabel('iteration');ylabel([nom_param ' (Pa)']);legend('reel','imag');
+ 
+ gcf = figure;
+ hold on;
+ plot(real(vec_param_identifie_moyen(n_param,:)),'-r');
+ plot(imag(vec_param_identifie_moyen(n_param,:)),'-b');
+ grid;
+ xlabel('iteration');
+ ylabel([nom_param ' (Pa)']);
+ legend('reel','imag');
+ saveas(gcf, 'results.png');
+
 end
 
 % for n_iter_LDC = 1:n_iter_LDC_max;
