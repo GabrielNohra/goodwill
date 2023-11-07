@@ -222,7 +222,7 @@ t_ini = cputime;
 
 mat_data = load(nom_fichier_deplacement);
 
-cd /users/bionanomri/nohra/Documents/MATLAB/code;
+cd /users/bionanomri/nohra/Documents/MATLAB/goodwill;
 
 mat_pos_mes = mat_data(:,1:3)';
 mat_U_mes = mat_data(:,4:2:9)'+1i*mat_data(:,5:2:9)';
