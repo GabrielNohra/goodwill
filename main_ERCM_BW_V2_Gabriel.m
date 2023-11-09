@@ -1079,10 +1079,10 @@ for j_param = 1:2
                     %  figure;spy(K_global);title('structure K global');
                 elseif ( strcmp(type_identification,'MERC') == 1 )
                     disp(['                valeur a donner a "kappa" pour avoir des poids equivalents sur "K_tilde" et "D" : ' num2str(kappa_critique)]);
-                    disp(['                valeur de kappa : ' num2str(kappa(index))]);
+                    disp(['                valeur de kappa : ' num2str(kappa)]);
                     vec_i_global = [vec_i_T'  , vec_i_K_tilde'                   , (vec_j_K_tilde+size(K_tilde,1))' , (vec_i_D+size(K_tilde,1))'];
                     vec_j_global = [vec_j_T'  , (vec_j_K_tilde+size(K_tilde,2))' , vec_i_K_tilde'                   , (vec_j_D+size(K_tilde,2))'];
-                    vec_s_global = [vec_s_T.' , vec_s_K_tilde.'                  , conj(vec_s_K_tilde).'            , (-kappa(index)*vec_s_D.')];
+                    vec_s_global = [vec_s_T.' , vec_s_K_tilde.'                  , conj(vec_s_K_tilde).'            , (-kappa*vec_s_D.')];
                     K_global = sparse(vec_i_global,vec_j_global,vec_s_global,2*size(K_tilde,1),2*size(K_tilde,2));
                     clear vec_i_K_tilde vec_j_K_tilde vec_s_K_tilde;
                     clear vec_i_T vec_j_T vec_s_T;
@@ -1091,7 +1091,7 @@ for j_param = 1:2
         %             clear K M T K_tilde D;
                     vec_F_global = zeros(size(K_global,1),1);
                     vec_F_global(1:size(K_tilde,1)) = vec_F;
-                    vec_F_global(size(K_tilde,1)+1:end) = -kappa(index)*vec_R;
+                    vec_F_global(size(K_tilde,1)+1:end) = -kappa*vec_R;
                     %  figure;spy(K_global);title('structure K global');
         % MAJ du systeme sur K_global pour tenir compte des CL
         % par substitution
@@ -1888,7 +1888,7 @@ for j_param = 1:2
             xlabel('numero noeud phase');
             ylabel([nom_param ' (Pa)']);
             legend('reel','imag');
-            saveas(gcf, sprintf('phase-node iv_%d (%d fixed).png',kappa(index)));
+            saveas(gcf, sprintf('phase-node iv_%d (%d fixed).png',kappa));
             close gcf;
 
         end
@@ -1916,7 +1916,7 @@ for j_param = 1:2
             xlabel('iteration');
             ylabel([nom_param ' (Pa)']);
             legend('reel','imag');
-            saveas(gcf, sprintf('results mu kappa_%d.png',kappa(index)));
+            saveas(gcf, sprintf('results mu kappa_%d.png',kappa));
             close gcf;
 
         end % end del while
