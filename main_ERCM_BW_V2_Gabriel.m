@@ -1888,7 +1888,7 @@ for j_param = 1:2
             xlabel('numero noeud phase');
             ylabel([nom_param ' (Pa)']);
             legend('reel','imag');
-            saveas(gcf, sprintf('phase-node iv_%d (%d fixed).png',kappa));
+            saveas(gcf, sprintf('phase-node iv_%d (%d fixed).png',i_param, j_param));
             close gcf;
 
         end
@@ -1916,7 +1916,7 @@ for j_param = 1:2
             xlabel('iteration');
             ylabel([nom_param ' (Pa)']);
             legend('reel','imag');
-            saveas(gcf, sprintf('results mu kappa_%d.png',kappa));
+            saveas(gcf, sprintf('results mu iv_%d (%d fixed).png',i_param, j_param));
             close gcf;
 
         end % end del while
