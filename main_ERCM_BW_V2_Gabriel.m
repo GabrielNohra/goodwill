@@ -685,6 +685,9 @@ disp(' ');
 
 disp('BOUCLE D''IDENTIFICATION');
 
+sTime = zeros(length(kappa));
+liste_proprietes_iterations = cell(length(kappa),nb_iter_LDC_max+1);
+
 for index=1:length(kappa)
 
     tic;
@@ -695,8 +698,7 @@ for index=1:length(kappa)
     n_iter_LDC = 1;
     t_ini_identification = cputime;
 
-    liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
-    liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
+    liste_proprietes_iterations{index,n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
 
     nb_sub_zones_x = taux_recouvrement_sub_zones_par_MAJ_materielle*(ni_elem_sig-(floor(ni_elem_sig/L_x_sub_zone)+1))+(floor(ni_elem_sig/L_x_sub_zone)+1);
     nb_sub_zones_y = taux_recouvrement_sub_zones_par_MAJ_materielle*(nj_elem_sig-(floor(nj_elem_sig/L_y_sub_zone)+1))+(floor(nj_elem_sig/L_y_sub_zone)+1);
@@ -1612,16 +1614,16 @@ for index=1:length(kappa)
                     vec_n_param_min_lambda_imag = find ( imag(vec_lambda_noeuds_pha_identifies) < imag(val_borne_min_lambda) );
                     vec_n_param_max_lambda_imag = find ( imag(vec_lambda_noeuds_pha_identifies) > imag(val_borne_max_lambda) );
                     if ( ~isempty(vec_n_param_min_lambda_reel) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel)).';
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel)).';
                     end
                     if ( ~isempty(vec_n_param_max_lambda_reel) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel)).';
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel)).';
                     end
                     if ( ~isempty(vec_n_param_min_lambda_imag) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag))));
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag))));
                     end
                     if ( ~isempty(vec_n_param_max_lambda_imag) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag))));
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag))));
                     end
                     vec_mu_noeuds_pha_identifies = vec_sol(max(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local)+(1:max(vec_correspondance_n_noeud_pha_global_n_noeud_pha_local)));
                     val_borne_min_mu = struct_param_comportement_a_identifier.vec_borne_min_param_identification(n_param_mu_ident);
@@ -1631,16 +1633,16 @@ for index=1:length(kappa)
                     vec_n_param_min_mu_imag = find ( imag(vec_mu_noeuds_pha_identifies) < imag(val_borne_min_mu) );
                     vec_n_param_max_mu_imag = find ( imag(vec_mu_noeuds_pha_identifies) > imag(val_borne_max_mu) );
                     if ( ~isempty(vec_n_param_min_mu_reel) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel)).';
+                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel)).';
                     end
                     if ( ~isempty(vec_n_param_max_mu_reel) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel)).';
+                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel)).';
                     end
                     if ( ~isempty(vec_n_param_min_mu_imag) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag))));
+                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag))));
                     end
                     if ( ~isempty(vec_n_param_max_mu_imag) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag))));
+                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag))));
                     end
                     [vec_n_noeud_pha_global] = find ( vec_correspondance_n_noeud_pha_global_n_noeud_pha_local > 0);
                     mat_proprietes_identifies_sub_zones(n_param_lambda_ident,n_sub_zone,vec_n_noeud_pha_global) = vec_lambda_noeuds_pha_identifies.';
@@ -1655,16 +1657,16 @@ for index=1:length(kappa)
                     vec_n_param_min_lambda_imag = find ( imag(vec_lambda_noeuds_pha_identifies) < imag(val_borne_min_lambda) );
                     vec_n_param_max_lambda_imag = find ( imag(vec_lambda_noeuds_pha_identifies) > imag(val_borne_max_lambda) );
                     if ( ~isempty(vec_n_param_min_lambda_reel) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel)).';
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_reel)).';
                     end
                     if ( ~isempty(vec_n_param_max_lambda_reel) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel)).';
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_reel))))+1i*imag(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_reel)).';
                     end
                     if ( ~isempty(vec_n_param_min_lambda_imag) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag))));
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_min_lambda_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_lambda_imag))));
                     end
                     if ( ~isempty(vec_n_param_max_lambda_imag) )
-                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_lambda-liste_proprietes_iterations{n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag))));
+                        vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag) = real(vec_lambda_noeuds_pha_identifies(vec_n_param_max_lambda_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_lambda-liste_proprietes_iterations{index,n_iter_LDC}(n_param_lambda_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_lambda_imag))));
                     end
                     [vec_n_noeud_pha_global] = find ( vec_correspondance_n_noeud_pha_global_n_noeud_pha_local > 0);
                     mat_proprietes_identifies_sub_zones(n_param_lambda_ident,n_sub_zone,vec_n_noeud_pha_global) = vec_lambda_noeuds_pha_identifies.';
@@ -1678,16 +1680,16 @@ for index=1:length(kappa)
                     vec_n_param_min_mu_imag = find ( imag(vec_mu_noeuds_pha_identifies) < imag(val_borne_min_mu) );
                     vec_n_param_max_mu_imag = find ( imag(vec_mu_noeuds_pha_identifies) > imag(val_borne_max_mu) );
                     if ( ~isempty(vec_n_param_min_mu_reel) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel)).';
+                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_min_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_reel)).';
                     end
                     if ( ~isempty(vec_n_param_max_mu_reel) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel) = real(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel)).';
+                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel) = real(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*real((val_borne_max_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_reel))))+1i*imag(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_reel)).';
                     end
                     if ( ~isempty(vec_n_param_min_mu_imag) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag))));
+                        vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_min_mu_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_min_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_min_mu_imag))));
                     end
                     if ( ~isempty(vec_n_param_max_mu_imag) )
-                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag)).'+1i*imag(liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_mu-liste_proprietes_iterations{n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag))));
+                        vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag) = real(vec_mu_noeuds_pha_identifies(vec_n_param_max_mu_imag)).'+1i*imag(liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag)))+struct_param_comportement_a_identifier.seuil_relaxation_bornes_min_max*imag((val_borne_max_mu-liste_proprietes_iterations{index,n_iter_LDC}(n_param_mu_ident,vec_n_noeuds_pha_sub_zone(vec_n_param_max_mu_imag))));
                     end
                     [vec_n_noeud_pha_global] = find ( vec_correspondance_n_noeud_pha_global_n_noeud_pha_local > 0);
                     mat_proprietes_identifies_sub_zones(n_param_mu_ident,n_sub_zone,vec_n_noeud_pha_global) = vec_mu_noeuds_pha_identifies.';
@@ -1826,8 +1828,8 @@ for index=1:length(kappa)
 
 
     % test de la convergence
-        vec_difference_proprietes = liste_proprietes_iterations{n_iter_LDC}-mat_proprietes_identifies_moyennes_sub_zones;
-        if ( norm(vec_difference_proprietes) < tolerance_LDC*norm(liste_proprietes_iterations{n_iter_LDC}) )
+        vec_difference_proprietes = liste_proprietes_iterations{index,n_iter_LDC}-mat_proprietes_identifies_moyennes_sub_zones;
+        if ( norm(vec_difference_proprietes) < tolerance_LDC*norm(liste_proprietes_iterations{index,n_iter_LDC}) )
             test_convergence_LDC = true;
         end
 
@@ -1848,30 +1850,30 @@ for index=1:length(kappa)
     %     zlabel('z (m)');
     %     title('maillage toutes sub-zones');
 
-        disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
+        disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{index,n_iter_LDC}))]);
         disp(' ');
         
     % mise a jour des proprietes
         n_iter_LDC = n_iter_LDC+1;
-        liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
+        liste_proprietes_iterations{index,n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
         
     end
 
-    time(index) = toc;
+    sTime(index) = toc;
 
     n_iter_LDC_max = n_iter_LDC;
     n_iter_LDC = n_iter_LDC_max;
 
     cd ..; cd results/081123;
 
-    for nn_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
+    for nn_param = 1:size(liste_proprietes_iterations{index,n_iter_LDC},1)
 
         n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
         nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
         gcf = figure;
         hold on;
-        plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
-        plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
+        plot(real(liste_proprietes_iterations{index,n_iter_LDC}(nn_param,:)),'-r');
+        plot(imag(liste_proprietes_iterations{index,n_iter_LDC}(nn_param,:)),'-b');
         grid;
         xlabel('numero noeud phase');
         ylabel([nom_param ' (Pa)']);
@@ -1881,19 +1883,19 @@ for index=1:length(kappa)
 
     end
 
-    vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
+    vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{index,n_iter_LDC},1),n_iter_LDC_max);
 
     for n_iter_LDC = 1:n_iter_LDC_max
 
-        for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
+        for n_param = 1:size(liste_proprietes_iterations{index,n_iter_LDC},1)
 
-            vec_param_identifie_moyen(n_param,n_iter_LDC) = mean(liste_proprietes_iterations{n_iter_LDC}(n_param,:));
+            vec_param_identifie_moyen(n_param,n_iter_LDC) = mean(liste_proprietes_iterations{index,n_iter_LDC}(n_param,:));
 
         end
 
     end
 
-    for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
+    for n_param = 1:size(liste_proprietes_iterations{index,n_iter_LDC},1)
 
         nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
         gcf = figure;
@@ -1913,17 +1915,13 @@ for index=1:length(kappa)
 
 end
 
-gcf = figure;
-hold on;
 cd ..; cd results/081123;
 
-for index = 1:length(kappa)
-
-    plot(index, time(index), '-k');
-
-end
-
-hold off;
+gcf = figure;
+plot([1:length(kappa)], sTime./3600, '-k');
+grid;
+ylabel('Simulation time [h]');
+xlabel('Kappa index');
 saveas(gcf, 'sim_time.png');
 
 cd ..; cd ..; cd goodwill;
