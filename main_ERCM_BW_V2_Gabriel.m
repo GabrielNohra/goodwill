@@ -686,13 +686,16 @@ disp(' ');
 disp('BOUCLE D''IDENTIFICATION');
 
 sTime = zeros(length(kappa));
+nb_iter_LDC_max = 200;
 liste_proprietes_iterations = cell(length(kappa),nb_iter_LDC_max+1);
 
 for index=1:length(kappa)
 
     tic;
 
-    nb_iter_LDC_max = 200;
+    if index ~= 1
+        nb_iter_LDC_max = 200;
+    end
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
