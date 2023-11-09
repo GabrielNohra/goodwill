@@ -1867,7 +1867,7 @@ for index=1:length(kappa)
     n_iter_LDC_max = n_iter_LDC;
     n_iter_LDC = n_iter_LDC_max;
 
-    cd ..; cd results/091123;
+    cd ..; cd ..; cd results/091123;
 
     for nn_param = 1:size(liste_proprietes_iterations{index,n_iter_LDC},1)
 
@@ -1914,11 +1914,7 @@ for index=1:length(kappa)
 
     end
 
-    cd ..; cd ..; cd goodwill;
-
 end
-
-cd ..; cd results/091123;
 
 gcf = figure;
 plot([1:length(kappa)], sTime./3600, '-k');
