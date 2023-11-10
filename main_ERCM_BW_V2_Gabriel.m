@@ -22,11 +22,11 @@ path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaille
 
 liste_LdC = creation_LdC_anisotrope_repere_global();
 
-devFactor = 0:0.25:4;
+devFactor = 0:0.25:2.25;
 i_flag = 5;
 kappa = 0.5 * 1e13;
 
-for j_param = 1:2
+for j_param = 2:2
     for i_param = 1:length(devFactor)
 
         % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
