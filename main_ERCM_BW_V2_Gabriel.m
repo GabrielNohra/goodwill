@@ -688,7 +688,7 @@ disp(' ');
 disp('BOUCLE D''IDENTIFICATION');
 
 liste_proprietes_iterations = cell(length(kappa),nb_iter_LDC_max+1);
-liste_proprietes_iterations(:,n_iter_LDC) = {struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:)};
+liste_proprietes_iterations(:,1) = {struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:)};
 
 nb_sub_zones_x = taux_recouvrement_sub_zones_par_MAJ_materielle*(ni_elem_sig-(floor(ni_elem_sig/L_x_sub_zone)+1))+(floor(ni_elem_sig/L_x_sub_zone)+1);
 nb_sub_zones_y = taux_recouvrement_sub_zones_par_MAJ_materielle*(nj_elem_sig-(floor(nj_elem_sig/L_y_sub_zone)+1))+(floor(nj_elem_sig/L_y_sub_zone)+1);
