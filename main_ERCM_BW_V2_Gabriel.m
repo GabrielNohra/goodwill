@@ -1899,8 +1899,8 @@ for idx = 1:length(kappa)
         plot(real(vec_param_identifie_moyen(n_param,:)),'--r');
         plot(imag(vec_param_identifie_moyen(n_param,:)),'--b');
 
-        plot(1743*ones(vec_param_identifie_moyen(n_param,:)),'-k');
-        plot(174.3*ones(vec_param_identifie_moyen(n_param,:)),'-k');
+        plot(1743*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
+        plot(174.3*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
 
         grid;
 
@@ -1909,7 +1909,7 @@ for idx = 1:length(kappa)
         ylabel('$\mu$ [Pa]','interpreter','latex');
         legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex');
         save(gcf,sprintf('results_kappa_%d.png',idx));
-
+        
     end
 
     if idx ~= 3
