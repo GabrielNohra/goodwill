@@ -20,9 +20,10 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/elastic',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/viscoelastic',...
             '/users/bionanonmri/nohra/Documents/MATLAB/results/161123/kappa'};
+
+            % '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/elastic',...
+            % '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/viscoelastic',...
 
 % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
 amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -181,8 +182,8 @@ nb_iter_LDC_max = 10;
 %kappa = 0.01*1e11; % convergence extremement lente 
 %kappa = 100*1e11; % bonne convergence si pas de bruit sur donnees
 
-%kappa = [0.001 0.01 0.1 1 10 100] * 1e13;
-kappa = [10000 100000 1000000] * 1e13;
+kappa = [0.001 0.01 0.1 1 10 100] * 1e13;
+% kappa = [10000 100000 1000000] * 1e13;
 
 % nombre de DDL par noeud
 nb_DDL_par_noeud = 3;
@@ -687,9 +688,6 @@ disp(' ');
 
 disp('BOUCLE D''IDENTIFICATION');
 
-liste_proprietes_iterations = cell(length(kappa),nb_iter_LDC_max+1);
-liste_proprietes_iterations(:,1) = {struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:)};
-
 nb_sub_zones_x = taux_recouvrement_sub_zones_par_MAJ_materielle*(ni_elem_sig-(floor(ni_elem_sig/L_x_sub_zone)+1))+(floor(ni_elem_sig/L_x_sub_zone)+1);
 nb_sub_zones_y = taux_recouvrement_sub_zones_par_MAJ_materielle*(nj_elem_sig-(floor(nj_elem_sig/L_y_sub_zone)+1))+(floor(nj_elem_sig/L_y_sub_zone)+1);
 nb_sub_zones_z = taux_recouvrement_sub_zones_par_MAJ_materielle*(nk_elem_sig-(floor(nk_elem_sig/L_z_sub_zone)+1))+(floor(nk_elem_sig/L_z_sub_zone)+1);
@@ -699,11 +697,17 @@ nb_faces_elem_ref = size(elem_sig_ref.n_noeuds_faces,1);
 
 nb_parametres_comportement_a_identifier = length(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier);
 
+valKappa = nan(length(kappa),nb_iter_LDC_max+1);
+sTime = zeros(1,length(kappa));
+
 for idx = 1:length(kappa)
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
     t_ini_identification = cputime;
+    
+    liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
+    liste_proprietes_iterations(:,n_iter_LDC) = {struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:)};
 
     while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du critere sur la convergence (utile pour id)
         
@@ -1823,8 +1827,8 @@ for idx = 1:length(kappa)
         
         
         % test de la convergence
-        vec_difference_proprietes = liste_proprietes_iterations{idx,n_iter_LDC}-mat_proprietes_identifies_moyennes_sub_zones;
-        if ( norm(vec_difference_proprietes) < tolerance_LDC*norm(liste_proprietes_iterations{idx,n_iter_LDC}) )
+        vec_difference_proprietes = liste_proprietes_iterations{n_iter_LDC}-mat_proprietes_identifies_moyennes_sub_zones;
+        if ( norm(vec_difference_proprietes) < tolerance_LDC*norm(liste_proprietes_iterations{n_iter_LDC}) )
             test_convergence_LDC = true;
         end
         
@@ -1845,58 +1849,77 @@ for idx = 1:length(kappa)
         %     zlabel('z (m)');
         %     title('maillage toutes sub-zones');
         
-        disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{idx,n_iter_LDC}))]);
+        disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
         disp(' ');
         
         % mise a jour des proprietes
         n_iter_LDC = n_iter_LDC+1;
-        liste_proprietes_iterations{idx,n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
+        liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
         
     end
 
-    % for one material property
+    sTime(1,idx) = toc;
 
-end
+    valKappa(idx,1:length(liste_proprietes_iterations(idx,:))) = cell2mat(liste_proprietes_iterations(idx,:));
 
-cd(path_dir{5});
+    cd(path_dir{3});
 
-% n_iter_LDC_max = n_iter_LDC;
-% n_iter_LDC = n_iter_LDC_max;
+    n_iter_LDC_max = n_iter_LDC;
+    n_iter_LDC = n_iter_LDC_max;
 
-for nn_param = 1:size(liste_proprietes_iterations,1)
-    n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
-    nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
-    figure;
-    hold on;
-
-    plot( real( cell2mat( liste_proprietes_iterations{nn_param} ) ), '-r' );
-    plot( imag( cell2mat( liste_proprietes_iterations{nn_param} ) ), '-r' );
-
-    % plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
-    % plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
-    grid;
-    xlabel('numero noeud phase');ylabel([nom_param ' (Pa)']);legend('reel','imag');
-end
-
-vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
-
-for n_iter_LDC = 1:n_iter_LDC_max
-    for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
-        vec_param_identifie_moyen(n_param,n_iter_LDC) = mean(liste_proprietes_iterations{n_iter_LDC}(n_param,:));
+    for nn_param = 1:size(liste_proprietes_iterations,1)
+        n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
+        nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
+        figure;
+        hold on;
+        plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
+        plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
+        % plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
+        % plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
+        grid;
+        xlabel('numero noeud phase');ylabel([nom_param ' (Pa)']);legend('reel','imag');
     end
+    
+    vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
+    
+    for n_iter_LDC = 1:n_iter_LDC_max
+        for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
+            vec_param_identifie_moyen(n_param,n_iter_LDC) = mean(liste_proprietes_iterations{n_iter_LDC}(n_param,:));
+        end
+    end
+    
+    for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
+        % nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
+        
+        gcf = figure;
+        hold on;
+
+        plot(real(vec_param_identifie_moyen(n_param,:)),'--r');
+        plot(imag(vec_param_identifie_moyen(n_param,:)),'--b');
+
+        plot(1743*ones(vec_param_identifie_moyen(n_param,:)),'-k');
+        plot(174.3*ones(vec_param_identifie_moyen(n_param,:)),'-k');
+
+        grid;
+
+        title(sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e)',kappa(idx)),'interpreter','latex');
+        xlabel('Number of iterations','interpreter','latex');
+        ylabel('$\mu$ [Pa]','interpreter','latex');
+        legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex');
+        save(gcf,sprintf('results_kappa_%d.png',idx));
+
+    end
+
+    if idx ~= 3
+        cd(path_dir{1});
+    end
+
 end
 
-for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
-    nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
-    figure;
-    hold on;
-    plot(real(vec_param_identifie_moyen(n_param,:)),'-r');
-    plot(imag(vec_param_identifie_moyen(n_param,:)),'-b');
-    grid;
-    xlabel('iteration');
-    ylabel([nom_param ' (Pa)']);
-    legend('reel','imag');
-end
+save('resultsKappa.mat');
+
+
+
 
 % for n_iter_LDC = 1:n_iter_LDC_max;
 %  for nn_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
