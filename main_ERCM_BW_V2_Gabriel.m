@@ -20,8 +20,9 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/elastic'...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/viscoelastic'};
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/elastic',...
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/091123/initialValues/viscoelastic',...
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/161123/kappa'};
 
 % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
 amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -160,9 +161,9 @@ facteur_tolerance_position = 10000.;
 % parametres de convergence sur l'identification materielle
 tolerance_LDC = 1e-4;
 %nb_iter_LDC_max = 5;
-%nb_iter_LDC_max = 10;
+nb_iter_LDC_max = 10;
 %nb_iter_LDC_max = 20;
-nb_iter_LDC_max = 200;
+% nb_iter_LDC_max = 200;
 
 % % seuil permettant de definir les elements de phase "pas assez deformes" pour pouvoir y identifier des proprietes
 % seuil_NRJ = 0.1; % 0 : pas de filtre
@@ -686,10 +687,6 @@ disp(' ');
 
 disp('BOUCLE D''IDENTIFICATION');
 
-test_convergence_LDC = false;
-n_iter_LDC = 1;
-t_ini_identification = cputime;
-
 liste_proprietes_iterations = cell(length(kappa),nb_iter_LDC_max+1);
 liste_proprietes_iterations(:,n_iter_LDC) = {struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:)};
 
@@ -704,7 +701,12 @@ nb_parametres_comportement_a_identifier = length(struct_param_comportement_a_ide
 
 for idx = 1:length(kappa)
 
+    test_convergence_LDC = false;
+    n_iter_LDC = 1;
+    t_ini_identification = cputime;
+
     while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du critere sur la convergence (utile pour id)
+        
         disp(['    iteration ' num2str(n_iter_LDC)]);
         
         % boucles sur les sub-zones
@@ -1851,21 +1853,27 @@ for idx = 1:length(kappa)
         liste_proprietes_iterations{idx,n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
         
     end
-    
-    % modificar
+
+    % for one material property
 
 end
 
-n_iter_LDC_max = n_iter_LDC;
-n_iter_LDC = n_iter_LDC_max;
+cd(path_dir{5});
+
+% n_iter_LDC_max = n_iter_LDC;
+% n_iter_LDC = n_iter_LDC_max;
 
 for nn_param = 1:size(liste_proprietes_iterations,1)
     n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
     nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
     figure;
     hold on;
-    plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
-    plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
+
+    plot( real( cell2mat( liste_proprietes_iterations{nn_param} ) ), '-r' );
+    plot( imag( cell2mat( liste_proprietes_iterations{nn_param} ) ), '-r' );
+
+    % plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
+    % plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
     grid;
     xlabel('numero noeud phase');ylabel([nom_param ' (Pa)']);legend('reel','imag');
 end
