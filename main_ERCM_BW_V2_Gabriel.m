@@ -711,6 +711,8 @@ for idx = 1:length(kappa)
 
     while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du critere sur la convergence (utile pour id)
         
+        tic;
+
         disp(['    iteration ' num2str(n_iter_LDC)]);
         
         % boucles sur les sub-zones
