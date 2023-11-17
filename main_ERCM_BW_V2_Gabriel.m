@@ -700,7 +700,7 @@ nb_parametres_comportement_a_identifier = length(struct_param_comportement_a_ide
 valKappa = nan(length(kappa),nb_iter_LDC_max+1);
 sTime = zeros(1,length(kappa));
 
-for idx = 2:length(kappa)
+for idx = 3:length(kappa)
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
@@ -1916,7 +1916,7 @@ for idx = 2:length(kappa)
         
     end
 
-    if idx ~= 3
+    if idx ~= length(kappa)
         cd(path_dir{2});
     end
 
