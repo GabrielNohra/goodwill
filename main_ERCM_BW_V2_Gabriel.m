@@ -1917,7 +1917,7 @@ for idx = 1:length(kappa)
     end
 
     if idx ~= 3
-        cd(path_dir{1});
+        cd(path_dir{2});
     end
 
 end
