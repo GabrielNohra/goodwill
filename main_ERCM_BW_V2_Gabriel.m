@@ -163,7 +163,7 @@ facteur_tolerance_position = 10000.;
 tolerance_LDC = 1e-4;
 %nb_iter_LDC_max = 5;
 % nb_iter_LDC_max = 10;
-nb_iter_LDC_max = 20;
+nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
 % % seuil permettant de definir les elements de phase "pas assez deformes" pour pouvoir y identifier des proprietes
