@@ -1909,7 +1909,7 @@ for idx = 1:length(kappa)
         grid;
 
         title(sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e)',kappa(idx)),'interpreter','latex','FontSize',12);
-        xlabel('Number of iterations','interpreter','latex',,'FontSize',12);
+        xlabel('Number of iterations','interpreter','latex','FontSize',12);
         ylabel('$\mu$ [Pa]','interpreter','latex','FontSize',12);
         legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex','FontSize',11);
         saveas(gcf,sprintf('results_kappa_%d.png',idx));
