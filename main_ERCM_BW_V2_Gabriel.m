@@ -707,7 +707,7 @@ for idx = 2:length(kappa)
     t_ini_identification = cputime;
     
     liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
-    liste_proprietes_iterations(:,n_iter_LDC) = {struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:)};
+    liste_proprietes_iterations(n_iter_LDC) = {struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:)};
 
     while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du critere sur la convergence (utile pour id)
         
