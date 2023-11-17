@@ -1879,7 +1879,11 @@ for idx = 1:length(kappa)
         % plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
         % plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
         grid;
-        xlabel('numero noeud phase');ylabel([nom_param ' (Pa)']);legend('reel','imag');
+        xlabel('Phase number node', 'interpreter', 'latex', 'FontSize', 12);
+        ylabel('\mu [Pa]','interpreter','latex','FontSize',12);
+        legend('Real','Imag','interpreter','latex','FontSize',11);
+        saveas(gcf,sprintf('phaseNum_kappa_%d.png',idx));
+
     end
     
     vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
@@ -1904,11 +1908,11 @@ for idx = 1:length(kappa)
 
         grid;
 
-        title(sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e)',kappa(idx)),'interpreter','latex');
-        xlabel('Number of iterations','interpreter','latex');
-        ylabel('$\mu$ [Pa]','interpreter','latex');
-        legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex');
-        save(gcf,sprintf('results_kappa_%d.png',idx));
+        title(sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e)',kappa(idx)),'interpreter','latex','FontSize',12);
+        xlabel('Number of iterations','interpreter','latex',,'FontSize',12);
+        ylabel('$\mu$ [Pa]','interpreter','latex','FontSize',12);
+        legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex','FontSize',11);
+        saveas(gcf,sprintf('results_kappa_%d.png',idx));
         
     end
 
