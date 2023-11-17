@@ -700,7 +700,7 @@ nb_parametres_comportement_a_identifier = length(struct_param_comportement_a_ide
 valKappa = nan(length(kappa),nb_iter_LDC_max+1);
 sTime = zeros(1,length(kappa));
 
-for idx = 3:length(kappa)
+for idx = 1:length(kappa)
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
@@ -1867,22 +1867,26 @@ for idx = 3:length(kappa)
     cd(path_dir{3});
 
     n_iter_LDC_max = n_iter_LDC;
-    n_iter_LDC = n_iter_LDC_max;
+    % n_iter_LDC = n_iter_LDC_max;
+
+    close all;
 
     for nn_param = 1:size(liste_proprietes_iterations,1)
+
         n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
         nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
-        figure;
+        gcf = figure;
         hold on;
         plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
         plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
-        % plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
-        % plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
         grid;
-        xlabel('Phase number node', 'interpreter', 'latex', 'FontSize', 12);
-        ylabel('$\mu$ [Pa]','interpreter','latex','FontSize',12);
-        legend('Real','Imag','interpreter','latex','FontSize',11);
+        xl = xlabel('Phase number node','interpreter','latex');
+        yl = ylabel('$\mu$ [Pa]','interpreter','latex');
+        lg = legend('Real','Imag','interpreter','latex');
+        [xl.FontSize, yl.FontSize] = deal(12)
+        lg.FontSize = 11;
         saveas(gcf,sprintf('phaseNum_kappa_%d.png',idx));
+        close gcf;
 
     end
     
@@ -1908,11 +1912,17 @@ for idx = 3:length(kappa)
 
         grid;
         
-        title(sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e)',kappa(idx)),'interpreter','latex','FontSize',12);
-        xlabel('Number of iterations','interpreter','latex','FontSize',12);
-        ylabel('$\mu$ [Pa]','interpreter','latex','FontSize',12);
-        legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex','FontSize',11);
+        tl = title(sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e)',kappa(idx)),'interpreter','latex');
+        xl = xlabel('Number of iterations','interpreter','latex');
+        yl = ylabel('$\mu$ [Pa]','interpreter','latex');
+        lg = legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex');
+        
+        [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12)
+        lg.FontSize = 11;
+
         saveas(gcf,sprintf('results_kappa_%d.png',idx));
+
+        close gcf;
         
     end
 
