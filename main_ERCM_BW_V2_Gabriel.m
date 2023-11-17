@@ -1880,7 +1880,7 @@ for idx = 1:length(kappa)
         % plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
         grid;
         xlabel('Phase number node', 'interpreter', 'latex', 'FontSize', 12);
-        ylabel('\mu [Pa]','interpreter','latex','FontSize',12);
+        ylabel('$\mu$ [Pa]','interpreter','latex','FontSize',12);
         legend('Real','Imag','interpreter','latex','FontSize',11);
         saveas(gcf,sprintf('phaseNum_kappa_%d.png',idx));
 
@@ -1907,7 +1907,7 @@ for idx = 1:length(kappa)
         plot(174.3*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
 
         grid;
-
+        
         title(sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e)',kappa(idx)),'interpreter','latex','FontSize',12);
         xlabel('Number of iterations','interpreter','latex','FontSize',12);
         ylabel('$\mu$ [Pa]','interpreter','latex','FontSize',12);
