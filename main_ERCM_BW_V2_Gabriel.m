@@ -700,7 +700,7 @@ nb_parametres_comportement_a_identifier = length(struct_param_comportement_a_ide
 valKappa = nan(length(kappa),nb_iter_LDC_max+1);
 sTime = zeros(1,length(kappa));
 
-for idx = 1:length(kappa)
+for idx = 3:length(kappa)
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
@@ -1862,7 +1862,7 @@ for idx = 1:length(kappa)
 
     sTime(1,idx) = toc;
 
-    valKappa(idx,1:length(liste_proprietes_iterations(idx,:))) = cell2mat(liste_proprietes_iterations(idx,:));
+    valKappa(idx,1:length(cell2mat(liste_proprietes_iterations))) = cell2mat(liste_proprietes_iterations);
 
     cd(path_dir{3});
 
@@ -1923,9 +1923,6 @@ for idx = 1:length(kappa)
 end
 
 save('resultsKappa.mat');
-
-
-
 
 % for n_iter_LDC = 1:n_iter_LDC_max;
 %  for nn_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
