@@ -227,7 +227,7 @@ elem_sig_ref = liste_elem_ref{n_elem_sig};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % lecture du fichier de resultats mesures (positions + deplacements)
 disp('LECTURE FICHIERS MESURES');
-t_ini = cputime;
+% t_ini = cputime;
 
 mat_data = load(path_dir{1});
 
@@ -354,7 +354,7 @@ for n_dim = 1:nb_dim
 end
 clear mat_i_mes_3D_local mat_j_mes_3D_local mat_k_mes_3D_local vec_n_a_supprimer mat_X_mes_3D_local mat_U_mes_3D_local;
 
-t_fin = cputime;
+% t_fin = cputime;
 disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
@@ -371,7 +371,7 @@ title('grille de mesure');
 % creation maillages "element-finis": phases et contraintes
 disp('CREATION MAILLAGES "ELEMENTS-FINIS"');
 
-t_ini = cputime;
+% t_ini = cputime;
 [liste_elem_pha,mat_pos_maillage_pha,mat_pos_pha,mat_n_pha,liste_elem_sig,mat_pos_maillage_sig,mat_pos_sig,mat_n_sig] = creation_maillages_EF(mat_X_mes_3D,elem_pha_ref,elem_sig_ref,n_integration_K,n_integration_M,struct_parametres_maillage_EF,struct_grille_mes);
 [nb_elem_sig_x,nb_elem_sig_y,nb_elem_sig_z] = size(mat_n_sig);
 struct_parametres_maillage_EF.nb_elem_sig_x = nb_elem_sig_x;
@@ -510,7 +510,7 @@ xlabel('x (m)');
 ylabel('y (m)');
 zlabel('z (m)');
 title('noeuds du maillage de contrainte');
-t_fin = cputime;
+% t_fin = cputime;
 disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
@@ -613,7 +613,7 @@ clear mat_multiplicite_mes_maillage_sig vec_multiplicite_mes;
 
 % filtrage eventuel des mesures
 disp('FILTRAGE DES MESURES');
-t_ini = cputime;
+% t_ini = cputime;
 if ( strcmp(struct_filtrage_deplacement.type,'sans') == 1 )
 else
     mat_x_mes = reshape(squeeze(mat_X_mes_3D(:,:,:,1)),size(mat_X_mes_3D,1),size(mat_X_mes_3D,2),size(mat_X_mes_3D,3));
@@ -632,13 +632,13 @@ else
     mat_X_mes_3D(isnan(mat_U_mes_3D(:))) = nan;
     clear mat_x_mes mat_y_mes mat_z_mes ii_mes_no_nan mat_U_filtr mat_U_filtr_3D;
 end
-t_fin = cputime;
+% t_fin = cputime;
 disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
 % determination des deplacements a appliquer en conditions aux limites
 disp('DETERMINATION DES DEPLACMENTS A APPLIQUER EN CONDITIONS AUX LIMITES');
-t_ini = cputime;
+% t_ini = cputime;
 if ( strcmp(struct_CL.type,'sans') == 1 )
 elseif ( strcmp(struct_CL.type,'mesure') == 1 )
     vec_x_sig = mat_pos_maillage_sig(:,1);
@@ -670,7 +670,7 @@ elseif ( strcmp(struct_CL.type,'mesure_filtree') == 1 )
     disp('A FAIRE : FILTRER LES CHAMPS MESURES FILTRES ET LES EVALUER SUR LA GRILLE DES CONTRAINTES');
     [mat_U_sig_3D] = filtrage_deplacements_IRM(mat_X_mes_3D,mat_U_mes_3D,mat_pos_maillage_sig,struct_grille_mes,struct_CL.parametres_filtrage);
 end
-t_fin = cputime;
+% t_fin = cputime;
 disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
@@ -693,6 +693,8 @@ nb_parametres_comportement_a_identifier = length(struct_param_comportement_a_ide
 valKappa = nan(length(kappa),nb_iter_LDC_max+1);
 sTime = zeros(1,length(kappa));
 
+[t_ini_identification, t_fin_identification] = deal(zeros(1,length(kappa)));
+
 for idx = 1:length(kappa)
 
     % INITIALISATION DES PROPRIETES
@@ -703,7 +705,7 @@ for idx = 1:length(kappa)
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
-    t_ini_identification = cputime;
+    t_ini_identification(1,idx) = cputime;
     
     liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
     liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
@@ -771,12 +773,12 @@ for idx = 1:length(kappa)
         for nn_elem_sig = 1:length(vec_n_elem_sig_sub_zone)
             liste_elem_sig_sub_zone{nn_elem_sig} = liste_elem_sig{vec_n_elem_sig_sub_zone(nn_elem_sig)};
         end
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % determinations des elements de contrainte de la sub-zone
         %         disp('            determinations des elements de contrainte de la sub-zone');
-        t_ini = cputime;
+        % t_ini = cputime;
         % determination des noeuds situes dans la sub-zone
         vec_test_noeuds_sig_sub_zone = false(1,size(mat_pos_maillage_sig,1));
         vec_x_noeuds_mes_sub_zone = nan(1,ni_mes*nj_mes*nk_mes);
@@ -810,11 +812,11 @@ for idx = 1:length(kappa)
         
         % determination des correspondances de numerotation "locale" - "globale"
         vec_correspondance_n_noeud_sig_local_n_noeud_sig_global = vec_n_noeuds_sig_sub_zone;
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         %         disp('            determinations des elements de phase de la sub-zone');
-        t_ini = cputime;
+        % t_ini = cputime;
         % determination des noeuds de phase situes dans la sub-zone
         vec_test_noeuds_pha_sub_zone_G_K = false(1,size(mat_pos_pha,1));
         vec_test_noeuds_pha_sub_zone_G_M = false(1,size(mat_pos_pha,1));
@@ -838,7 +840,7 @@ for idx = 1:length(kappa)
         
         % determination des correspondances de numerotation "LOCALE" - "GLOBALE"
         vec_correspondance_n_noeud_pha_local_n_noeud_pha_global = vec_n_noeuds_pha_sub_zone;
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % % affichage des noeuds de contrainte et de deplacement dans la subzone
@@ -899,7 +901,7 @@ for idx = 1:length(kappa)
         
         % determination des conditions aux limites sur la sub-zone
         %         disp('            determinations des conditions aux limites de la sub-zone');
-        t_ini = cputime;
+        % t_ini = cputime;
         nb_noeuds_sig_sub_zone = length(vec_n_noeuds_sig_sub_zone);
         if ( (strcmp(struct_CL.type,'mesure') == 1) || (strcmp(struct_CL.type,'mesure_filtree') == 1) )
             liste_DL_bloque = cell(1,2*nb_DDL_par_noeud);
@@ -918,19 +920,19 @@ for idx = 1:length(kappa)
                 liste_DL_bloque{n_DL_imp} = struct('type','W','vec_n_DL_bloque',vec_n_DL_bloque_W,'vec_val_DL_bloque',zeros(size(vec_n_DL_bloque_W)),'vec_n_noeud',vec_n_noeuds_frontieres_local);
             end
         end
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % determination des matrices de masse et de raideur sur la sub-zone
         %         disp(['            matrices equivalentes - ' num2str(nb_noeuds_sig_sub_zone*nb_DDL_par_noeud) ' DDL']);
         t_ini = cputime;
         [K,T,M,D,d_K_d_p] = raideur_ERCM(liste_elem_pha,liste_elem_sig_sub_zone,liste_elem_ref,struct_param_masse_raideur,vec_correspondance_n_noeud_sig_global_n_noeud_sig_local,vec_correspondance_n_noeud_pha_global_n_noeud_pha_local,mat_pos_maillage_sig,nb_DDL_par_noeud,struct_param_comportement_a_identifier,struct_param_comportement_normalisation);
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % determination de l'operateur de projection sur la sub-zone
         %         disp('            operateur de projection');
-        t_ini = cputime;
+        % t_ini = cputime;
         %         [N_mes,D_mes] = projection_mes(mat_pos_mes,mat_pos_maillage_sig,liste_elem_sig_sub_zone,mat_n_sig,liste_elem_ref,nb_DDL_par_noeud);
         ni_N_mes = nb_points_mesure_sub_zone*nb_DDL_par_noeud;
         nj_N_mes = length(vec_n_noeuds_sig_sub_zone)*nb_DDL_par_noeud;
@@ -981,12 +983,12 @@ for idx = 1:length(kappa)
         ni_N_mes = max(vec_i_N_mes);
         N_mes = sparse(vec_i_N_mes,vec_j_N_mes,vec_s_N_mes,ni_N_mes,nj_N_mes);
         %         D_mes = N_mes'*N_mes;
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % calcul du seconds membre R
         %         disp('            second membre');
-        t_ini = cputime;
+        % t_ini = cputime;
         nb_mes = length(vec_n_points_mes_dans_sub_zone);
         vec_U_mes = zeros(nb_DDL_par_noeud*nb_mes,1);
         for n_DDL = 1:nb_DDL_par_noeud
@@ -1034,12 +1036,12 @@ for idx = 1:length(kappa)
         %         figure;slice(mat_x_sig_sub_zone,mat_y_sig_sub_zone,mat_z_sig_sub_zone,mat_Uz_real_sig_sub_zone_affichage,coupe_x_sig,coupe_y_sig,coupe_z_sig);colorbar;xlabel('x');ylabel('y');zlabel('z');title('real(Uz projete), (m)');
         %         figure;slice(mat_x_sig_sub_zone,mat_y_sig_sub_zone,mat_z_sig_sub_zone,mat_Uz_imag_sig_sub_zone_affichage,coupe_x_sig,coupe_y_sig,coupe_z_sig);colorbar;xlabel('x');ylabel('y');zlabel('z');title('imag(Uz projete), (m)');
         %         clear vec_R_U vec_R_Ux vec_R_Uy vec_R_Uz mat_pos_maillage_sig_sub_zone vec_x_sig_sub_zone vec_y_sig_sub_zone vec_z_sig_sub_zone F_Ux_real_sig F_Ux_imag_sig F_Uy_real_sig F_Uy_imag_sig F_Uz_real_sig F_Uz_imag_sig vec_grille_x_sig_sub_zone vec_grille_y_sig_sub_zone vec_grille_z_sig_sub_zone mat_x_sig_sub_zone mat_y_sig_sub_zone mat_z_sig_sub_zone mat_Ux_real_sig_sub_zone_affichage mat_Ux_imag_sig_sub_zone_affichage mat_Uy_real_sig_sub_zone_affichage mat_Uy_imag_sig_sub_zone_affichage mat_Uz_real_sig_sub_zone_affichage mat_Uz_imag_sig_sub_zone_affichage coupe_x_sig coupe_y_sig coupe_z_sig;
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % determination de la raideur globale
         %         disp('            raideur globale');
-        t_ini = cputime;
+        % t_ini = cputime;
         K_tilde = K-omega_mec^2*M; % (elastodynamique)
         [vec_i_K_tilde,vec_j_K_tilde,vec_s_K_tilde] = find(K_tilde);
         [vec_i_T,vec_j_T,vec_s_T] = find(T);
@@ -1113,7 +1115,7 @@ for idx = 1:length(kappa)
             %             vec_n_DDL_supprimes_global = [];
         end
         
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % TEST POUR VOIR SI LES IMPLEMENTATIONS DES MATRICES SONT CORRECTES =>  CALCUL DES (U) en CL imposees en deplacement
@@ -1238,7 +1240,7 @@ for idx = 1:length(kappa)
         
         % resolution et reecriture de U (assemblage du vecteur resultat)
         %         disp('            resolution');
-        t_ini = cputime;
+        % t_ini = cputime;
         nb_DDL_K = size(K,1);
         Us_global = Ks_global\Fs_global;
         % reintroduction des CL
@@ -1261,7 +1263,7 @@ for idx = 1:length(kappa)
         % %         figure;hold on;plot(imag(Ux(vec_n_noeuds_frontieres_local)),'-r');plot(imag(Uy(vec_n_noeuds_frontieres_local)),'-g');plot(imag(Uz(vec_n_noeuds_frontieres_local)),'-b');grid;legend('Ux','Uy','Uz');title('Im(U calc frontiere))');
         % %         figure;hold on;plot(real(Wx(vec_n_noeuds_frontieres_local)),'-r');plot(real(Wy(vec_n_noeuds_frontieres_local)),'-g');plot(real(Wz(vec_n_noeuds_frontieres_local)),'-b');grid;legend('Wx','Wy','Wz');title('Re(W calc frontiere))');
         % %         figure;hold on;plot(imag(Wx(vec_n_noeuds_frontieres_local)),'-r');plot(imag(Wy(vec_n_noeuds_frontieres_local)),'-g');plot(imag(Wz(vec_n_noeuds_frontieres_local)),'-b');grid;legend('Wx','Wy','Wz');title('Im(W calc frontiere))');
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % AFFICHAGE DES CHAMPS CALCULES POUR LA SUB-ZONE COURANTE
@@ -1386,7 +1388,7 @@ for idx = 1:length(kappa)
         % %         for k = 1:size(mat_V,3),figure;imagesc(squeeze(mat_V(:,:,k)-mat_V_tilde(:,:,k)));colorbar;end;
         
         %         disp('            mise a jour des proprietes mecaniques');
-        t_ini = cputime;
+        % t_ini = cputime;
         if ( strcmp(type_identification,'FEMU_DFC') == 1 )
             
         elseif ( strcmp(type_identification,'FEMU_AFC') == 1 )
@@ -1738,7 +1740,7 @@ for idx = 1:length(kappa)
             
         end
         
-        t_fin = cputime;
+        % t_fin = cputime;
         %         disp(['                ' num2str(t_fin-t_ini) ' s']);
         
         % mise a jour de la liste des candidats possibles pour etre le centre d'une sub-zone => vecteur "vec_test_n_elem_sig_centre_sub_zone"
@@ -1861,6 +1863,8 @@ for idx = 1:length(kappa)
 
     sTime(1,idx) = toc;
 
+    t_fin_identification(1,idx) = cputime - t_ini_identification(1,idx);
+
     valKappa(idx,1:length(cell2mat(liste_proprietes_iterations))) = cell2mat(liste_proprietes_iterations);
 
     cd(path_dir{3});
@@ -1882,7 +1886,7 @@ for idx = 1:length(kappa)
         xl = xlabel('Phase number node','interpreter','latex');
         yl = ylabel('$\mu$ [Pa]','interpreter','latex');
         lg = legend('Real','Imag','interpreter','latex');
-        [xl.FontSize, yl.FontSize] = deal(12)
+        [xl.FontSize, yl.FontSize] = deal(12);
         lg.FontSize = 11;
         saveas(gcf,sprintf('phaseNum_kappa_%d.png',idx));
         close gcf;
@@ -1916,7 +1920,7 @@ for idx = 1:length(kappa)
         yl = ylabel('$\mu$ [Pa]','interpreter','latex');
         lg = legend({'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex');
         
-        [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12)
+        [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
         lg.FontSize = 11;
 
         saveas(gcf,sprintf('results_kappa_%d.png',idx));
@@ -1930,6 +1934,29 @@ for idx = 1:length(kappa)
     end
 
 end
+
+gcf = figure;
+hold on;
+
+plot(1:length(sTime), sTime, '-k');
+tl = title('Code performance (tic-toc)', 'interpreter', 'latex');
+xl = xlabel('Number of kappa indices', 'interpreter', 'latex');
+yl = ylabel('Simulation time [s]', 'interpreter', 'latex');
+[tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
+saveas(gcf,'simTime (t-t).png');
+close gcf;
+
+
+gcf = figure;
+hold on;
+
+plot(1:length(t_fin_identification), t_fin_identification, '-k');
+tl = title('Code performance (cputime)', 'interpreter', 'latex');
+xl = xlabel('Number of kappa indices', 'interpreter', 'latex');
+yl = ylabel('Simulation time [s]', 'interpreter', 'latex');
+[tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
+saveas(gcf, 'simTime');
+close gcf;
 
 save('resultsKappa.mat');
 
