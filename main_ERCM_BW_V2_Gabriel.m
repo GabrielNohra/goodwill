@@ -355,7 +355,7 @@ end
 clear mat_i_mes_3D_local mat_j_mes_3D_local mat_k_mes_3D_local vec_n_a_supprimer mat_X_mes_3D_local mat_U_mes_3D_local;
 
 % t_fin = cputime;
-disp(['      ' num2str(t_fin-t_ini) ' s']);
+% disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
 % affichage de la grille de mesure
@@ -511,7 +511,7 @@ ylabel('y (m)');
 zlabel('z (m)');
 title('noeuds du maillage de contrainte');
 % t_fin = cputime;
-disp(['      ' num2str(t_fin-t_ini) ' s']);
+% disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
 % determination des elements de phase qui ne contiennent pas de points de mesure "interieurs" ou bien pas d'element de contrainte
@@ -633,7 +633,7 @@ else
     clear mat_x_mes mat_y_mes mat_z_mes ii_mes_no_nan mat_U_filtr mat_U_filtr_3D;
 end
 % t_fin = cputime;
-disp(['      ' num2str(t_fin-t_ini) ' s']);
+% disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
 % determination des deplacements a appliquer en conditions aux limites
@@ -671,7 +671,7 @@ elseif ( strcmp(struct_CL.type,'mesure_filtree') == 1 )
     [mat_U_sig_3D] = filtrage_deplacements_IRM(mat_X_mes_3D,mat_U_mes_3D,mat_pos_maillage_sig,struct_grille_mes,struct_CL.parametres_filtrage);
 end
 % t_fin = cputime;
-disp(['      ' num2str(t_fin-t_ini) ' s']);
+% disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
