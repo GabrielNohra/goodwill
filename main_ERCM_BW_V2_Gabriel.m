@@ -674,13 +674,6 @@ t_fin = cputime;
 disp(['      ' num2str(t_fin-t_ini) ' s']);
 disp(' ');
 
-% INITIALISATION DES PROPRIETES
-disp('INITIALISATION DES PROPRIETES');
-struct_param_comportement_a_identifier.mat_param = struct_param_comportement_a_identifier.vec_param_initialisation.'*ones(1,nb_noeuds_pha);
-struct_param_comportement_normalisation.mat_param = struct_param_comportement_normalisation.vec_param_initialisation.'*ones(1,nb_noeuds_pha);
-disp(' ');
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% DEBUT DU TEST SUR LA CONVERGENCE %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%% SUR LES PROPRIETES MATERIELLES %%%%%%%%%%%%%%%%%%%%%%%
@@ -701,6 +694,12 @@ valKappa = nan(length(kappa),nb_iter_LDC_max+1);
 sTime = zeros(1,length(kappa));
 
 for idx = 1:length(kappa)
+
+    % INITIALISATION DES PROPRIETES
+    disp('INITIALISATION DES PROPRIETES');
+    struct_param_comportement_a_identifier.mat_param = struct_param_comportement_a_identifier.vec_param_initialisation.'*ones(1,nb_noeuds_pha);
+    struct_param_comportement_normalisation.mat_param = struct_param_comportement_normalisation.vec_param_initialisation.'*ones(1,nb_noeuds_pha);
+    disp(' ');
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
