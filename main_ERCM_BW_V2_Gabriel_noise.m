@@ -69,8 +69,8 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
     % rho_0 = 1020.; % [kg/m^3]
     lambda_r0 = 41382.; % [Pa]
     lambda_i0 = 0.; % [Pa]
-    mu_r0 = devFactor(i_param*(j_param-1)+i_flag*(2-j_param))*1743.; % [Pa] 1.5*1743.;
-    mu_i0 = devFactor(i_param*(2-j_param)+i_flag*(j_param-1))*174.3; % [Pa] 0.75*174.3;
+    mu_r0 = 1.5*1743; % devFactor(i_param*(j_param-1)+i_flag*(2-j_param))*1743.; % [Pa] 1.5*1743.;
+    mu_i0 = 0.75*174.3; % devFactor(i_param*(2-j_param)+i_flag*(j_param-1))*174.3; % [Pa] 0.75*174.3;
     rho_0 = 1020.; % [kg/m^3]
     vec_param_initialisation = [(lambda_r0+1i*lambda_i0) (mu_r0+1i*mu_i0) rho_0];
     % bornes d'identification
