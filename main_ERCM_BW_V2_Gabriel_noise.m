@@ -1893,8 +1893,8 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         % nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
         
         gcf = figure;
+        
         hold on;
-
         plot(real(vec_param_identifie_moyen(n_param,:)),'--r');
         plot(imag(vec_param_identifie_moyen(n_param,:)),'--b');
 
