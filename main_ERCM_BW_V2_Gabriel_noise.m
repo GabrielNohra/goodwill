@@ -1876,7 +1876,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         lg = legend('Real','Imag','interpreter','latex');
         [xl.FontSize, yl.FontSize] = deal(12);
         lg.FontSize = 11;
-        saveas(gcf,sprintf('phaseNum_(noise=%d).png',amplitude_bruit_Gaussien_U*100));
+        saveas(gcf,sprintf('phaseNum_(noise=%0.2f).png',amplitude_bruit_Gaussien_U(i_param)*100));
         close gcf;
 
     end
@@ -1898,8 +1898,8 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         plot(real(vec_param_identifie_moyen(n_param,:)),'--r');
         plot(imag(vec_param_identifie_moyen(n_param,:)),'--b');
 
-        plot(mu_r0*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
-        plot(mu_i0*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
+        plot(1743*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
+        plot(174.3*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
 
         grid;
         
@@ -1911,7 +1911,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
         lg.FontSize = 11;
 
-        saveas(gcf,sprintf('results_(noise=%d).png',amplitude_bruit_Gaussien_U*100));
+        saveas(gcf,sprintf('results_(noise=%0.2f).png',amplitude_bruit_Gaussien_U(i_param)*100));
 
         close gcf;
         
