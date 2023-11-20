@@ -695,7 +695,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
     test_convergence_LDC = false;
     n_iter_LDC = 1;
-    t_ini_identification(j_param,i_param) = cputime;
+    t_ini_identification(1,i_param) = cputime;
     
     liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
     liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
@@ -1876,7 +1876,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         lg = legend('Real','Imag','interpreter','latex');
         [xl.FontSize, yl.FontSize] = deal(12);
         lg.FontSize = 11;
-        saveas(gcf,sprintf('phaseNum_%d (fixed %d).png',i_param, j_param));
+        saveas(gcf,sprintf('phaseNum_(noise=%d).png',amplitude_bruit_Gaussien_U*100));
         close gcf;
 
     end
@@ -1911,7 +1911,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
         lg.FontSize = 11;
 
-        saveas(gcf,sprintf('results_iV_%d_fixed_%d.png',i_param,j_param));
+        saveas(gcf,sprintf('results_(noise=%d).png',amplitude_bruit_Gaussien_U*100));
 
         close gcf;
         
@@ -1921,16 +1921,14 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
 end
 
-if j_param == 2
-    cd(path_dir{3});
-end
+cd(path_dir{3});
 
 gcf = figure;
 hold on;
 
-plot(1:length(sTime), sTime(1,:), '-k');
-tl = title('Code performance (elastic parameter fixed)', 'interpreter', 'latex');
-xl = xlabel('Initial value indices', 'interpreter', 'latex');
+plot(amplitude_bruit_Gaussien_U, sTime, '-k');
+tl = title('Code performance', 'interpreter', 'latex');
+xl = xlabel('Noise values', 'interpreter', 'latex');
 yl = ylabel('Simulation time [s]', 'interpreter', 'latex');
 [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
 saveas(gcf,'simTime (elastic).png');
@@ -1939,15 +1937,7 @@ close gcf;
 gcf = figure;
 hold on;
 
-plot(1:length(sTime), sTime(2,:), '-k');
-tl = title('Code performance (viscous parameter fixed)', 'interpreter', 'latex');
-xl = xlabel('Initial value indices', 'interpreter', 'latex');
-yl = ylabel('Simulation time [s]', 'interpreter', 'latex');
-[tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
-saveas(gcf,'simTime (viscous).png');
-close gcf;
-
-save('initialValues.mat');
+save('noiseValues.mat');
 
 % for n_iter_LDC = 1:n_iter_LDC_max;
 %  for nn_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
