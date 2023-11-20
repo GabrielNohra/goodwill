@@ -28,6 +28,13 @@ devFactor = 0:0.25:4;
 i_flag = 5;
 kappa = 1 * 1e13;
 
+% parametres de convergence sur l'identification materielle
+tolerance_LDC = 1e-4;
+%nb_iter_LDC_max = 5;
+% nb_iter_LDC_max = 10;
+nb_iter_LDC_max = 200;
+% nb_iter_LDC_max = 200;
+
 valInitial = nan(2,length(devFactor),nb_iter_LDC_max+1);
 sTime = zeros(2,length(devFactor));
 
@@ -169,13 +176,6 @@ for j_param = 1:2
 
         % facteur pour calculer la tolerance sur la position : tolerance = dimension_maxi/facteur
         facteur_tolerance_position = 10000.;
-
-        % parametres de convergence sur l'identification materielle
-        tolerance_LDC = 1e-4;
-        %nb_iter_LDC_max = 5;
-        % nb_iter_LDC_max = 10;
-        nb_iter_LDC_max = 200;
-        % nb_iter_LDC_max = 200;
 
         % % seuil permettant de definir les elements de phase "pas assez deformes" pour pouvoir y identifier des proprietes
         % seuil_NRJ = 0.1; % 0 : pas de filtre
