@@ -1902,8 +1902,8 @@ for j_param = 1:2
             plot(real(vec_param_identifie_moyen(n_param,:)),'--r');
             plot(imag(vec_param_identifie_moyen(n_param,:)),'--b');
 
-            plot(mu_r0*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
-            plot(mu_i0*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
+            plot(1743*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
+            plot(174.3*ones(size(vec_param_identifie_moyen(n_param,:))),'-k');
 
             grid;
             
