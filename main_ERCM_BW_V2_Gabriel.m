@@ -41,7 +41,7 @@ sTime = zeros(2,length(devFactor));
 [t_ini_identification, t_fin_identification] = deal(zeros(2,length(devFactor)));
 
 for j_param = 1:2
-    for i_param = 1:length(devFactor)
+    for i_param = 2:length(devFactor)
 
         % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
         amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -110,7 +110,7 @@ for j_param = 1:2
         % creation de la structure contenant les parametres pour normaliser
         struct_param_comportement_normalisation.vec_numeros_parametres_comportement = vec_numeros_parametres_comportement;
         struct_param_comportement_normalisation.vec_param_initialisation = vec_param_initialisation;
-        clear lambda_r0 mu_r0 vec_numeros_parametres_comportement;
+        clear lambda_r0 vec_numeros_parametres_comportement;
 
         % parametres de filtrage des deplacements
         struct_filtrage_deplacement = struct('type','sans'); % Filtrage eventuel des deplacements
