@@ -1909,7 +1909,10 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
             % nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
             
-            figure(gcf);
+            if j_param ~= 1
+                figure(gcf);
+            end
+
             p = [p plot(real(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
             hold on;
             p = [p plot(imag(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
