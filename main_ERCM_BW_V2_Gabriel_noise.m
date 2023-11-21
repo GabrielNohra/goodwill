@@ -373,7 +373,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         % affichage de la grille de mesure
 
         figure;
-        hp = plot3(reshape(mat_X_mes_3D(:,:,:,1),1,[]),reshape(mat_X_mes_3D(:,:,:,2),1,[]),reshape(mat_X_mes_3D(:,:,:,3),1,[]),'xk');
+        % hp = plot3(reshape(mat_X_mes_3D(:,:,:,1),1,[]),reshape(mat_X_mes_3D(:,:,:,2),1,[]),reshape(mat_X_mes_3D(:,:,:,3),1,[]),'xk');
         grid;
         xlabel('x (m)');
         ylabel('y (m)');
@@ -406,9 +406,9 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
                 for k = 1:nk_elem_pha
                     n_elem_pha = n_elem_pha+1;
                     if ( strcmp(liste_elem_pha{n_elem_pha}.type_elem,'HEX1') == 1 )
-                        hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,3),'xk');
+                        % hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,3),'xk');
                     else
-                        hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,3),'xk');
+                        % hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,3),'xk');
                     end
                     set(hp,'Color',mat_coul(n_elem_pha,:));
                 end
@@ -511,9 +511,9 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         hold on;
         for n_elem_sig = 1:nb_elem_sig
             if ( strcmp(liste_elem_sig{n_elem_sig}.type_elem,'HEX1') == 1 )
-                hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,3),'xk');
+                % hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,3),'xk');
             else
-                hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,3),'xk');
+                % hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,3),'xk');
             end
             set(hp,'Color',mat_coul(n_elem_sig,:));
         end
@@ -562,8 +562,8 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
         figure;
         hold on;
-        plot3(mat_pos_pha(vec_n_noeuds_pha_a_supprimer,1),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,2),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,3),'or');
-        plot3(mat_pos_pha(vec_n_noeuds_pha_a_conserver,1),mat_pos_pha(vec_n_noeuds_pha_a_conserver,2),mat_pos_pha(vec_n_noeuds_pha_a_conserver,3),'xk');
+        % plot3(mat_pos_pha(vec_n_noeuds_pha_a_supprimer,1),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,2),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,3),'or');
+        % plot3(mat_pos_pha(vec_n_noeuds_pha_a_conserver,1),mat_pos_pha(vec_n_noeuds_pha_a_conserver,2),mat_pos_pha(vec_n_noeuds_pha_a_conserver,3),'xk');
         hold off;
         grid;
         xlabel('x (m)');
@@ -584,8 +584,8 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         end
         figure;
         hold on;
-        plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,3),'or');
-        plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,3),'xk');
+        % plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,3),'or');
+        % plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,3),'xk');
         hold off;
         grid;
         xlabel('x (m)');
@@ -1891,8 +1891,6 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         %     close gcf;
 
         % end
-
-        close all;
 
         if j_param == 1
             gcf = figure;
