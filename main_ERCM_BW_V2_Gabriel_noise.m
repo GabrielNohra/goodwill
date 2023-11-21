@@ -1873,8 +1873,6 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         n_iter_LDC_max = n_iter_LDC;
         % n_iter_LDC = n_iter_LDC_max;
 
-        close all;
-
         % for nn_param = 1:size(liste_proprietes_iterations,1)
 
         %     n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
@@ -1894,8 +1892,12 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
         % end
 
+        close all;
+
         if j_param == 1
             gcf = figure;
+        else
+            figure(gcf);
         end
 
         vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
@@ -1908,15 +1910,10 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         
         for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
             % nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
-            
-            if j_param ~= 1
-                figure(gcf);
-            end
 
             p = [p plot(real(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
             hold on;
             p = [p plot(imag(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
-            hold off;
 
         end
 
