@@ -46,7 +46,7 @@ amplitude_bruit_Gaussien_U = 0.005:0.005:0.1; % pourcentage de norme_U_max
 
 valNoise = zeros(length(amplitude_bruit_Gaussien_U),nb_iter_LDC_max+1);
 
-[t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa)));
+[t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
 for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
