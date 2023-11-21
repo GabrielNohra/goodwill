@@ -26,11 +26,11 @@ path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaille
 
 kappa = [5 10 100 1000 5000] * 1e13;
 colorList = {'[0 0.03 1]', '[0.2 1 0]', '[1 0 0]', '[1 0 0.5]', '[0.90 0 0.57]',...
-             '[0.03 0.46 0.02]', '[0 0.57 0.85]', '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]'} % rgb colors
+             '[0.03 0.46 0.02]', '[0 0.57 0.85]', '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]'}; % rgb colors
 
-lg = @(x) sprintf({'\kappa = %0.0e',x});
+l_i = @(x) sprintf({'\kappa = %0.0e',x});
 
-n_lg = {lgd(kappa(1)), lgd(kappa(2)), lgd(kappa(3)), lgd(kappa(4)), lgd(kappa(5))};
+n_lg = {l_i(kappa(1)), l_i(kappa(2)), l_i(kappa(3)), l_i(kappa(4)), l_i(kappa(5))};
 
 % 'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'}
 
