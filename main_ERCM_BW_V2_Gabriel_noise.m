@@ -372,13 +372,13 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
         % affichage de la grille de mesure
 
-        figure;
-        % hp = plot3(reshape(mat_X_mes_3D(:,:,:,1),1,[]),reshape(mat_X_mes_3D(:,:,:,2),1,[]),reshape(mat_X_mes_3D(:,:,:,3),1,[]),'xk');
-        grid;
-        xlabel('x (m)');
-        ylabel('y (m)');
-        zlabel('z (m)');
-        title('grille de mesure');
+        % figure;
+        % % hp = plot3(reshape(mat_X_mes_3D(:,:,:,1),1,[]),reshape(mat_X_mes_3D(:,:,:,2),1,[]),reshape(mat_X_mes_3D(:,:,:,3),1,[]),'xk');
+        % grid;
+        % xlabel('x (m)');
+        % ylabel('y (m)');
+        % zlabel('z (m)');
+        % title('grille de mesure');
 
         % creation maillages "element-finis": phases et contraintes
         disp('CREATION MAILLAGES "ELEMENTS-FINIS"');
@@ -397,28 +397,28 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         nk_elem_pha = struct_parametres_maillage_EF.nb_elem_pha_z;
 
         % affichage des elements de phases
-        mat_coul = jet(nb_elem_pha);
-        figure;
-        hold on;
-        n_elem_pha = 0;
-        for i = 1:ni_elem_pha
-            for j = 1:nj_elem_pha
-                for k = 1:nk_elem_pha
-                    n_elem_pha = n_elem_pha+1;
-                    if ( strcmp(liste_elem_pha{n_elem_pha}.type_elem,'HEX1') == 1 )
-                        % hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,3),'xk');
-                    else
-                        % hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,3),'xk');
-                    end
-                    set(hp,'Color',mat_coul(n_elem_pha,:));
-                end
-            end
-        end
-        grid;
-        xlabel('x (m)');
-        ylabel('y (m)');
-        zlabel('z (m)');
-        title('noeuds du maillage de phase');
+        % mat_coul = jet(nb_elem_pha);
+        % figure;
+        % hold on;
+        % n_elem_pha = 0;
+        % for i = 1:ni_elem_pha
+        %     for j = 1:nj_elem_pha
+        %         for k = 1:nk_elem_pha
+        %             n_elem_pha = n_elem_pha+1;
+        %             if ( strcmp(liste_elem_pha{n_elem_pha}.type_elem,'HEX1') == 1 )
+        %                 % hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds_maillage,3),'xk');
+        %             else
+        %                 % hp = plot3(mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,1),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,2),mat_pos_maillage_pha(liste_elem_pha{n_elem_pha}.vec_n_noeuds,3),'xk');
+        %             end
+        %             % set(hp,'Color',mat_coul(n_elem_pha,:));
+        %         end
+        %     end
+        % end
+        % grid;
+        % xlabel('x (m)');
+        % ylabel('y (m)');
+        % zlabel('z (m)');
+        % title('noeuds du maillage de phase');
 
         % suppression des noeuds inutilises dans le maillage de phase
         vec_test_pos_pha = false(1,size(mat_pos_pha,1));
@@ -506,22 +506,22 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         %zlabel('z (m)');
         %title('noeuds du maillage de contrainte');
 
-        mat_coul = jet(nb_elem_sig);
-        figure;
-        hold on;
-        for n_elem_sig = 1:nb_elem_sig
-            if ( strcmp(liste_elem_sig{n_elem_sig}.type_elem,'HEX1') == 1 )
-                % hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,3),'xk');
-            else
-                % hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,3),'xk');
-            end
-            set(hp,'Color',mat_coul(n_elem_sig,:));
-        end
-        grid;
-        xlabel('x (m)');
-        ylabel('y (m)');
-        zlabel('z (m)');
-        title('noeuds du maillage de contrainte');
+        % mat_coul = jet(nb_elem_sig);
+        % figure;
+        % hold on;
+        % for n_elem_sig = 1:nb_elem_sig
+        %     if ( strcmp(liste_elem_sig{n_elem_sig}.type_elem,'HEX1') == 1 )
+        %         % hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds_maillage,3),'xk');
+        %     else
+        %         % hp = plot3(mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,1),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,2),mat_pos_maillage_sig(liste_elem_sig{n_elem_sig}.vec_n_noeuds,3),'xk');
+        %     end
+        %     set(hp,'Color',mat_coul(n_elem_sig,:));
+        % end
+        % grid;
+        % xlabel('x (m)');
+        % ylabel('y (m)');
+        % zlabel('z (m)');
+        % title('noeuds du maillage de contrainte');
         % t_fin = cputime;
         % disp(['      ' num2str(t_fin-t_ini) ' s']);
         disp(' ');
