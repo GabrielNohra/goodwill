@@ -24,7 +24,7 @@ path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaille
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
             '/users/bionanonmri/nohra/Documents/MATLAB/results/211123/'};
 
-kappa = [5 10 100 1000 5000] * 1e13;
+kappa = 1e14;
 colorList = {'[0 0.03 1]', '[0.2 1 0]', '[1 0 0]', '[1 0 0.5]', '[0.90 0 0.57]',...
              '[0.03 0.46 0.02]', '[0 0.57 0.85]', '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]'}; % rgb colors
 
@@ -50,9 +50,7 @@ valNoise = zeros(length(amplitude_bruit_Gaussien_U),nb_iter_LDC_max+1);
 
 for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
-    p = [];
-
-    for j_param = 1:length(kappa)
+    while true
 
         % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
         % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -710,7 +708,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
         test_convergence_LDC = false;
         n_iter_LDC = 1;
-        t_ini_identification(j_param,i_param) = cputime;
+        t_ini_identification(1,i_param) = cputime;
         
         liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
         liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
@@ -1079,7 +1077,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
                 %             disp(['                valeur de kappa : ' num2str(kappa)]);
                 vec_i_global = [vec_i_T'  , vec_i_K_tilde'                   , (vec_j_K_tilde+size(K_tilde,1))' , (vec_i_D+size(K_tilde,1))'];
                 vec_j_global = [vec_j_T'  , (vec_j_K_tilde+size(K_tilde,2))' , vec_i_K_tilde'                   , (vec_j_D+size(K_tilde,2))'];
-                vec_s_global = [vec_s_T.' , vec_s_K_tilde.'                  , conj(vec_s_K_tilde).'            , (-kappa(j_param)*vec_s_D.')];
+                vec_s_global = [vec_s_T.' , vec_s_K_tilde.'                  , conj(vec_s_K_tilde).'            , (-kappa*vec_s_D.')];
                 K_global = sparse(vec_i_global,vec_j_global,vec_s_global,2*size(K_tilde,1),2*size(K_tilde,2));
                 clear vec_i_K_tilde vec_j_K_tilde vec_s_K_tilde;
                 clear vec_i_T vec_j_T vec_s_T;
@@ -1088,7 +1086,7 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
                 %             clear K M T K_tilde D;
                 vec_F_global = zeros(size(K_global,1),1);
                 vec_F_global(1:size(K_tilde,1)) = vec_F;
-                vec_F_global(size(K_tilde,1)+1:end) = -kappa(j_param)*vec_R;
+                vec_F_global(size(K_tilde,1)+1:end) = -kappa*vec_R;
                 %  figure;spy(K_global);title('structure K global');
                 % MAJ du systeme sur K_global pour tenir compte des CL
                 % par substitution
@@ -1866,54 +1864,64 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         
         end
 
-        sTime(i_param,j_param) = cputime - t_ini_identification(i_param,i_param);
+        aux = struct_param_comportement_a_identifier.vec_param_initialisation(2);
 
-        valNoise(i_param,1:length(cell2mat(liste_proprietes_iterations))) = cell2mat(liste_proprietes_iterations);
+        diffVector = aux - mat_proprietes_identifies_moyennes_sub_zones;
 
-        n_iter_LDC_max = n_iter_LDC;
-        % n_iter_LDC = n_iter_LDC_max;
-
-        % for nn_param = 1:size(liste_proprietes_iterations,1)
-
-        %     n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
-        %     nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
-        %     gcf = figure;
-        %     hold on;
-        %     plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
-        %     plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
-        %     grid;
-        %     xl = xlabel('Phase number node','interpreter','latex');
-        %     yl = ylabel('$\mu$ [Pa]','interpreter','latex');
-        %     lg = legend('Real','Imag','interpreter','latex');
-        %     [xl.FontSize, yl.FontSize] = deal(12);
-        %     lg.FontSize = 11;
-        %     saveas(gcf,sprintf('phaseNum_(noise=%0.2f).png',amplitude_bruit_Gaussien_U(i_param)*100));
-        %     close gcf;
-
-        % end
-
-        if j_param == 1
-            gcf = figure;
+        if norm(diffVector) < tolerance_LDC*norm(aux)
+            break;
         else
-            figure(gcf);
+            kappa = kappa * 10;
         end
 
-        vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
-        
-        for n_iter_LDC = 1:n_iter_LDC_max
-            for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
-                vec_param_identifie_moyen(n_param,n_iter_LDC) = mean(liste_proprietes_iterations{n_iter_LDC}(n_param,:));
-            end
-        end
-        
+    end
+
+    sTime(1,i_param) = cputime - t_ini_identification(1,i_param);
+
+    valNoise(i_param,1:length(cell2mat(liste_proprietes_iterations))) = cell2mat(liste_proprietes_iterations);
+
+    n_iter_LDC_max = n_iter_LDC;
+    % n_iter_LDC = n_iter_LDC_max;
+
+    % for nn_param = 1:size(liste_proprietes_iterations,1)
+
+    %     n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
+    %     nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
+    %     gcf = figure;
+    %     hold on;
+    %     plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
+    %     plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
+    %     grid;
+    %     xl = xlabel('Phase number node','interpreter','latex');
+    %     yl = ylabel('$\mu$ [Pa]','interpreter','latex');
+    %     lg = legend('Real','Imag','interpreter','latex');
+    %     [xl.FontSize, yl.FontSize] = deal(12);
+    %     lg.FontSize = 11;
+    %     saveas(gcf,sprintf('phaseNum_(noise=%0.2f).png',amplitude_bruit_Gaussien_U(i_param)*100));
+    %     close gcf;
+
+    % end
+
+    if j_param == 1
+        gcf = figure;
+    else
+        figure(gcf);
+    end
+
+    vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
+    
+    for n_iter_LDC = 1:n_iter_LDC_max
         for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
-            % nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
-
-            p = [p plot(real(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
-            hold on;
-            p = [p plot(imag(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
-
+            vec_param_identifie_moyen(n_param,n_iter_LDC) = mean(liste_proprietes_iterations{n_iter_LDC}(n_param,:));
         end
+    end
+    
+    for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
+        % nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
+
+        p = [p plot(real(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
+        hold on;
+        p = [p plot(imag(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
 
     end
 
