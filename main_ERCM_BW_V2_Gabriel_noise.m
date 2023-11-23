@@ -558,17 +558,17 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
             liste_legende{length(liste_legende)+1} = 'cons';
         end
 
-        figure;
-        hold on;
-        % plot3(mat_pos_pha(vec_n_noeuds_pha_a_supprimer,1),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,2),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,3),'or');
-        % plot3(mat_pos_pha(vec_n_noeuds_pha_a_conserver,1),mat_pos_pha(vec_n_noeuds_pha_a_conserver,2),mat_pos_pha(vec_n_noeuds_pha_a_conserver,3),'xk');
-        hold off;
-        grid;
-        xlabel('x (m)');
-        ylabel('y (m)');
-        zlabel('z (m)');
-        legend(liste_legende);
-        title('noeuds/elements de phase');
+        % figure;
+        % hold on;
+        % % plot3(mat_pos_pha(vec_n_noeuds_pha_a_supprimer,1),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,2),mat_pos_pha(vec_n_noeuds_pha_a_supprimer,3),'or');
+        % % plot3(mat_pos_pha(vec_n_noeuds_pha_a_conserver,1),mat_pos_pha(vec_n_noeuds_pha_a_conserver,2),mat_pos_pha(vec_n_noeuds_pha_a_conserver,3),'xk');
+        % hold off;
+        % grid;
+        % xlabel('x (m)');
+        % ylabel('y (m)');
+        % zlabel('z (m)');
+        % legend(liste_legende);
+        % title('noeuds/elements de phase');
 
         clear liste_legende;
         vec_n_noeuds_maillage_pha_a_conserver = find ( vec_test_noeud_maillage_pha );
@@ -580,17 +580,17 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         if ( ~isempty(vec_n_noeuds_maillage_pha_a_conserver) )
             liste_legende{length(liste_legende)+1} = 'cons';
         end
-        figure;
-        hold on;
-        % plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,3),'or');
-        % plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,3),'xk');
-        hold off;
-        grid;
-        xlabel('x (m)');
-        ylabel('y (m)');
-        zlabel('z (m)');
-        legend(liste_legende);title('noeuds maillage de phase');
-        clear liste_legende;
+        % figure;
+        % hold on;
+        % % plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_supprimer,3),'or');
+        % % plot3(mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,1),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,2),mat_pos_maillage_pha(vec_n_noeuds_maillage_pha_a_conserver,3),'xk');
+        % hold off;
+        % grid;
+        % xlabel('x (m)');
+        % ylabel('y (m)');
+        % zlabel('z (m)');
+        % legend(liste_legende);title('noeuds maillage de phase');
+        % clear liste_legende;
 
         % determination des matrices donnant la correspondance (i_sig,j_sig,k_sig) => n_elem_sig
         mat_correspondance_i_sig_j_sig_k_sig_n_elem_sig = nan(ni_elem_sig,nj_elem_sig,nk_elem_sig);
@@ -1855,6 +1855,9 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
             %     zlabel('z (m)');
             %     title('maillage toutes sub-zones');
             
+            nAux = num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
+            rnAux = num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}));
+
             disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
             disp(' ');
             
@@ -1871,6 +1874,13 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         if norm(diffVector) < tolerance_LDC*norm(aux)
             break;
         else
+            fileID = fopen('results.txt','W');
+            fprintf(fileID, 'Iteration = %d, noise = %d \% \n', n_iter_LDC, i_param*100);
+            fprintf(fileID, 'The value of kappa is equal to %0.0e \n', kappa);
+            fprintf(fileID, 'The difference vector is equal to %f \n', diffVector);
+            fprintf(fileID, 'The value of the norm is equal to %f \n', nAux);
+            fprintf(fileID, 'The value of the relative norm is equal to %f \n', rnAux);
+            fclose(fileID);
             kappa = kappa * 10;
         end
 
