@@ -1873,13 +1873,14 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
 
         if norm(diffVector) < tolerance_LDC*norm(aux)
             break;
-        else
-            fileID = fopen('results.txt','W');
-            fprintf(fileID, 'Iteration = %d, noise = %d \% \n', n_iter_LDC, i_param*100);
-            fprintf(fileID, 'The value of kappa is equal to %0.0e \n', kappa);
-            fprintf(fileID, 'The difference vector is equal to %f \n', diffVector);
-            fprintf(fileID, 'The value of the norm is equal to %f \n', nAux);
-            fprintf(fileID, 'The value of the relative norm is equal to %f \n', rnAux);
+        else 
+            fileID = fopen('results.txt','w');
+            fprintf(fileID,'The algorithm converged with %d iterations\n',n_iter_LDC);
+            fprintf(fileID,'The noise value is equal to %d\n',amplitude_bruit_Gaussien_U(i_param)*100);
+            fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
+            fprintf(fileID,'The difference vector is equal to %f\n',diffVector);
+            fprintf(fileID,'The value of the norm is equal to %f\n',nAux);
+            fprintf(fileID,'The value of the relative norm is equal to %f\n\n',rnAux);
             fclose(fileID);
             kappa = kappa * 1e10;
         end
