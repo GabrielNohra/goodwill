@@ -1862,6 +1862,13 @@ while exitVar ~= 1
             n_iter_LDC = n_iter_LDC+1;
             liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
+            archivo = fopen('partial_results.txt','a+');
+            fprintf(archivo,'Iteration number %d\n',n_iter_LDC);
+            fprintf(archivo,'The noise value is equal to %0.2d \%\n',amplitude_bruit_Gaussien_U*100);
+            fprintf(archivo,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
+            fprintf(archivo,'The difference vector is equal to %0.2f\n\n',diffVector);
+            fclose(archivo);
+
         end
 
         aux = struct_param_comportement_a_identifier.vec_param_initialisation(2);
@@ -1872,11 +1879,11 @@ while exitVar ~= 1
             exitVar = 1;
             break;
         else 
-            fileID = fopen('results.txt','w');
+            fileID = fopen('results.txt','a+');
             fprintf(fileID,'The algorithm converged with %d iterations\n',n_iter_LDC);
             fprintf(fileID,'The noise value is equal to %d \%\n',amplitude_bruit_Gaussien_U*100);
             fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
-            fprintf(fileID,'The difference vector is equal to %f\n',diffVector);
+            fprintf(fileID,'The difference vector is equal to %f\n\n',diffVector);
             fclose(fileID);
             kappa = kappa * 1e10;
         end
