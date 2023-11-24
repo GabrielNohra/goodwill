@@ -42,7 +42,7 @@ nb_iter_LDC_max = 200;
 
 % valNoise = zeros(length(amplitude_bruit_Gaussien_U),nb_iter_LDC_max+1);
 
-[t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
+% [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
 amplitude_bruit_Gaussien_U = 0.0001;
 
