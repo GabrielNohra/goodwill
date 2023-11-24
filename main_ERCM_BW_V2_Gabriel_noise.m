@@ -40,16 +40,19 @@ tolerance_LDC = 1e-4;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-% valNoise = zeros(length(amplitude_bruit_Gaussien_U),nb_iter_LDC_max+1);
+valNoise = zeros(nb_iter_LDC_max/2,nb_iter_LDC_max+1);
 
 % [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
-amplitude_bruit_Gaussien_U = 0.0001;
+amplitude_bruit_Gaussien_U = 0.00005; % tengo que disminuir el error!!
 exitVar = 0;
+count = 0;
 
 while exitVar ~= 1
 
     while true
+        
+        count = count + 1;
 
         % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
         % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -711,6 +714,8 @@ while exitVar ~= 1
         
         liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
         liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
+        
+        valNoise(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
 
         while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du critere sur la convergence (utile pour id)
         
@@ -1858,15 +1863,20 @@ while exitVar ~= 1
             disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
             disp(' ');
             
+
+
             % mise a jour des proprietes
             n_iter_LDC = n_iter_LDC+1;
             liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
+            valNoise(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
+
             archivo = fopen('partial_results.txt','a+');
-            fprintf(archivo,'Iteration number %d\n',n_iter_LDC);
-            fprintf(archivo,'The noise value is equal to %0.2d \%\n',amplitude_bruit_Gaussien_U*100);
+            fprintf(archivo,'Iteration number %d\n',n_iter_LDC-1);
+            fprintf(archivo,'The noise value is equal to %0.4d %%\n',amplitude_bruit_Gaussien_U*100);
             fprintf(archivo,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
-            fprintf(archivo,'The material property (mu) is equal to %0.2f\n\n',mat_proprietes_identifies_moyennes_sub_zones);
+            fprintf('')
+            fprintf(archivo,'The norm of the material property (mu) is equal to %0.4f\n\n',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
             fclose(archivo);
 
         end
@@ -1880,15 +1890,20 @@ while exitVar ~= 1
             break;
         else 
             fileID = fopen('results.txt','a+');
-            fprintf(fileID,'The algorithm converged with %d iterations\n',n_iter_LDC);
-            fprintf(fileID,'The noise value is equal to %d \%\n',amplitude_bruit_Gaussien_U*100);
+            fprintf(fileID,'--------------------------------------\n')
+            fprintf(fileID,'Convergence achieved for %d iterations',n_iter_LDC);
+            fprintf(fileID,'The noise value is equal to %0.4d \%\n',amplitude_bruit_Gaussien_U*100);
             fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
-            fprintf(fileID,'The difference vector is equal to %f\n\n',diffVector);
+            fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
+            fprintf(fileID,'The regularization parameter (kappa) will be increased by 10\n\n');
+            fprintf(fileID,'--------------------------------------\n\n')
             fclose(fileID);
-            kappa = kappa * 1e10;
+            kappa = kappa * 1e+10;
         end
 
     end
+
+
 
     amplitude_bruit_Gaussien_U = amplitude_bruit_Gaussien_U - 0.00001;
 
