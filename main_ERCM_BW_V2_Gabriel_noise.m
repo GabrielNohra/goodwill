@@ -1886,24 +1886,30 @@ while exitVar ~= 1
         diffVector = aux - mat_proprietes_identifies_moyennes_sub_zones;
 
         if norm(diffVector) < tolerance_LDC*norm(aux)
-            exitVar = 1;
-            break;
-        else 
             fileID = fopen('results.txt','a+');
             fprintf(fileID,'--------------------------------------\n')
-            fprintf(fileID,'Convergence achieved for %d iterations',n_iter_LDC);
+            fprintf(fileID,'Convergence *ACHIEVED* for %d iterations',n_iter_LDC-1);
             fprintf(fileID,'The noise value is equal to %0.4d \%\n',amplitude_bruit_Gaussien_U*100);
             fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
+            fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n\n',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
             fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
-            fprintf(fileID,'The regularization parameter (kappa) will be increased by 10\n\n');
             fprintf(fileID,'--------------------------------------\n\n')
-            fclose(fileID);
+            exitVar = 1;
+            break;
+        else
+            fileID = fopen('results.txt','a+');
+            fprintf(fileID,'--------------------------------------\n')
+            fprintf(fileID,'Convergence *NOT ACHIEVED* for %d iterations',n_iter_LD-1);
+            fprintf(fileID,'The noise value is equal to %0.4d \%\n',amplitude_bruit_Gaussien_U*100);
+            fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
+            fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n\n',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
+            fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
+            fprintf(fileID,'The regularization parameter (kappa) will be increased by 10\n');
+            fprintf(fileID,'--------------------------------------\n\n')
             kappa = kappa * 1e+10;
         end
 
     end
-
-
 
     amplitude_bruit_Gaussien_U = amplitude_bruit_Gaussien_U - 0.00001;
 
