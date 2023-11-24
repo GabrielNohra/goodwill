@@ -1862,15 +1862,6 @@ while exitVar ~= 1
             n_iter_LDC = n_iter_LDC+1;
             liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
-            archivo = fopen('prueba.txt','w');
-            fprintf(archivo,'This is the iteration number %d',n_iter_LDC);
-            fprintf(archivo,'The material property mu is equal to %0.2f', mat_proprietes_identifies_moyennes_sub_zones);
-            fprintf(archivo,'The value of the norm of the material property "mu" is %0.2f',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
-            fprintf(archivo,'The value of the relative norm, with respect to the previous one, is %0.2f',num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC})));
-            fclose(archivo);
-
-            pause;
-
         end
 
         aux = struct_param_comportement_a_identifier.vec_param_initialisation(2);
