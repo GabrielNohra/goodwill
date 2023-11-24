@@ -1862,7 +1862,7 @@ while exitVar ~= 1
             n_iter_LDC = n_iter_LDC+1;
             liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
-            archivo = fopen('prueba.txt');
+            archivo = fopen('prueba.txt','w');
             fprintf(archivo,'This is the iteration number %d',n_iter_LDC);
             fprintf(archivo,'The material property mu is equal to %0.2f', mat_proprietes_identifies_moyennes_sub_zones);
             fprintf(archivo,'The value of the norm of the material property "mu" is %0.2f',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
@@ -1883,7 +1883,7 @@ while exitVar ~= 1
         else 
             fileID = fopen('results.txt','w');
             fprintf(fileID,'The algorithm converged with %d iterations\n',n_iter_LDC);
-            fprintf(fileID,'The noise value is equal to %d \%\n',amplitude_bruit_Gaussien_U(i_param)*100);
+            fprintf(fileID,'The noise value is equal to %d \%\n',amplitude_bruit_Gaussien_U*100);
             fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
             fprintf(fileID,'The difference vector is equal to %f\n',diffVector);
             fclose(fileID);
@@ -1892,7 +1892,7 @@ while exitVar ~= 1
 
     end
 
-    amplitude_bruit_Gaussien_U = amplitude_bruit_Gaussien_U + 0.00001;
+    amplitude_bruit_Gaussien_U = amplitude_bruit_Gaussien_U - 0.00001;
 
 end
 
