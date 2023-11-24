@@ -18,13 +18,11 @@ disp(' ');
 %nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep.don';
 liste_LdC = creation_LdC_anisotrope_repere_global();
 
-
-
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
             '/users/bionanonmri/nohra/Documents/MATLAB/results/211123/'};
 
-kappa = 1e31;
+kappa = 1e13;
 % colorList = {'[0 0.03 1]', '[0.2 1 0]', '[1 0 0]', '[1 0 0.5]', '[0.90 0 0.57]',...
 %              '[0.03 0.46 0.02]', '[0 0.57 0.85]', '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]'}; % rgb colors
 
@@ -42,13 +40,13 @@ tolerance_LDC = 1e-4;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-amplitude_bruit_Gaussien_U = 0.005:0.005:0.1; % pourcentage de norme_U_max
-
-valNoise = zeros(length(amplitude_bruit_Gaussien_U),nb_iter_LDC_max+1);
+% valNoise = zeros(length(amplitude_bruit_Gaussien_U),nb_iter_LDC_max+1);
 
 [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
-for i_param = 1:length(amplitude_bruit_Gaussien_U)
+amplitude_bruit_Gaussien_U = 0.0001;
+
+while exitVar ~= 1
 
     while true
 
@@ -1855,16 +1853,23 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
             %     zlabel('z (m)');
             %     title('maillage toutes sub-zones');
             
-            nAux = num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
-            rnAux = num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}));
-
+            
             disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
             disp(' ');
             
             % mise a jour des proprietes
             n_iter_LDC = n_iter_LDC+1;
             liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
-        
+
+            archivo = fopen('prueba.txt');
+            fprintf(archivo,'This is the iteration number %d',n_iter_LDC);
+            fprintf(archivo,'The material property mu is equal to %0.2f', mat_proprietes_identifies_moyennes_sub_zones);
+            fprintf(archivo,'The value of the norm of the material property "mu" is %0.2f',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
+            fprintf(archivo,'The value of the relative norm, with respect to the previous one, is %0.2f',num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC})));
+            fclose(archivo);
+
+            pause;
+
         end
 
         aux = struct_param_comportement_a_identifier.vec_param_initialisation(2);
@@ -1872,115 +1877,23 @@ for i_param = 1:length(amplitude_bruit_Gaussien_U)
         diffVector = aux - mat_proprietes_identifies_moyennes_sub_zones;
 
         if norm(diffVector) < tolerance_LDC*norm(aux)
+            exitVar = 1;
             break;
         else 
             fileID = fopen('results.txt','w');
             fprintf(fileID,'The algorithm converged with %d iterations\n',n_iter_LDC);
-            fprintf(fileID,'The noise value is equal to %d\n',amplitude_bruit_Gaussien_U(i_param)*100);
+            fprintf(fileID,'The noise value is equal to %d \%\n',amplitude_bruit_Gaussien_U(i_param)*100);
             fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
             fprintf(fileID,'The difference vector is equal to %f\n',diffVector);
-            fprintf(fileID,'The value of the norm is equal to %f\n',nAux);
-            fprintf(fileID,'The value of the relative norm is equal to %f\n\n',rnAux);
             fclose(fileID);
             kappa = kappa * 1e10;
         end
 
     end
 
-    sTime(1,i_param) = cputime - t_ini_identification(1,i_param);
-
-    valNoise(i_param,1:length(cell2mat(liste_proprietes_iterations))) = cell2mat(liste_proprietes_iterations);
-
-    n_iter_LDC_max = n_iter_LDC;
-    % n_iter_LDC = n_iter_LDC_max;
-
-    % for nn_param = 1:size(liste_proprietes_iterations,1)
-
-    %     n_param = struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(nn_param);
-    %     nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{n_param};
-    %     gcf = figure;
-    %     hold on;
-    %     plot(real(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-r');
-    %     plot(imag(liste_proprietes_iterations{n_iter_LDC}(nn_param,:)),'-b');
-    %     grid;
-    %     xl = xlabel('Phase number node','interpreter','latex');
-    %     yl = ylabel('$\mu$ [Pa]','interpreter','latex');
-    %     lg = legend('Real','Imag','interpreter','latex');
-    %     [xl.FontSize, yl.FontSize] = deal(12);
-    %     lg.FontSize = 11;
-    %     saveas(gcf,sprintf('phaseNum_(noise=%0.2f).png',amplitude_bruit_Gaussien_U(i_param)*100));
-    %     close gcf;
-
-    % end
-
-    if j_param == 1
-        gcf = figure;
-    else
-        figure(gcf);
-    end
-
-    vec_param_identifie_moyen = zeros(size(liste_proprietes_iterations{n_iter_LDC},1),n_iter_LDC_max);
-    
-    for n_iter_LDC = 1:n_iter_LDC_max
-        for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
-            vec_param_identifie_moyen(n_param,n_iter_LDC) = mean(liste_proprietes_iterations{n_iter_LDC}(n_param,:));
-        end
-    end
-    
-    for n_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
-        % nom_param = struct_param_comportement_a_identifier.liste_parametres_comportement{struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param)};
-
-        p = [p plot(real(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
-        hold on;
-        p = [p plot(imag(vec_param_identifie_moyen(n_param,:)),'color',colorList{i_param},'linestyle','--')];
-
-    end
-
-    cd(path_dir{3});
-
-    figure(gcf);
-
-    hold on;
-    p = [p plot(1743*ones(size(vec_param_identifie_moyen(n_param,:))),'-k')];
-    p = [p plot(174.3*ones(size(vec_param_identifie_moyen(n_param,:))),'-k')];
-    grid;
-
-    tl = title(sprintf('Material property $\mu$ (noise = %d \\%%)',amplitude_bruit_Gaussien_U(i_param)),'interpreter','latex');
-    xl = xlabel('Number of iterations','interpreter','latex');
-    yl = ylabel('$\mu$ [Pa]','interpreter','latex');
-    lgd = legend([p(1) p(3) p(5) p(7) p(9) p(11) p(12)], n_lg, {'Re $\left( \mu \right)$',...
-         'Im $\left( \mu \right)$'});
-    [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
-    lgd.FontSize = 11;
-    hold off;
-
-    saveas(gcf,sprintf('results_(noise=%0.2f%%).png',amplitude_bruit_Gaussien_U(i_param)*100));
-    close gcf;
-
-    tmp = figure;
-    hold on;
-
-    % for i=1:length(kappa)
-    %     plot(1:length(kappa), sTime(i,:), '-k');
-    % end
-
-    % tl = title('Code performance', 'interpreter', 'latex');
-    % xl = xlabel('Noise values', 'interpreter', 'latex');
-    % yl = ylabel('Simulation time [s]', 'interpreter', 'latex');
-    % lgd = legend(n_lg);
-    % [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
-    % lgd.FontSize = 11;
-    % grid;
-    % saveas(tmp,'simTime (elastic).png');
-    % close tmp;
-
-    if j_param ~= length(amplitude_bruit_Gaussien_U)
-        cd(path_dir{2});
-    end
+    amplitude_bruit_Gaussien_U = amplitude_bruit_Gaussien_U + 0.00001;
 
 end
-
-save('noiseValues.mat');
 
 % for n_iter_LDC = 1:n_iter_LDC_max;
 %  for nn_param = 1:size(liste_proprietes_iterations{n_iter_LDC},1)
