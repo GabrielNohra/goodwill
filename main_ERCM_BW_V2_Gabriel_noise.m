@@ -243,9 +243,9 @@ while exitVar ~= 1
         mat_pos_mes = mat_data(:,1:3)';
         mat_U_mes = mat_data(:,4:2:9)'+1i*mat_data(:,5:2:9)';
         % prise en compte eventuelle du bruit rajoute
-        if ( amplitude_bruit_Gaussien_U(i_param) > 0 )
+        if ( amplitude_bruit_Gaussien_U > 0 )
         norme_U_max = sqrt(max(sum(abs(mat_U_mes).^2,1)));
-        mat_U_mes = (real(mat_U_mes)+norme_U_max*amplitude_bruit_Gaussien_U(i_param)*randn(size(mat_U_mes)))+1i*(imag(mat_U_mes)+norme_U_max*amplitude_bruit_Gaussien_U(i_param)*randn(size(mat_U_mes))); 
+        mat_U_mes = (real(mat_U_mes)+norme_U_max*amplitude_bruit_Gaussien_U*randn(size(mat_U_mes)))+1i*(imag(mat_U_mes)+norme_U_max*amplitude_bruit_Gaussien_U*randn(size(mat_U_mes))); 
         clear norme_U_max;
         end
         clear mat_data;
