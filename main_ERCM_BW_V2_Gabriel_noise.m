@@ -1866,7 +1866,7 @@ while exitVar ~= 1
             fprintf(archivo,'Iteration number %d\n',n_iter_LDC);
             fprintf(archivo,'The noise value is equal to %0.2d \%\n',amplitude_bruit_Gaussien_U*100);
             fprintf(archivo,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
-            fprintf(archivo,'The difference vector is equal to %0.2f\n\n',diffVector);
+            fprintf(archivo,'The material property (mu) is equal to %0.2f\n\n',mat_proprietes_identifies_moyennes_sub_zones);
             fclose(archivo);
 
         end
