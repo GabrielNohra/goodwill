@@ -707,7 +707,7 @@ while exitVar ~= 1
 
         test_convergence_LDC = false;
         n_iter_LDC = 1;
-        t_ini_identification(1,i_param) = cputime;
+        % t_ini_identification(1,i_param) = cputime;
         
         liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
         liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
