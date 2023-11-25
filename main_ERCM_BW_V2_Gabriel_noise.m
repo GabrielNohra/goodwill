@@ -20,7 +20,7 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/211123/'};
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/251123/'};
 
 kappa = 1e13;
 % colorList = {'[0 0.03 1]', '[0.2 1 0]', '[1 0 0]', '[1 0 0.5]', '[0.90 0 0.57]',...
@@ -1870,7 +1870,9 @@ while exitVar ~= 1
             liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
             valNoise(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
+            cd(path_dir{3});
 
+            cd(path_dir{3});
             archivo = fopen('partial_results.txt','a+');
             fprintf(archivo,'Iteration number %d\n',n_iter_LDC-1);
             fprintf(archivo,'The noise value is equal to %0.4d %%\n',amplitude_bruit_Gaussien_U*100);
@@ -1878,6 +1880,7 @@ while exitVar ~= 1
             fprintf('')
             fprintf(archivo,'The norm of the material property (mu) is equal to %0.4f\n\n',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
             fclose(archivo);
+            cd(path_dir{2});
 
         end
 
@@ -1886,6 +1889,7 @@ while exitVar ~= 1
         diffVector = aux - mat_proprietes_identifies_moyennes_sub_zones;
 
         if norm(diffVector) < tolerance_LDC*norm(aux)
+            cd(path_dir{3});
             fileID = fopen('results.txt','a+');
             fprintf(fileID,'--------------------------------------\n')
             fprintf(fileID,'Convergence *ACHIEVED* for %d iterations',n_iter_LDC-1);
@@ -1895,8 +1899,10 @@ while exitVar ~= 1
             fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
             fprintf(fileID,'--------------------------------------\n\n')
             exitVar = 1;
+            cd(path_dir{2});
             break;
         else
+            cd(path_dir{3});
             fileID = fopen('results.txt','a+');
             fprintf(fileID,'--------------------------------------\n')
             fprintf(fileID,'Convergence *NOT ACHIEVED* for %d iterations',n_iter_LD-1);
@@ -1907,6 +1913,7 @@ while exitVar ~= 1
             fprintf(fileID,'The regularization parameter (kappa) will be increased by 10\n');
             fprintf(fileID,'--------------------------------------\n\n')
             kappa = kappa * 1e+10;
+            cd(path_dir{2});
         end
 
     end
