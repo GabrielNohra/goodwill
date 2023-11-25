@@ -1877,7 +1877,7 @@ while exitVar ~= 1
             fprintf(archivo,'Iteration number %d\n',n_iter_LDC-1);
             fprintf(archivo,'The noise value is equal to %0.4d %%\n',amplitude_bruit_Gaussien_U*100);
             fprintf(archivo,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
-            fprintf(archivo,'The norm of the material property (mu) is equal to %0.4f\n\n',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
+            fprintf(archivo,'The norm of the material property (mu) is equal to %f\n\n',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
             fclose(archivo);
             cd(path_dir{2});
 
