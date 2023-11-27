@@ -46,12 +46,12 @@ valNoise = zeros(nb_iter_LDC_max/2,nb_iter_LDC_max+1);
 
 % [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
-amplitude_bruit_Gaussien_U = 0.00005; % tengo que disminuir el error!!
+amplitude_bruit_Gaussien_U = 0.00008; % tengo que disminuir el error!!
 exitVar = 0;
 count = 1;
 
 
-while count <= 10
+while count <= 6
 
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
     % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
