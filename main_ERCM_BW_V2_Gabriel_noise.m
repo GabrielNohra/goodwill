@@ -25,8 +25,8 @@ path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaille
             '/users/bionanonmri/nohra/Documents/MATLAB/results/251123/'};
 
 kappa = 1e13;
-% colorList = {'[0 0.03 1]', '[0.2 1 0]', '[1 0 0]', '[1 0 0.5]', '[0.90 0 0.57]',...
-%              '[0.03 0.46 0.02]', '[0 0.57 0.85]', '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]'}; % rgb colors
+colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0.57]',...
+            '[0.03 0.46 0.02]'}; %, '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]' rgb colors
 
 % l_i = @(x) sprintf('\\kappa = %0.0e',x);
 
@@ -42,7 +42,7 @@ tolerance_LDC = 1e-4;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-valNoise = zeros(nb_iter_LDC_max/2,nb_iter_LDC_max+1);
+valNoise = zeros(6,nb_iter_LDC_max+1);
 
 % [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
@@ -1874,7 +1874,7 @@ while count <= 6
     fileID = fopen(sprintf('results_noise_%d_%%).txt',amplitude_bruit_Gaussien_U*100),'a+');
     fprintf(fileID,'--------------------------------------\n')
     fprintf(fileID,'Convergence *ACHIEVED* for %d iterations',n_iter_LDC-1);
-    fprintf(fileID,'The noise value is equal to %0.4d \%\n',amplitude_bruit_Gaussien_U*100);
+    fprintf(fileID,'The noise value is equal to %0.4d %%\n',amplitude_bruit_Gaussien_U*100);
     fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
     fprintf(fileID,'The theoretical material property is equal to %0.4f\n',struct_param_comportement_a_identifier.vec_param_initialisation(2));
     fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
@@ -1890,6 +1890,9 @@ while count <= 6
 end
 
 cd(path_dir{3});
+
+plotting(valNoise, kappa, amplitude_bruit_Gaussien_U, count);
+
 save('resultsNoise.mat');
 
 diary off;
