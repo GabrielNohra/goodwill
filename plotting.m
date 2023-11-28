@@ -39,7 +39,7 @@ function plotting(A,kappa,noise,dir)
 
     p = [p; plot(1743*ones(1,size(A,2)),'-k'); plot(174.3*ones(1,size(A,2)),'-k')];
 
-    tl = title(sprintf('Material property $\mu$ (kappa = %0.0e)',kappa),'interpreter','latex');
+    tl = title(sprintf('Material property $\\mu$ (kappa = %0.0e)',kappa),'interpreter','latex');
     xl = xlabel('Number of iterations','interpreter','latex');
     yl = ylabel('$\mu$ [Pa]','interpreter','latex');
     lgd = legend([p(1,1) p(3,1) p(5,1) p(7,1) p(9,1) p(11,1)], n_lg, {'Re $\left( \mu \right)$',...
@@ -52,6 +52,7 @@ function plotting(A,kappa,noise,dir)
 
     cd(dir{3});
     saveas(gcf,'results.png');
+    cd(dir{2});
 
     close gcf;
 
