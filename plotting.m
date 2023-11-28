@@ -33,7 +33,7 @@ function plotting(A,kappa,noise,dir)
 
         strTitle = sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e, noise = %0.4f \\%%)',kappa,n(i)*100);
         fileName = sprintf('results_(noise=%0.4f%%).png',n(i)*100);
-        tl = title(strTitle,'interpreter,'latex');
+        tl = title(strTitle,'interpreter','latex');
         xl = xlabel('Number of iterations','interpreter','latex');
         yl = ylabel('$\mu$ [Pa]','interpreter','latex');
         lgd = legend({'Re $\left( \tilde{mu} \right)$','Im $\left( \tilde{mu} \right)$',...
