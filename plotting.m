@@ -3,7 +3,10 @@ function plotting(A,kappa,noise,dir)
 % This function plots the values of the material properties
 % for different scenarios
 
-    A(A==0) = NaN; % change 0's for NaN's
+    [A(real(A)==0), A(imag(A)==0)] = deal(NaN); % change 0's for NaN's
+
+    n = zeros(1,6); % Initialization of noise storage values
+    n(1,1) = noise;
 
     color_1 = '[0 0.03 1]';
     color_2 = '[0.2 1 1]';
@@ -18,43 +21,39 @@ function plotting(A,kappa,noise,dir)
     colorList = {color_1,color_2,color_3,color_4,...
                     color_5,color_6,color_7,color_8,color_9};
 
-    p = [];
-
-    gcf = figure;
-    hold on;
-
-    n = zeros(1,6);
-    n(1,1) = noise;
-
     for i=1:size(A,1)
-        p = [p; plot(real(A(i,:)),'color',colorList{i},'linestyle','--'); plot(imag(A(i,:)),'color',colorList{i},'linestyle','--')];
+
+        gcf = figure;
+        hold on;
+
+        plot(real(A(i,:)),'color',colorList{1},'linestyle','--');
+        plot(imag(A(i,:)),'color',colorList{2},'linestyle','--');
+        plot(1743*ones(1,size(A,2)),'-k');
+        plot(174.3*ones(1,size(A,2)),'-k');
+
+        strTitle = sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e, noise = %0.4f \\%%)',kappa,n(i)*100);
+        fileName = sprintf('results_(noise=%0.4f%%).png',n(i)*100);
+        tl = title(strTitle,'interpreter,'latex');
+        xl = xlabel('Number of iterations','interpreter','latex');
+        yl = ylabel('$\mu$ [Pa]','interpreter','latex');
+        lgd = legend({'Re $\left( \tilde{mu} \right)$','Im $\left( \tilde{mu} \right)$',...
+            'Re $\left( \mu \right)$','Im $\left( \mu \right)$'};
+
+        [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
+        lgd.FontSize = 11;
+        grid;
+
+        saveas(gcf,fileName);
+
+        close gcf;
+
         if i ~= size(A,1)
             n(1,i+1) = noise + 0.00001*i;
         end
+
     end
 
-    lgd = @(x) sprintf('noise = %0.4f \\%%',n*100);
-
-    n_lg = {lgd(n(1)), lgd(n(2)), lgd(n(3)), lgd(n(4)), lgd(n(5)), lgd(n(6))};
-
-    p = [p; plot(1743*ones(1,size(A,2)),'-k'); plot(174.3*ones(1,size(A,2)),'-k')];
-
-    tl = title(sprintf('Material property $\\mu$ (kappa = %0.0e)',kappa),'interpreter','latex');
-    xl = xlabel('Number of iterations','interpreter','latex');
-    yl = ylabel('$\mu$ [Pa]','interpreter','latex');
-    lgd = legend([p(1,1) p(3,1) p(5,1) p(7,1) p(9,1) p(11,1)], n_lg, {'Re $\left( \mu \right)$',...
-        'Im $\left( \mu \right)$'});
-    [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
-    lgd.FontSize = 11;
-    grid;
-
-    hold off;
-
-    cd(dir{3});
-    saveas(gcf,'results.png');
     cd(dir{2});
-
-    close gcf;
 
 end
 
