@@ -1,4 +1,4 @@
-function plotting(A,kappa,noise,count)
+function plotting(A,kappa,noise,dir)
 % 
 % This function plots the values of the material properties
 % for different scenarios
@@ -30,7 +30,7 @@ function plotting(A,kappa,noise,count)
         p = [p plot(real(A(i,:)),'color',colorList{i},'linestyle','--') 
             plot(imag(A(i,:)),'color',colorList{i},'linestyle','--')];
         if i ~= size(A,1)
-            n(1,i+1) = noise + 0.00001*count;
+            n(1,i+1) = noise + 0.00001*i;
         end
     end
 
@@ -51,6 +51,7 @@ function plotting(A,kappa,noise,count)
 
     hold off;
 
+    cd(dir{3});
     saveas(gcf,'results.png');
 
     close gcf;

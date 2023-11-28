@@ -1892,7 +1892,8 @@ end
 cd(path_dir{3});
 save('resultsNoise.mat');
 
-plotting(valNoise, kappa, amplitude_bruit_Gaussien_U, count);
+cd(path_dir{2});
+plotting(valNoise, kappa, amplitude_bruit_Gaussien_U);
 
 diary off;
 
