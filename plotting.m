@@ -15,7 +15,7 @@ function plotting(A,kappa,noise,dir)
     color_8 = '[0 0.49 0.49]';
     color_9 = '[0.67 0 0]';
 
-    colorList = {color_1,color_2,color_3,color_4,
+    colorList = {color_1,color_2,color_3,color_4,...
                     color_5,color_6,color_7,color_8,color_9};
 
     p = [];
