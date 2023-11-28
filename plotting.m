@@ -38,7 +38,7 @@ function plotting(A,kappa,noise,dir)
         tl = title(strTitle,'interpreter','latex');
         xl = xlabel('Number of iterations','interpreter','latex');
         yl = ylabel('$\mu$ [Pa]','interpreter','latex');
-        lgd = legend({'Re $\left( \tilde{mu} \right)$','Im $\left( \tilde{mu} \right)$',...
+        lgd = legend({'Re $\left( \tilde{\mu} \right)$','Im $\left( \tilde{\mu} \right)$',...
             'Re $\left( \mu \right)$','Im $\left( \mu \right)$'},'interpreter','latex');
 
         [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
