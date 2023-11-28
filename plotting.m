@@ -37,7 +37,7 @@ function plotting(A,kappa,noise,dir)
 
     n_lg = {lgd(n(1)), lgd(n(2)), lgd(n(3)), lgd(n(4)), lgd(n(5)), lgd(n(6))};
 
-    p = [p; plot(1743*ones(size(A,2),'-k')); plot(174.3*ones(size(A,2),'-k'))];
+    p = [p; plot(1743*ones(1,size(A,2)),'-k'); plot(174.3*ones(1,size(A,2)),'-k')];
 
     tl = title(sprintf('Material property $\mu$ (kappa = %0.0e)',kappa),'interpreter','latex');
     xl = xlabel('Number of iterations','interpreter','latex');
