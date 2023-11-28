@@ -28,8 +28,8 @@ function plotting(A,kappa,noise,dir)
         gcf = figure;
         hold on;
 
-        plot(real(A(i,:)),'color',colorList{1},'linestyle','--');
-        plot(imag(A(i,:)),'color',colorList{2},'linestyle','--');
+        plot(real(A(i,:)),'color','b','linestyle','--');
+        plot(imag(A(i,:)),'color','r','linestyle','--');
         plot(1743*ones(1,size(A,2)),'-k');
         plot(174.3*ones(1,size(A,2)),'-k');
 
