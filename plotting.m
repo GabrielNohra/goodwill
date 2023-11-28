@@ -3,7 +3,12 @@ function plotting(A,kappa,noise,dir)
 % This function plots the values of the material properties
 % for different scenarios
 
-    [A(real(A)==0), A(imag(A)==0)] = deal(NaN); % change 0's for NaN's
+% change 0's for NaN's
+
+    rA = real(A);
+    iA = imag(A);
+    rA(rA == 0) = NaN;
+    iA(iA == 0) = NaN;
 
     n = zeros(1,6); % Initialization of noise storage values
     n(1,1) = noise;
@@ -28,8 +33,8 @@ function plotting(A,kappa,noise,dir)
         gcf = figure;
         hold on;
 
-        plot(real(A(i,:)),'color','b','linestyle','--');
-        plot(imag(A(i,:)),'color','r','linestyle','--');
+        plot(rA(i,:)),'color','b','linestyle','--');
+        plot(iA(i,:)),'color','r','linestyle','--');
         plot(1743*ones(1,size(A,2)),'-k');
         plot(174.3*ones(1,size(A,2)),'-k');
 
