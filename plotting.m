@@ -27,8 +27,7 @@ function plotting(A,kappa,noise,dir)
     n(1,1) = noise;
 
     for i=1:size(A,1)
-        p = [p plot(real(A(i,:)),'color',colorList{i},'linestyle','--') 
-            plot(imag(A(i,:)),'color',colorList{i},'linestyle','--')];
+        p = [p; plot(real(A(i,:)),'color',colorList{i},'linestyle','--'); plot(imag(A(i,:)),'color',colorList{i},'linestyle','--')];
         if i ~= size(A,1)
             n(1,i+1) = noise + 0.00001*i;
         end
@@ -43,7 +42,7 @@ function plotting(A,kappa,noise,dir)
     tl = title(sprintf('Material property $\mu$ (kappa = %0.0e)',kappa),'interpreter','latex');
     xl = xlabel('Number of iterations','interpreter','latex');
     yl = ylabel('$\mu$ [Pa]','interpreter','latex');
-    lgd = legend([p(1) p(3) p(5) p(7) p(9) p(11)], n_lg, {'Re $\left( \mu \right)$',...
+    lgd = legend([p(1,1) p(3,1) p(5,1) p(7,1) p(9,1) p(11,1)], n_lg, {'Re $\left( \mu \right)$',...
         'Im $\left( \mu \right)$'});
     [tl.FontSize, xl.FontSize, yl.FontSize] = deal(12);
     lgd.FontSize = 11;
