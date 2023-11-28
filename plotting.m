@@ -33,8 +33,8 @@ function plotting(A,kappa,noise,dir)
         gcf = figure;
         hold on;
 
-        plot(rA(i,:)),'color','b','linestyle','--');
-        plot(iA(i,:)),'color','r','linestyle','--');
+        plot(rA(i,:),'color','b','linestyle','--');
+        plot(iA(i,:),'color','r','linestyle','--');
         plot(1743*ones(1,size(A,2)),'-k');
         plot(174.3*ones(1,size(A,2)),'-k');
 
