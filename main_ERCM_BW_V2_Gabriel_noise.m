@@ -22,9 +22,9 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/251123/'};
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/281123/'};
 
-kappa = 1e13;
+kappa = 1e14;
 colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0.57]',...
             '[0.03 0.46 0.02]'}; %, '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]' rgb colors
 
@@ -42,14 +42,13 @@ tolerance_LDC = 1e-4;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-valNoise = zeros(6,nb_iter_LDC_max+1);
+valKappa = zeros(6,nb_iter_LDC_max+1);
 
 % [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
-amplitude_bruit_Gaussien_U = 0.00008; % tengo que disminuir el error!!
+amplitude_bruit_Gaussien_U = 0.000065; % 0.00008;
 exitVar = 0;
 count = 1;
-
 
 while count <= 6
 
@@ -714,7 +713,7 @@ while count <= 6
     liste_proprietes_iterations = cell(1,nb_iter_LDC_max+1);
     liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
     
-    valNoise(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
+    valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
 
     while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du critere sur la convergence (utile pour id)
     
@@ -1866,7 +1865,7 @@ while count <= 6
         n_iter_LDC = n_iter_LDC+1;
         liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
-        valNoise(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
+        valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
 
     end
 
@@ -1877,23 +1876,23 @@ while count <= 6
     fprintf(fileID,'The noise value is equal to %0.4d %%\n',amplitude_bruit_Gaussien_U*100);
     fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
     fprintf(fileID,'The theoretical material property is equal to %0.4f\n',struct_param_comportement_a_identifier.vec_param_initialisation(2));
-    fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
+    fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
     % fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
     fprintf(fileID,'--------------------------------------');
     fclose(fileID);
     cd(path_dir{2});
 
-    amplitude_bruit_Gaussien_U = amplitude_bruit_Gaussien_U - 0.00001;
+    kappa = kappa * 10;
 
     count = count + 1;
 
 end
 
 cd(path_dir{3});
-save('resultsNoise.mat');
+save('resultsKappa.mat');
 
 cd(path_dir{2});
-plotting(valNoise, kappa, amplitude_bruit_Gaussien_U);
+plotting(valKappa, kappa, amplitude_bruit_Gaussien_U, path_dir);
 
 diary off;
 

@@ -10,8 +10,8 @@ function plotting(A,kappa,noise,dir)
     rA(rA == 0) = NaN;
     iA(iA == 0) = NaN;
 
-    n = zeros(1,6); % Initialization of noise storage values
-    n(1,1) = noise;
+    n = zeros(1,6); % Initialization of parameter storage values
+    n(1,1) = kappa;
 
     color_1 = '[0 0.03 1]';
     color_2 = '[0.2 1 1]';
@@ -38,8 +38,8 @@ function plotting(A,kappa,noise,dir)
         plot(1743*ones(1,size(A,2)),'-k');
         plot(174.3*ones(1,size(A,2)),'-k');
 
-        strTitle = sprintf('Material property $\\mu$ ($\\kappa$ = %0.0e, noise = %0.4f \\%%)',kappa,n(i)*100);
-        fileName = sprintf('results_(noise=%0.4f%%).png',n(i)*100);
+        strTitle = sprintf('Material property $\\mu$ ($\\kappa$ = %0.2e, noise = %0.4f \\%%)',n(i),noise*100);
+        fileName = sprintf('results_(kappa=%0.2e).png',n(i)*100);
         tl = title(strTitle,'interpreter','latex');
         xl = xlabel('Number of iterations','interpreter','latex');
         yl = ylabel('$\mu$ [Pa]','interpreter','latex');
@@ -55,7 +55,7 @@ function plotting(A,kappa,noise,dir)
         close gcf;
 
         if i ~= size(A,1)
-            n(1,i+1) = noise + 0.00001*i;
+            n(1,i+1) = kappa / power(10,i);
         end
 
     end
