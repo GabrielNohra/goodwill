@@ -1871,7 +1871,7 @@ while count <= 6
     end
 
     cd(path_dir{3});
-    fileID = fopen(sprintf('results_noise_%d_%%).txt',amplitude_bruit_Gaussien_U*100),'a+');
+    fileID = fopen(sprintf('resultsNoise_%0.4f.txt',amplitude_bruit_Gaussien_U*100),'a+');
     fprintf(fileID,'--------------------------------------\n')
     fprintf(fileID,'Convergence *ACHIEVED* for %d iterations',n_iter_LDC-1);
     fprintf(fileID,'The noise value is equal to %0.4d %%\n',amplitude_bruit_Gaussien_U*100);
@@ -1890,10 +1890,9 @@ while count <= 6
 end
 
 cd(path_dir{3});
+save('resultsNoise.mat');
 
 plotting(valNoise, kappa, amplitude_bruit_Gaussien_U, count);
-
-save('resultsNoise.mat');
 
 diary off;
 
