@@ -12,7 +12,7 @@ function plotting(A,kappa,noise,dir)
 
     n = zeros(1,6); % Initialization of parameter storage values
     
-    n(1,length(n)) = kappa/10;
+    n(1,length(n)) = kappa;
 
     for i=length(n)-1:-1:1
         n(1,i) = n(1,i+1)/10;
