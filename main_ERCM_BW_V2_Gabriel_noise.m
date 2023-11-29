@@ -24,7 +24,7 @@ path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaille
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
             '/users/bionanonmri/nohra/Documents/MATLAB/results/291123/'};
 
-kappa = 1e14;
+kappa = 1e20;
 colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0.57]',...
             '[0.03 0.46 0.02]'}; %, '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]' rgb colors
 
