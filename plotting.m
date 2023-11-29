@@ -44,7 +44,7 @@ function plotting(A,kappa,noise,dir)
         plot(174.3*ones(1,size(A,2)),'-k');
 
         strTitle = sprintf('Material property $\\mu$ ($\\kappa$ = %0.2e, noise = %0.4f \\%%)',n(1,i),noise*100);
-        fileName = sprintf('results_(kappa=%0.2e).png',n(1,i)*100);
+        fileName = sprintf('results_(kappa=%0.2e).png',n(1,i));
         tl = title(strTitle,'interpreter','latex');
         xl = xlabel('Number of iterations','interpreter','latex');
         yl = ylabel('$\mu$ [Pa]','interpreter','latex');
