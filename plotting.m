@@ -11,7 +11,12 @@ function plotting(A,kappa,noise,dir)
     iA(iA == 0) = NaN;
 
     n = zeros(1,6); % Initialization of parameter storage values
-    n(1,1) = kappa;
+    
+    n(1,length(n)) = kappa;
+
+    for i=length(n)-1:-1:1
+        n(1,i) = n(1,i+1)/10;
+    end
 
     color_1 = '[0 0.03 1]';
     color_2 = '[0.2 1 1]';

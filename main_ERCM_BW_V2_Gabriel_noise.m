@@ -1872,13 +1872,13 @@ while count <= 6
     cd(path_dir{3});
     fileID = fopen(sprintf('resultsNoise_%0.4f.txt',amplitude_bruit_Gaussien_U*100),'a+');
     fprintf(fileID,'--------------------------------------\n')
-    fprintf(fileID,'Convergence *ACHIEVED* for %d iterations',n_iter_LDC-1);
+    fprintf(fileID,'Convergence *ACHIEVED* for %d iterations\n',n_iter_LDC-1);
     fprintf(fileID,'The noise value is equal to %0.4d %%\n',amplitude_bruit_Gaussien_U*100);
     fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
     fprintf(fileID,'The theoretical material property is equal to %0.4f\n',struct_param_comportement_a_identifier.vec_param_initialisation(2));
     fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
     % fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
-    fprintf(fileID,'--------------------------------------');
+    fprintf(fileID,'--------------------------------------\n');
     fclose(fileID);
     cd(path_dir{2});
 
