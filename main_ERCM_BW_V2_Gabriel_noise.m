@@ -22,9 +22,13 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/291123/'};
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/'};
 
-kappa = 1e20;
+if ~exist(path_dir{3},'dir')
+    mkdir(path_dir{3});
+end
+
+kappa = 1e13;
 colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0.57]',...
             '[0.03 0.46 0.02]'}; %, '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]' rgb colors
 
@@ -42,7 +46,9 @@ tolerance_LDC = 1e-4;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-valKappa = zeros(6,nb_iter_LDC_max+1);
+sizeM = 5;
+
+valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 
 % [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
@@ -50,7 +56,7 @@ amplitude_bruit_Gaussien_U = 0.000065; % 0.00008;
 exitVar = 0;
 count = 1;
 
-while count <= 6
+while count <= sizeM
 
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
     % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -1875,7 +1881,7 @@ while count <= 6
     fprintf(fileID,'Convergence *ACHIEVED* for %d iterations\n',n_iter_LDC-1);
     fprintf(fileID,'The noise value is equal to %0.4f %%\n',amplitude_bruit_Gaussien_U*100);
     fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
-    fprintf(fileID,'The theoretical material property is equal to 1743 + 174.3*i');
+    fprintf(fileID,'The theoretical material property is equal to 1743 + 174.3*i\n');
     fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
     % fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
     fprintf(fileID,'--------------------------------------\n');
@@ -1884,8 +1890,8 @@ while count <= 6
 
     count = count + 1;
 
-    if count <= 6
-        kappa = kappa * 1e10;
+    if count <= sizeM
+        kappa = kappa / 1e5;
     end
 
 end
