@@ -28,7 +28,7 @@ if ~exist(path_dir{3},'dir')
     mkdir(path_dir{3});
 end
 
-kappa = 1e13;
+kappa = 1e7;
 colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0.57]',...
             '[0.03 0.46 0.02]'}; %, '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]' rgb colors
 
@@ -46,7 +46,7 @@ tolerance_LDC = 1e-4;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-sizeM = 5;
+sizeM = 4;
 
 valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 
@@ -1891,7 +1891,7 @@ while count <= sizeM
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa / 1e5;
+        kappa = kappa / power(10,count-1);
     end
 
 end
