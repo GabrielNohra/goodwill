@@ -22,10 +22,11 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/'};
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/',...
+            '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/kappa'};
 
-if ~exist(path_dir{3},'dir')
-    mkdir(path_dir{3});
+if ~exist(path_dir{4},'dir')
+    mkdir(path_dir{4});
 end
 
 kappa = 1e7;
@@ -1896,7 +1897,7 @@ while count <= sizeM
 
 end
 
-cd(path_dir{3});
+cd(path_dir{4});
 save('resultsKappa.mat');
 
 cd(path_dir{2});
