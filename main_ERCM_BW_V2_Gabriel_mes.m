@@ -1884,7 +1884,7 @@ while count <= sizeM
         %     title('maillage toutes sub-zones');
         
         vec_difference_proprietes = liste_proprietes_iterations{n_iter_LDC}-mat_proprietes_identifies_moyennes_sub_zones;
-        
+
         disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
         disp(' ');
 
@@ -1892,15 +1892,15 @@ while count <= sizeM
         cd(path_dir{4});
         fileID = fopen(sprintf('resultsPartial-%0.0f.txt',count),'a+');
         fprintf(fileID,'**** ITERATION NUMBER: \t %0.0f **** \n',n_iter_LDC);
-        fprintf(fileID,'Norm of "vector": \t %0.4f\n',n_iter_LDC);
+        fprintf(fileID,'Norm of "vector": \t %0.4f\n',norm(vector));
         fprintf(fileID,'Std of the real part of "vector": \t %0.4f\n',std(real(vector))); 
         fprintf(fileID,'Std of the imaginary part of "vector": \t %0.4f\n\n',std(imag(vector)));
         fprintf(fileID,'-- DIFFERENCES BETWEEN...\n')
         fprintf(fileID,'Real-valued standard deviations: \t %0.4f\n',realSTD);
         fprintf(fileID,'Imaginary-valued standard deviations: \t %0.4f\n\n',imagSTD);
         fprintf(fileID,'-- NORMS OF THE MATERIAL PROPERTY...\n');
-        fprintf(fileID,'Norm of the material property: \t %0.4f\n',num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)));
-        fprintf(fileID,'Relative norm of the material property: \t %0.4f\n',num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC})));
+        fprintf(fileID,'Norm of the material property: \t %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
+        fprintf(fileID,'Relative norm of the material property: \t %0.4f\n',norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}));
         fclose(fileID);
         cd(path_dir{2});
         
