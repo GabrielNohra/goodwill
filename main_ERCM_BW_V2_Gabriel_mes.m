@@ -1883,6 +1883,7 @@ while count <= sizeM
         %     zlabel('z (m)');
         %     title('maillage toutes sub-zones');
         
+        vec_difference_proprietes = liste_proprietes_iterations{n_iter_LDC}-mat_proprietes_identifies_moyennes_sub_zones;
         
         disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
         disp(' ');
