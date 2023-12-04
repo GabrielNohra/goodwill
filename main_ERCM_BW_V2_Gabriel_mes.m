@@ -725,7 +725,7 @@ while count <= sizeM
     valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
 
     cd(path_dir{4});
-    fileID = fopen(sprintf('resultsPartial-%0.0f',count),'a+');
+    fileID = fopen(sprintf('resultsPartial-%0.0f.txt',count),'a+');
     fprintf(fileID,'--------------------------------------\n');
     fprintf(fileID,'The noise value is equal to %0.4f %%\n',amplitude_bruit_Gaussien_U*100);
     fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
@@ -1889,7 +1889,7 @@ while count <= sizeM
 
        
         cd(path_dir{4});
-        fileID = fopen(sprintf('resultsPartial-%0.0f',count),'a+');
+        fileID = fopen(sprintf('resultsPartial-%0.0f.txt',count),'a+');
         fprintf(fileID,'**** ITERATION NUMBER: \t %0.0f **** \n',n_iter_LDC);
         fprintf(fileID,'Norm of "vector": \t %0.4f\n',n_iter_LDC);
         fprintf(fileID,'Std of the real part of "vector": \t %0.4f\n',std(real(vector))); 
