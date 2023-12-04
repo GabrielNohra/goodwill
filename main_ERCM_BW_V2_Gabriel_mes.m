@@ -1858,8 +1858,8 @@ while count <= sizeM
         % test de la convergence
 
         vector = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
-        realSTD = std(real(vector)) - std(real(vec_U_mes));
-        imagSTD = std(imag(vector)) - std(imag(vec_U_mes));
+        realSTD = abs(std(real(vector)) - std(real(vec_U_mes)));
+        imagSTD = abs(std(imag(vector)) - std(imag(vec_U_mes)));
 
 
         if ((realSTD < tolerance_LDC*std(real(vec_U_mes))) && (imagSTD < tolerance_LDC*std(imag(vec_U_mes))))
