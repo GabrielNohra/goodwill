@@ -1851,9 +1851,8 @@ while True
     realSTD = abs(std(real(vector)) - std(real(vec_U_mes)));
     imagSTD = abs(std(imag(vector)) - std(imag(vec_U_mes)));
 
-    if ((realSTD < tol*std(real(vec_U_mes))) && (imagSTD < tol*std(imag(vec_U_mes))))
-        test_convergence_LDC = true;
-    end
+    cond_1 = realSTD < tol*std(real(vec_U_mes));
+    cond_2 = imagSTD < tol*std(imag(vec_U_mes));
     
     % % affichage des noeuds des differentes sub-zones
     %     figure;
@@ -1879,13 +1878,14 @@ while True
 
     
     cd(path_dir{4});
-    fileID = fopen(sprintf('results-%0.0f.txt',count),'a+');
-    fprintf(fileID,'**** FOR KAPPA = %0.2e **** \n',kappa);
-    fprintf(fileID,'Norm of mismatch: \t %0.4f\n',norm(vector));
+    fileID = fopen('results.txt','a+');
+    fprintf(fileID,'**** FOR KAPPA = %0.2e **** \n\n',kappa);
+    fprintf(fileID,'Norm of the mismatch: \t %0.4f\n',norm(vector));
     fprintf(fileID,'Std of the real part of the mismatch: \t %e\n',std(real(vector))); 
-    fprintf(fileID,'Std of the imaginary part of the mismatch: \t %e\n',std(imag(vector)));
+    fprintf(fileID,'Std of the imaginary part of the mismatch: \t %e\n\n',std(imag(vector)));
+    fprintf(fileID,'Norm of the measurement noise: \t %0.4f\n',norm(vec_U_mes));
     fprintf(fileID,'Std of the real part of the measurement noise: \t %e\n',std(real(vec_U_mes)));
-    fprintf(fileID,'Std of the imaginary part of the measurement noise: \t %e\n',std(imag(vec_U_mes)));
+    fprintf(fileID,'Std of the imaginary part of the measurement noise: \t %e\n\n',std(imag(vec_U_mes)));
     fprintf(fileID,'-- NORMS OF THE MATERIAL PROPERTY...\n');
     fprintf(fileID,'Norm of the material property: \t %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
     fprintf(fileID,'Relative norm of the material property: \t %e\n\n',norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}));
