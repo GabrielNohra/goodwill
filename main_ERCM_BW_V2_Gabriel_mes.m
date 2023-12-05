@@ -24,11 +24,10 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/',...
-            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s',date)};
+            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/decrease',date)};
 
-if ~exist(path_dir{4},'dir')
-    mkdir(path_dir{4});
+if ~exist(path_dir{end},'dir')
+    mkdir(path_dir{end});
 end
 
 kappa = 1e7;
@@ -64,7 +63,10 @@ count = 0;
 while true
 
     count = count + 1;
-    kappa = kappa * power(10,1);
+
+    if count ~= 1
+        kappa = kappa / power(10,1);
+    end
 
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
     % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -1877,7 +1879,7 @@ while true
     disp(' ');
 
     
-    cd(path_dir{4});
+    cd(path_dir{end});
     fileID = fopen('results.txt','a+');
     fprintf(fileID,'**** FOR KAPPA = %0.2e **** \n\n',kappa);
     fprintf(fileID,'Norm of the mismatch: \t %0.4f\n',norm(vector));
@@ -1901,7 +1903,7 @@ while true
 
 end
 
-cd(path_dir{4});
+cd(path_dir{end4});
 save('resultsKappa.mat');
 
 diary off;
