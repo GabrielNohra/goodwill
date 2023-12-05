@@ -68,6 +68,10 @@ while true
         kappa = kappa / power(10,1);
     end
 
+    if kappa < 1
+        break
+    end
+
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
     % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
     % amplitude_bruit_Gaussien_U = 0.05; % pourcentage de norme_U_max
