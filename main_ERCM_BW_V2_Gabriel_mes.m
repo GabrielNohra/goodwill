@@ -61,7 +61,7 @@ tol = 1e-3;
 amplitude_bruit_Gaussien_U = 0.000065; % 0.00008;
 count = 0;
 
-while True
+while true
 
     count = count + 1;
     kappa = kappa * power(10,1);
