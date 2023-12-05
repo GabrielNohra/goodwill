@@ -25,7 +25,7 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
             '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/041223'};
+            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s',date)};
 
 if ~exist(path_dir{4},'dir')
     mkdir(path_dir{4});
@@ -53,6 +53,8 @@ sizeM = 6;
 
 valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 valVector = [];
+
+tol = 1e-3;
 
 % [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
@@ -1854,7 +1856,6 @@ while count <= sizeM
             struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier(n_param),:) = mat_proprietes_identifies_moyennes_sub_zones(n_param,:);
         end
         
-        
         % test de la convergence
 
         vector = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
@@ -1862,7 +1863,7 @@ while count <= sizeM
         imagSTD = abs(std(imag(vector)) - std(imag(vec_U_mes)));
 
 
-        if ((realSTD < tolerance_LDC*std(real(vec_U_mes))) && (imagSTD < tolerance_LDC*std(imag(vec_U_mes))))
+        if ((realSTD < tol*std(real(vec_U_mes))) && (imagSTD < tol*std(imag(vec_U_mes))))
             test_convergence_LDC = true;
         end
         
@@ -1893,11 +1894,11 @@ while count <= sizeM
         fileID = fopen(sprintf('resultsPartial-%0.0f.txt',count),'a+');
         fprintf(fileID,'**** ITERATION NUMBER: \t %0.0f **** \n',n_iter_LDC);
         fprintf(fileID,'Norm of "vector": \t %0.4f\n',norm(vector));
-        fprintf(fileID,'Std of the real part of "vector": \t %0.4f\n',std(real(vector))); 
-        fprintf(fileID,'Std of the imaginary part of "vector": \t %0.4f\n\n',std(imag(vector)));
+        fprintf(fileID,'Std of the real part of "vector": \t %e\n',std(real(vector))); 
+        fprintf(fileID,'Std of the imaginary part of "vector": \t %e\n\n',std(imag(vector)));
         fprintf(fileID,'-- DIFFERENCES BETWEEN...\n')
-        fprintf(fileID,'Real-valued standard deviations: \t %0.4f\n',realSTD);
-        fprintf(fileID,'Imaginary-valued standard deviations: \t %0.4f\n\n',imagSTD);
+        fprintf(fileID,'Real-valued standard deviations: \t %e\n',realSTD);
+        fprintf(fileID,'Imaginary-valued standard deviations: \t %e\n\n',imagSTD);
         fprintf(fileID,'-- NORMS OF THE MATERIAL PROPERTY...\n');
         fprintf(fileID,'Norm of the material property: \t %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
         fprintf(fileID,'Relative norm of the material property: \t %0.4f\n',norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}));
@@ -1922,15 +1923,15 @@ while count <= sizeM
     fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
     fprintf(fileID,'The theoretical material property is equal to 1743 + 174.3*i\n');
     fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
-    fprintf(fileID,'The real-valued standard deviation difference is equal to %0.4f\n',realSTD);
-    fprintf(fileID,'The imaginary-valued standard deviation difference is equal to %0.4f\n',imagSTD);
+    fprintf(fileID,'The real-valued standard deviation difference is equal to %e\n',realSTD);
+    fprintf(fileID,'The imaginary-valued standard deviation difference is equal to %e\n',imagSTD);
     fclose(fileID);
     cd(path_dir{2});
 
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa * power(10,count-1);
+        kappa = kappa * power(10,1);
     end
 
 end
