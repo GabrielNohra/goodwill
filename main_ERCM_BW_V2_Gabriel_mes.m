@@ -54,9 +54,7 @@ while count <= sizeM
         kappa = kappa * power(10,1)
     end
 
-    processText(1, amplitude_bruit_Gaussien_U, kappa, n_iter_LDC, devMes,...
-        vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones,...
-        liste_proprietes_iterations, vec_difference_proprietes);
+    processText(1, amplitude_bruit_Gaussien_U, kappa, n_iter_LDC, devMes, vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
 
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
     % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -1878,9 +1876,7 @@ while count <= sizeM
     devMes = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
     valVector = [valVector devMes];
 
-    processText(0, amplitude_bruit_Gaussien_U, kappa, n_iter_LDC, devMes,...
-        vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones,...
-        liste_proprietes_iterations, vec_difference_proprietes);
+    processText(0, amplitude_bruit_Gaussien_U, kappa, n_iter_LDC, devMes,vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones,liste_proprietes_iterations, vec_difference_proprietes);
 
     count = count + 1;
 
