@@ -2,6 +2,7 @@ clearvars;
 close all;
 clc;
 
+delete salida.out;
 diary salida.out;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
