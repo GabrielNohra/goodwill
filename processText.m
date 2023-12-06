@@ -28,22 +28,15 @@ function processText(varagin)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if nargin < 4
-    valInitial = varargin{1};
-    ampNoise = varargin{2};
-    kappa = varargin{3};
-else
-    valInitial = varargin{1};
-    ampNoise = varargin{2};
-    kappa = varargin{3};
-    nIter = varargin{4};
-    devMes = varargin{5};
-    mesNoise = varargin{6};
-    filePath = varargin{7};
-    subMaterial = varargin{8};
-    matList = varargin{9};
-    difProperty = varargin{10};
-end
+ampNoise = varargin{1};
+kappa = varargin{2};
+nIter = varargin{3};
+devMes = varargin{4};
+mesNoise = varargin{5};
+filePath = varargin{6};
+subMaterial = varargin{7};
+matList = varargin{8};
+difProperty = varargin{9};
 
 oldPath = cd(filePath);
 fileID = fopen('results.txt','a+');
