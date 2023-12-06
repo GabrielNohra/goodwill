@@ -48,6 +48,8 @@ amplitude_bruit_Gaussien_U = 0.000065; % 0.00008;
 exitVar = 0;
 count = 1;
 
+[devMes, vec_U_mes, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes] = deal(0);
+
 while count <= sizeM
 
     if count ~= 1
