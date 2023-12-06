@@ -47,7 +47,7 @@ tolerance_LDC = 1e-4;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-sizeM = 4;
+sizeM = 6;
 
 valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 
@@ -56,6 +56,8 @@ valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 amplitude_bruit_Gaussien_U = 0.000065; % 0.00008;
 exitVar = 0;
 count = 1;
+
+valVector = [];
 
 while count <= sizeM
 
@@ -1267,6 +1269,14 @@ while count <= sizeM
         Ux = U_global((nb_DDL_K+1):nb_DDL_par_noeud:end);
         Uy = U_global((nb_DDL_K+2):nb_DDL_par_noeud:end);
         Uz = U_global((nb_DDL_K+3):nb_DDL_par_noeud:end);
+
+
+        % E_c = U_global(1:nb_DDL_K)'T*U_global(1:nb_DDL_K); % chequear
+        
+        % dV = (U_global(nb_DDL_K+(1:nb_DDL_K)) - vec_U_mes); % chequear
+        % E_u = dv'*D*dv; % chequear
+
+
         %         figure;hold on;plot(real(Ux),'r');plot(real(Uy),'g');plot(real(Uz),'b');title('real(U)');legend('Ux','Uy','Uz');title('Re(U calc))');
         %         figure;hold on;plot(imag(Ux),'r');plot(imag(Uy),'g');plot(imag(Uz),'b');title('imag(U)');legend('Ux','Uy','Uz');title('Im(U calc))');
         %         figure;hold on;plot(real(Wx),'r');plot(real(Wy),'g');plot(real(Wz),'b');title('real(W)');legend('Wx','Wy','Wz');title('Re(W calc))');
@@ -1876,18 +1886,10 @@ while count <= sizeM
 
     end
 
-    cd(path_dir{end});
-    fileID = fopen('resultsKappa.txt','a+');
-    fprintf(fileID,'--------------------------------------\n')
-    fprintf(fileID,'Convergence *ACHIEVED* for %d iterations\n',n_iter_LDC-1);
-    fprintf(fileID,'The noise value is equal to %0.4f %%\n',amplitude_bruit_Gaussien_U*100);
-    fprintf(fileID,'The regularization parameter (kappa) is equal to %0.0e\n',kappa);
-    fprintf(fileID,'The theoretical material property is equal to 1743 + 174.3*i\n');
-    fprintf(fileID,'The norm of the material property (mu) is equal to %0.4f\n',sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2));
-    % fprintf(fileID,'The difference vector is equal to %0.4f\n',diffVector);
-    fprintf(fileID,'--------------------------------------\n');
-    fclose(fileID);
-    cd(path_dir{2});
+    devMes = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
+    valVector = [valVector devMes];
+
+    processText(amplitude_bruit_Gaussien_U, kappa, n_iter_LDC-1, devMes, vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
 
     count = count + 1;
 
@@ -1902,7 +1904,7 @@ save('resultsKappa.mat');
 
 % cd(path_dir{2});
 % plotting(valKappa, kappa, amplitude_bruit_Gaussien_U, path_dir);
-% processText(amplitude_bruit_Gaussien_U, kappa, n_iter_LDC-1, devMes, vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
+% 
 
 diary off;
 
