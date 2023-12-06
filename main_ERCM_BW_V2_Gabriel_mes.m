@@ -54,8 +54,8 @@ while count <= sizeM
         kappa = kappa * power(10,1)
     end
 
-    processText(1, amplitude_bruit_Gaussien_U, kappa, n_iter_LDC, devMes,
-        vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones,
+    processText(1, amplitude_bruit_Gaussien_U, kappa, n_iter_LDC, devMes,...
+        vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones,...
         liste_proprietes_iterations, vec_difference_proprietes);
 
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
