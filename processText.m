@@ -1,4 +1,4 @@
-function processText(varagin)
+function processText(varargin)
 %
 % BRIEF DESCRIPTION OF THE SCRIPT
 %
