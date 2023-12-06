@@ -22,11 +22,10 @@ liste_LdC = creation_LdC_anisotrope_repere_global();
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/',...
-            '/users/bionanonmri/nohra/Documents/MATLAB/results/011223/kappa'};
+            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/kappa',date)};
 
-if ~exist(path_dir{4},'dir')
-    mkdir(path_dir{4});
+if ~exist(path_dir{end},'dir')
+    mkdir(path_dir{end});
 end
 
 kappa = 1e7;
@@ -1876,7 +1875,7 @@ while count <= sizeM
 
     end
 
-    cd(path_dir{3});
+    cd(path_dir{end});
     fileID = fopen('resultsKappa.txt','a+');
     fprintf(fileID,'--------------------------------------\n')
     fprintf(fileID,'Convergence *ACHIEVED* for %d iterations\n',n_iter_LDC-1);
@@ -1892,16 +1891,17 @@ while count <= sizeM
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa / power(10,count-1);
+        kappa = kappa / power(10,1);
     end
 
 end
 
-cd(path_dir{4});
+cd(path_dir{end});
 save('resultsKappa.mat');
 
-cd(path_dir{2});
-plotting(valKappa, kappa, amplitude_bruit_Gaussien_U, path_dir);
+% cd(path_dir{2});
+% plotting(valKappa, kappa, amplitude_bruit_Gaussien_U, path_dir);
+% processText(amplitude_bruit_Gaussien_U, kappa, n_iter_LDC-1, devMes, vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
 
 diary off;
 
