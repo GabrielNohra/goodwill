@@ -139,12 +139,12 @@ while count <= sizeM
     %L_x_sub_zone = (2*10+1); % en nombre d'elements de contrainte dans la direction "x"
     %L_y_sub_zone = (2*10+1); % en nombre d'elements de contrainte dans la direction "y"
     %L_z_sub_zone = (2*10+1); % en nombre d'elements de contrainte dans la direction "z"
-    L_x_sub_zone = (2*5+1); % en nombre d'elements de contrainte dans la direction "x"
-    L_y_sub_zone = (2*5+1); % en nombre d'elements de contrainte dans la direction "y"
-    L_z_sub_zone = (2*5+1); % en nombre d'elements de contrainte dans la direction "z"
-    %L_x_sub_zone = (2*3+1); % en nombre d'elements de contrainte dans la direction "x"
-    %L_y_sub_zone = (2*3+1); % en nombre d'elements de contrainte dans la direction "y"
-    %L_z_sub_zone = (2*3+1); % en nombre d'elements de contrainte dans la direction "z"
+    % L_x_sub_zone = (2*5+1); % en nombre d'elements de contrainte dans la direction "x"
+    % L_y_sub_zone = (2*5+1); % en nombre d'elements de contrainte dans la direction "y"
+    % L_z_sub_zone = (2*5+1); % en nombre d'elements de contrainte dans la direction "z"
+    L_x_sub_zone = (2*3+1); % en nombre d'elements de contrainte dans la direction "x"
+    L_y_sub_zone = (2*3+1); % en nombre d'elements de contrainte dans la direction "y"
+    L_z_sub_zone = (2*3+1); % en nombre d'elements de contrainte dans la direction "z"
     %L_x_sub_zone = (2*2+1); % en nombre d'elements de contrainte dans la direction "x"
     %L_y_sub_zone = (2*2+1); % en nombre d'elements de contrainte dans la direction "y"
     %L_z_sub_zone = (2*2+1); % en nombre d'elements de contrainte dans la direction "z"
@@ -1271,10 +1271,10 @@ while count <= sizeM
         Uz = U_global((nb_DDL_K+3):nb_DDL_par_noeud:end);
 
 
-        % E_c = U_global(1:nb_DDL_K)'T*U_global(1:nb_DDL_K); % chequear
+        E_c = U_global(1:nb_DDL_K)'T*U_global(1:nb_DDL_K); % chequear
         
-        % dV = (U_global(nb_DDL_K+(1:nb_DDL_K)) - vec_U_mes); % chequear
-        % E_u = dv'*D*dv; % chequear
+        dV = (U_global(nb_DDL_K+(1:nb_DDL_K)) - vec_U_mes); % chequear
+        E_u = dv'*D*dv; % chequear
 
 
         %         figure;hold on;plot(real(Ux),'r');plot(real(Uy),'g');plot(real(Uz),'b');title('real(U)');legend('Ux','Uy','Uz');title('Re(U calc))');
