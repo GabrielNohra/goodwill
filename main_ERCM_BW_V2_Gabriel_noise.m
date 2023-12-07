@@ -1271,7 +1271,7 @@ while count <= sizeM
         Uz = U_global((nb_DDL_K+3):nb_DDL_par_noeud:end);
 
 
-        E_c = U_global(1:nb_DDL_K)'T*U_global(1:nb_DDL_K); % chequear
+        E_c = U_global(1:nb_DDL_K)'*T*U_global(1:nb_DDL_K); % chequear
         
         dV = (U_global(nb_DDL_K+(1:nb_DDL_K)) - vec_U_mes); % chequear
         E_u = dv'*D*dv; % chequear
