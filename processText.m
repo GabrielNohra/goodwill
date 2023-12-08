@@ -42,9 +42,8 @@ if nargin < 7 && ~varargin{2} % (line 275)
     fprintf(fileID,'REGULARIZATION PARAMETER (KAPPA):               %0.2e\n',kappa);
     fprintf(fileID,'GAUSSIAN NOISE AMPLITUDE:                       %e\n',gaussNoise);
     fprintf(fileID,'NOISE AMPLITUDE:                                %e\n',ampNoise);
-    fprintf(fileID,'THEORETICAL MATERIAL PROPERTY (MU):             %0.1f + %0.1f*i\n\n',...
+    fprintf(fileID,'THEORETICAL MATERIAL PROPERTY (MU):             %0.1f + %0.1f*i\n\n\n',...
             real(muTheoretical), imag(muTheoretical));
-    fprintf(fileID,'-----------------------------------------------------------------------------\n\n');
     fclose(fileID);
     cd(oldPath);
 
