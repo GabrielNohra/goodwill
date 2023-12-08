@@ -38,12 +38,13 @@ if nargin < 7 && ~varargin{2} % (line 275)
 
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
-    fprintf(fileID,'-----------------------------------------------------------------------------\n');
+    fprintf(fileiD,'-----------------------------------------------------------------------------\n\n');
+    fprintf(fileID,'REGULARIZATION PARAMETER (KAPPA):               %0.2e\n',kappa);
     fprintf(fileID,'GAUSSIAN NOISE AMPLITUDE:                       %e\n',gaussNoise);
     fprintf(fileID,'NOISE AMPLITUDE:                                %e\n',ampNoise);
-    fprintf(fileID,'REGULARIZATION PARAMETER (KAPPA):               %0.2e\n',kappa);
     fprintf(fileID,'THEORETICAL MATERIAL PROPERTY (MU):             %0.1f + %0.1f*i\n\n',...
             real(muTheoretical), imag(muTheoretical));
+    fprintf(fileiD,'-----------------------------------------------------------------------------\n\n');
     fclose(fileID);
     cd(oldPath);
 
@@ -57,18 +58,17 @@ elseif nargin < 10 && ~varargin{2} % (line 1300)
     secondTerm = varargin{7};
     devMes = varargin{8};
     mesNoise = varargin{9};
-
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
-    fprintf(fileID,'******** FOR ITERATION NUMBER %0.0f ********\n\n',nIter);
+    fprintf(fileID,'************************ FOR ITERATION NUMBER %0.0f *****************************n\n',nIter);
     fprintf(fileID,'MECE FUNCTIONAL (FOR %0.0f-th ITERATION):           %e + %e\n',...
             nIter-1,prevFirstTerm, prevSecondTerm);
     fprintf(fileID,'MECE FUNCTIONAL (FOR %0.0f-th ITERATION):           %e + %e\n\n',...
             nIter,firstTerm,secondTerm);
-    fprintf(fileID,'-- NORMS OF... \n\n');
+    fprintf(fileID,'------------------------------- NORMS ---------------------------------------\n\n');
     fprintf(fileID,'MISMATCH:                                       %e\n',norm(devMes));
     fprintf(fileID,'NOISY MEASUREMENT:                              %e\n\n',norm(mesNoise));
-    fprintf(fileID,'-- STANDARD DEVIATIONS OF... \n\n');
+    fprintf(fileID,'-------------------------- STANDARD DEVIATIONS ------------------------------\n\n');
     fprintf(fileID,'REAL PART (MISMATCH):                           %e\n',...
             std(real(devMes))); 
     fprintf(fileID,'IMAGINARY PART (MISMATCH):                      %e\n',...
@@ -90,7 +90,7 @@ elseif nargin < 7 && varargin{2} % (line 1910)
 
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
-    fprintf(fileID,'-- NORMS OF THE MATERIAL PROPERTY... \n\n');
+    fprintf(fileID,'-------------------- NORM OF THE MATERIAL PROPERTY (MU) ---------------------\n\n');
     fprintf(fileID,'ABSOLUTE NORM:                                  %0.4f\n',...
             sum(abs(subMaterial),2)/size(subMaterial,2));;
     fprintf(fileID,'RELATIVE NORM:                                  %e\n\n',...
