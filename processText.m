@@ -49,16 +49,16 @@ if nargin < 7 && ~varargin{2} % (line 275)
 
     flag = true;
 
-elseif nargin < 9 % (line 1300)
+elseif nargin < 9 && ~varargin{2} % (line 1300)
 
     filePath = varargin{1};
-    nIter = varargin{2};
-    prevFirstTerm = varargin{3};
-    prevSecondTerm = varargin{4};
-    firstTerm = varargin{5};
-    secondTerm = varargin{6};
-    devMes = varargin{7};
-    mesNoise = varargin{8};
+    nIter = varargin{3};
+    prevFirstTerm = varargin{4};
+    prevSecondTerm = varargin{5};
+    firstTerm = varargin{6};
+    secondTerm = varargin{7};
+    devMes = varargin{8};
+    mesNoise = varargin{9};
 
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
