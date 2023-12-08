@@ -44,7 +44,7 @@ if nargin < 7 && ~varargin{2} % (line 275)
     fprintf(fileID,'NOISE AMPLITUDE:                                %e\n',ampNoise);
     fprintf(fileID,'THEORETICAL MATERIAL PROPERTY (MU):             %0.1f + %0.1f*i\n\n',...
             real(muTheoretical), imag(muTheoretical));
-    fprintf(fileiD,'-----------------------------------------------------------------------------\n\n');
+    fprintf(fileID,'-----------------------------------------------------------------------------\n\n');
     fclose(fileID);
     cd(oldPath);
 
