@@ -272,7 +272,7 @@ while count <= sizeM
     end
     clear mat_data;
 
-    flag = processText(path_dir{end}, false, amplitude_bruit_Gaussien_U, aux, kappa, muTheoretical);
+    processText(path_dir{end}, false, amplitude_bruit_Gaussien_U, aux, kappa, muTheoretical);
 
     nb_dim = size(mat_U_mes,1);
 

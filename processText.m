@@ -1,4 +1,4 @@
-function [flag] = processText(varargin)
+function processText(varargin)
 %
 % BRIEF DESCRIPTION OF THE SCRIPT
 %
