@@ -1907,7 +1907,7 @@ while count <= sizeM
 
         valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
 
-        processText(path_dir{end}, flag, n_iter_LDC, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
+        processText(path_dir{end}, true, n_iter_LDC, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
         flag = false;
 
     end

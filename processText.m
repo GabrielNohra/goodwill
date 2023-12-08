@@ -47,8 +47,6 @@ if nargin < 7 && ~varargin{2} % (line 275)
     fclose(fileID);
     cd(oldPath);
 
-    flag = true;
-
 elseif nargin < 10 && ~varargin{2} % (line 1300)
 
     filePath = varargin{1};
