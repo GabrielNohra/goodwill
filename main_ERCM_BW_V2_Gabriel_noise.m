@@ -91,9 +91,19 @@ while count <= sizeM
     % rho_0 = 1020.; % [kg/m^3]
     lambda_r0 = 41382.; % [Pa]
     lambda_i0 = 0.; % [Pa]
-    mu_r0 = 1.5*1743; % devFactor(i_param*(j_param-1)+i_flag*(2-j_param))*1743.; % [Pa] 1.5*1743.;
-    mu_i0 = 0.75*174.3; % devFactor(i_param*(2-j_param)+i_flag*(j_param-1))*174.3; % [Pa] 0.75*174.3;
+
+    muTheoretical = 1743 + 174.3*1i;
+    mu_r0 = 1.5 * real(muTheoretical);
+    mu_i0 = 0.75 * imag(muTheoretical);
     rho_0 = 1020.; % [kg/m^3]
+
+    % mu_r0 = 1.5*1743; devFactor(i_param*(j_param-1)+i_flag*(2-j_param))*1743.; % [Pa] 1.5*1743.;
+    % mu_i0 = 0.75*174.3; devFactor(i_param*(2-j_param)+i_flag*(j_param-1))*174.3; % [Pa] 0.75*174.3;
+
+
+
+
+
     vec_param_initialisation = [(lambda_r0+1i*lambda_i0) (mu_r0+1i*mu_i0) rho_0];
     % bornes d'identification
     seuil_identification_min = 0.1;
@@ -254,11 +264,15 @@ while count <= sizeM
     mat_U_mes = mat_data(:,4:2:9)'+1i*mat_data(:,5:2:9)';
     % prise en compte eventuelle du bruit rajoute
     if ( amplitude_bruit_Gaussien_U > 0 )
-    norme_U_max = sqrt(max(sum(abs(mat_U_mes).^2,1)));
-    mat_U_mes = (real(mat_U_mes)+norme_U_max*amplitude_bruit_Gaussien_U*randn(size(mat_U_mes)))+1i*(imag(mat_U_mes)+norme_U_max*amplitude_bruit_Gaussien_U*randn(size(mat_U_mes))); 
-    clear norme_U_max;
+
+    aux = sqrt(max(sum(abs(mat_U_mes).^2,1))) * amplitude_bruit_Gaussien_U; % norme_U_max * amplitude_bruit_Gaussien_U
+
+    mat_U_mes = (real(mat_U_mes)+aux*randn(size(mat_U_mes)))+1i*(imag(mat_U_mes)+aux*randn(size(mat_U_mes))); 
+
     end
     clear mat_data;
+
+    flag = processText(path_dir, amplitude_bruit_Gaussien_U, aux, kappa, muTheoretical);
 
     nb_dim = size(mat_U_mes,1);
 
@@ -723,6 +737,8 @@ while count <= sizeM
     liste_proprietes_iterations{n_iter_LDC} = struct_param_comportement_a_identifier.mat_param(struct_param_comportement_a_identifier.vec_numeros_parametres_a_identifier,:);
     
     valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
+
+    fcnError = [NaN NaN];
 
     while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du critere sur la convergence (utile pour id)
     
@@ -1270,11 +1286,18 @@ while count <= sizeM
         Uy = U_global((nb_DDL_K+2):nb_DDL_par_noeud:end);
         Uz = U_global((nb_DDL_K+3):nb_DDL_par_noeud:end);
 
-
         E_c = U_global(1:nb_DDL_K)'*T*U_global(1:nb_DDL_K); % chequear
         
+
         dV = (U_global(nb_DDL_K+(1:nb_DDL_K)) - vec_U_mes); % chequear
-        E_u = dv'*D*dv; % chequear
+        E_u = dV'*D*dV; % chequear
+
+        fcnError = [fcnError; E_c kappa/2*E_u];
+
+        devMes = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
+        valVector = [valVector devMes];
+
+        processText( path_dir, n_iter_LDC, fcnError(n_iter_LDC,1) fcnError(n_iter_LDC,2), fcnError(n_iter_LDC+1,1) fcnError(n_iter_LDC+1,2), devMes, vec_U_mes );
 
 
         %         figure;hold on;plot(real(Ux),'r');plot(real(Uy),'g');plot(real(Uz),'b');title('real(U)');legend('Ux','Uy','Uz');title('Re(U calc))');
@@ -1884,12 +1907,9 @@ while count <= sizeM
 
         valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
 
+        processText(flag, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
+
     end
-
-    devMes = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
-    valVector = [valVector devMes];
-
-    processText(amplitude_bruit_Gaussien_U, kappa, n_iter_LDC-1, devMes, vec_U_mes, path_dir{end}, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
 
     count = count + 1;
 

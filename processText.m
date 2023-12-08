@@ -1,4 +1,4 @@
-function processText(varargin)
+function [flag] = processText(varargin)
 %
 % BRIEF DESCRIPTION OF THE SCRIPT
 %
@@ -28,34 +28,76 @@ function processText(varargin)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-ampNoise = varargin{1};
-kappa = varargin{2};
-nIter = varargin{3};
-devMes = varargin{4};
-mesNoise = varargin{5};
-filePath = varargin{6};
-subMaterial = varargin{7};
-matList = varargin{8};
-difProperty = varargin{9};
+if nargin < 6  % (line 275)
 
-oldPath = cd(filePath);
-fileID = fopen('results.txt','a+');
-fprintf(fileID,'--------------------------------------\n');
-fprintf(fileID,'NOISE AMPLITUDE:                    %0.4f %%\n',ampNoise*100);
-fprintf(fileID,'REGULARIZATION PARAMETER (KAPPA):   %0.2e\n',kappa*100);
-fprintf(fileID,'THEORETICAL MATERIAL PROPERTY:      1743 + 174.3*i\n\n');
-fprintf(fileID,'*** FOR ITERATION NUMBER %f:\n\n',nIter);
-fprintf(fileID,'-- NORMS:\n');
-fprintf(fileID,'MISMATCH:                           %f\n',norm(devMes));
-fprintf(fileID,'MEASUREMENT NOISE:                  %f\n',norm(mesNoise));
-fprintf(fileID,'MATERIAL PROPERTY (ABS):            %0.4f\n',sum(abs(subMaterial),2)/size(subMaterial,2));
-fprintf(fileID,'MATERIAL PROPERTY (REL):            %e\n\n',norm(difProperty)/norm(matList{nIter}));
-fprintf(fileID,'-- STANDARD DEVIATIONS:\n');
-fprintf(fileID,'REAL PART (MISMATCH):               %e\n',std(real(devMes))); 
-fprintf(fileID,'IMAGINARY PART (MISMATCH):          %e\n',std(imag(devMes)));
-fprintf(fileID,'REAL PART (MEAS. NOISE):            %e\n',std(real(mesNoise)));
-fprintf(fileID,'IMAGINARY PART (MEAS. NOISE):       %e\n\n',std(imag(mesNoise)));
-fclose(fileID);
-cd(oldPath);
+    filePath = varargin{1};
+    gaussNoise = varargin{2};
+    ampNoise = varargin{3};
+    kappa = varargin{4};
+    muTheoretical = varargin{5};
+
+    oldPath = cd(filePath);
+    fileID = fopen('results.txt','a+');
+    fprintf(fileID,'-------------------------------------------------\n');
+    fprintf(fileID,'GAUSSIAN NOISE AMPLITUDE:                   %0.4f %%\n',gaussNoise);
+    fprintf(fileID,'NOISE AMPLITUDE:                            %0.4f %%\n',ampNoise);
+    fprintf(fileID,'REGULARIZATION PARAMETER (KAPPA):           %0.2e\n',kappa);
+    fprintf(fileID,'THEORETICAL MATERIAL PROPERTY (MU):         %0.1f + %0.1f*i\n\n',...
+            real(muTheoretical), imag(muTheoretical));
+    fclose(fileID);
+    cd(oldPath);
+
+    flag = true;
+
+elseif nargin < 9 % (line 1300)
+
+    filePath = varargin{1};
+    nIter = varargin{2};
+    prevFirstTerm = varargin{3};
+    prevSecondTerm = varargin{4};
+    firstTerm = varargin{5};
+    secondTerm = varargin{6};
+    devMes = varargin{7};
+    mesNoise = varargin{8};
+
+    oldPath = cd(filePath);
+    fileID = fopen('results.txt','a+');
+    fprintf(fileID,'*** FOR ITERATION NUMBER %0.0f:\n\n',nIter);
+    fprintf(fileID,'MECE FUNCTIONAL (FOR %0.0f-th ITERATION):   %0.5e + %0.5e\n',...
+            nIter-1,prevFirstTerm, prevSecondTerm);
+    fprintf(fileID,'MECE FUNCTIONAL (FOR %0.0f-th ITERATION):   %0.5e + %0.5e\n\n',...
+            nIter,firstTerm,secondTerm);
+    fprintf(fileID,'-- NORMS OF... \n');
+    fprintf(fileID,'MISMATCH:                                   %e\n',norm(devMes));
+    fprintf(fileID,'NOISY MEASUREMENT:                          %e\n',norm(mesNoise));
+    fprintf(fileID,'-- STANDARD DEVIATIONS OF... \n');
+    fprintf(fileID,'REAL PART (MISMATCH):                       %e\n',...
+            std(real(devMes))); 
+    fprintf(fileID,'IMAGINARY PART (MISMATCH):                  %e\n',
+            std(imag(devMes)));
+    fprintf(fileID,'REAL PART (NOISY MEASUREMENT):              %e\n',
+            std(real(mesNoise)));
+    fprintf(fileID,'IMAGINARY PART (NOISY MEASUREMENT):         %e\n\n',
+            std(imag(mesNoise)));
+    fclose(fileID);
+    cd(oldPath);
+
+elseif nargin < 5 && varargin{1} % (line 1910)
+
+    subMaterial = varargin{2};
+    matList = varargin{3};
+    difProperty = varargin{4};
+
+    oldPath = cd(filePath);
+    fileID = fopen('results.txt','a+');
+    fprintf(fileID,'-- NORMS OF THE MATERIAL PROPERTY... \n');
+    fprintf(fileID,'ABSOLUTE NORM:                              %0.4f\n',...
+            sum(abs(subMaterial),2)/size(subMaterial,2));;
+    fprintf(fileID,'RELATIVE NORM:                              %e\n\n',...
+            norm(difProperty)/norm(matList{nIter}));
+    fclose(fileID);
+    cd(oldPath);
+
+end
     
 end
