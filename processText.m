@@ -39,8 +39,8 @@ if nargin < 6  % (line 275)
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
     fprintf(fileID,'-------------------------------------------------\n');
-    fprintf(fileID,'GAUSSIAN NOISE AMPLITUDE:                   %e %%\n',gaussNoise);
-    fprintf(fileID,'NOISE AMPLITUDE:                            %e %%\n',ampNoise);
+    fprintf(fileID,'GAUSSIAN NOISE AMPLITUDE:                   %e\n',gaussNoise);
+    fprintf(fileID,'NOISE AMPLITUDE:                            %e\n',ampNoise);
     fprintf(fileID,'REGULARIZATION PARAMETER (KAPPA):           %0.2e\n',kappa);
     fprintf(fileID,'THEORETICAL MATERIAL PROPERTY (MU):         %0.1f + %0.1f*i\n\n',...
             real(muTheoretical), imag(muTheoretical));
