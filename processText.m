@@ -38,7 +38,7 @@ if nargin < 7 && ~varargin{2} % (line 275)
 
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
-    fprintf(fileiD,'-----------------------------------------------------------------------------\n\n');
+    fprintf(fileID,'-----------------------------------------------------------------------------\n\n');
     fprintf(fileID,'REGULARIZATION PARAMETER (KAPPA):               %0.2e\n',kappa);
     fprintf(fileID,'GAUSSIAN NOISE AMPLITUDE:                       %e\n',gaussNoise);
     fprintf(fileID,'NOISE AMPLITUDE:                                %e\n',ampNoise);
