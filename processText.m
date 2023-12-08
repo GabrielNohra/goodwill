@@ -73,11 +73,11 @@ elseif nargin < 9 % (line 1300)
     fprintf(fileID,'-- STANDARD DEVIATIONS OF... \n');
     fprintf(fileID,'REAL PART (MISMATCH):                       %e\n',...
             std(real(devMes))); 
-    fprintf(fileID,'IMAGINARY PART (MISMATCH):                  %e\n',
+    fprintf(fileID,'IMAGINARY PART (MISMATCH):                  %e\n',...
             std(imag(devMes)));
-    fprintf(fileID,'REAL PART (NOISY MEASUREMENT):              %e\n',
+    fprintf(fileID,'REAL PART (NOISY MEASUREMENT):              %e\n',...
             std(real(mesNoise)));
-    fprintf(fileID,'IMAGINARY PART (NOISY MEASUREMENT):         %e\n\n',
+    fprintf(fileID,'IMAGINARY PART (NOISY MEASUREMENT):         %e\n\n',...
             std(imag(mesNoise)));
     fclose(fileID);
     cd(oldPath);
