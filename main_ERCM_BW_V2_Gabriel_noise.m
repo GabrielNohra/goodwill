@@ -1297,7 +1297,7 @@ while count <= sizeM
         devMes = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
         valVector = [valVector devMes];
 
-        processText( path_dir, n_iter_LDC, fcnError(n_iter_LDC,1) fcnError(n_iter_LDC,2), fcnError(n_iter_LDC+1,1) fcnError(n_iter_LDC+1,2), devMes, vec_U_mes );
+        processText( path_dir, n_iter_LDC, fcnError(n_iter_LDC,1), fcnError(n_iter_LDC,2), fcnError(n_iter_LDC+1,1), fcnError(n_iter_LDC+1,2), devMes, vec_U_mes );
 
 
         %         figure;hold on;plot(real(Ux),'r');plot(real(Uy),'g');plot(real(Uz),'b');title('real(U)');legend('Ux','Uy','Uz');title('Re(U calc))');
