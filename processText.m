@@ -28,13 +28,13 @@ function [flag] = processText(varargin)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if nargin < 6  % (line 275)
+if nargin < 7 && ~varargin{2} % (line 275)
 
     filePath = varargin{1};
-    gaussNoise = varargin{2};
-    ampNoise = varargin{3};
-    kappa = varargin{4};
-    muTheoretical = varargin{5};
+    gaussNoise = varargin{3};
+    ampNoise = varargin{4};
+    kappa = varargin{5};
+    muTheoretical = varargin{6};
 
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
