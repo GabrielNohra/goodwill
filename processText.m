@@ -49,7 +49,7 @@ if nargin < 7 && ~varargin{2} % (line 275)
 
     flag = true;
 
-elseif nargin < 9 && ~varargin{2} % (line 1300)
+elseif nargin < 10 && ~varargin{2} % (line 1300)
 
     filePath = varargin{1};
     nIter = varargin{3};
@@ -82,12 +82,13 @@ elseif nargin < 9 && ~varargin{2} % (line 1300)
     fclose(fileID);
     cd(oldPath);
 
-elseif nargin < 6 && varargin{2} % (line 1910)
+elseif nargin < 7 && varargin{2} % (line 1910)
 
     filePath = varargin{1};
-    subMaterial = varargin{3};
-    matList = varargin{4};
-    difProperty = varargin{5};
+    nIter = varargin{3};
+    subMaterial = varargin{4};
+    matList = varargin{5};
+    difProperty = varargin{6};
 
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
