@@ -82,11 +82,12 @@ elseif nargin < 9 % (line 1300)
     fclose(fileID);
     cd(oldPath);
 
-elseif nargin < 5 && varargin{1} % (line 1910)
+elseif nargin < 6 && varargin{2} % (line 1910)
 
-    subMaterial = varargin{2};
-    matList = varargin{3};
-    difProperty = varargin{4};
+    filePath = varargin{1};
+    subMaterial = varargin{3};
+    matList = varargin{4};
+    difProperty = varargin{5};
 
     oldPath = cd(filePath);
     fileID = fopen('results.txt','a+');
