@@ -47,7 +47,7 @@ tolerance_LDC = 1e-2;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-sizeM = 6;
+sizeM = 10;
 
 valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 
@@ -58,6 +58,7 @@ exitVar = 0;
 count = 1;
 
 valVector = [];
+lista = [];
 
 while count <= sizeM
 
@@ -1911,6 +1912,8 @@ while count <= sizeM
         flag = false;
 
     end
+
+    lista = [lista; kappa mat_proprietes_identifies_moyennes_sub_zones];
 
     cd(path_dir{end});
     save('resultsKappa.mat');
