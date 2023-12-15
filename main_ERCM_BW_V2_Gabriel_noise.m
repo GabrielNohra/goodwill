@@ -272,7 +272,7 @@ while count <= sizeM
     end
     clear mat_data;
 
-    processText(path_dir{end}, false, amplitude_bruit_Gaussien_U, aux, kappa, muTheoretical);
+    % processText(path_dir{end}, false, amplitude_bruit_Gaussien_U, aux, kappa, muTheoretical);
 
     nb_dim = size(mat_U_mes,1);
 
@@ -1297,7 +1297,7 @@ while count <= sizeM
         devMes = N_mes*U_global((nb_DDL_K+1):end)-vec_U_mes;
         valVector = [valVector devMes];
 
-        processText( path_dir{end}, false, n_iter_LDC, fcnError(n_iter_LDC,1), fcnError(n_iter_LDC,2), fcnError(n_iter_LDC+1,1), fcnError(n_iter_LDC+1,2), devMes, vec_U_mes );
+        % processText( path_dir{end}, false, n_iter_LDC, fcnError(n_iter_LDC,1), fcnError(n_iter_LDC,2), fcnError(n_iter_LDC+1,1), fcnError(n_iter_LDC+1,2), devMes, vec_U_mes );
 
 
         %         figure;hold on;plot(real(Ux),'r');plot(real(Uy),'g');plot(real(Uz),'b');title('real(U)');legend('Ux','Uy','Uz');title('Re(U calc))');
@@ -1907,7 +1907,7 @@ while count <= sizeM
 
         valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
 
-        processText(path_dir{end}, true, n_iter_LDC, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
+        % processText(path_dir{end}, true, n_iter_LDC, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
         flag = false;
 
     end
