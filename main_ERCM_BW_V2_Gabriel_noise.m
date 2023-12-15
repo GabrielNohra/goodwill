@@ -1912,6 +1912,10 @@ while count <= sizeM
 
     end
 
+    cd(path_dir{end});
+    save('resultsKappa.mat');
+    cd(path_dir{2});
+
     h1 = plot(abs(devMes));
     saveas(h1, sprintf('results%0.0f.png',count));
 
