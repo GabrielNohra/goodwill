@@ -53,7 +53,7 @@ valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 
 % [t_ini_identification, sTime] = deal(length(amplitude_bruit_Gaussien_U),length(kappa));
 
-amplitude_bruit_Gaussien_U = 0.000065; % 0.00008;
+amplitude_bruit_Gaussien_U = 0; % 0.000065 0.00008;
 exitVar = 0;
 count = 1;
 
