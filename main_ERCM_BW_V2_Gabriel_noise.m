@@ -41,7 +41,7 @@ colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0
 
              
 % parametres de convergence sur l'identification materielle
-tolerance_LDC = 1e-4;
+tolerance_LDC = 1e-2;
 %nb_iter_LDC_max = 5;
 % nb_iter_LDC_max = 10;
 nb_iter_LDC_max = 200;
