@@ -47,7 +47,7 @@ tolerance_LDC = 1e-2;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
 
-sizeM = 10;
+sizeM = 25;
 
 valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 
