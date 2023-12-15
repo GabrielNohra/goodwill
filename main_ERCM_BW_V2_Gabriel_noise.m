@@ -1912,10 +1912,13 @@ while count <= sizeM
 
     end
 
+    h1 = plot(abs(devMes));
+    saveas(h1, sprintf('results%0.0f.png',count));
+
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa / power(10,1);
+        kappa = kappa / 1.5;
     end
 
 end
