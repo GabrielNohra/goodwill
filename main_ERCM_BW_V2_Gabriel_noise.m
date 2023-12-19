@@ -58,7 +58,13 @@ exitVar = 0;
 count = 1;
 
 valVector = [];
-lista = [];
+
+lista1 = [];
+lista2 = [];
+lista3 = [];
+lista4 = [];
+lista5 = [];
+lista6 = [];
 
 while count <= sizeM
 
@@ -1913,14 +1919,17 @@ while count <= sizeM
 
     end
 
-    lista = [lista; kappa mat_proprietes_identifies_moyennes_sub_zones];
+    lista1 = [lista1; mat_proprietes_identifies_moyennes_sub_zones];
+    lista2 = [listak; kappa];
+    lista3 = [lista2; N_mes*U_global((nb_DDL_K+1):end)];
+    lista4 = [lista3; U_global];
+    lista5 = [lista4; vec_U_mes];
+    lista6 = [lista5; E_c];
+    lista7 = [lista6; E_u];
 
-    cd(path_dir{end});
-    save('resultsKappa.mat');
-    cd(path_dir{2});
+    h1 = plot(lista2(count+1),lista1(count+1));
 
-    h1 = plot(abs(devMes));
-    saveas(h1, sprintf('results%0.0f.png',count));
+    % saveas(h1, sprintf('results%0.0f.png',count));
 
     count = count + 1;
 
