@@ -1922,9 +1922,9 @@ while count <= sizeM
 
     lista1 = [lista1; mat_proprietes_identifies_moyennes_sub_zones];
     lista2 = [lista2; kappa];
-    lista3 = [lista3; N_mes*U_global((nb_DDL_K+1):end)];
-    lista4 = [lista4; U_global];
-    lista5 = [lista5; vec_U_mes];
+    lista3 = [lista3 N_mes*U_global((nb_DDL_K+1):end)];
+    lista4 = [lista4 U_global];
+    lista5 = [lista5 vec_U_mes];
     lista6 = [lista6; E_c];
     lista7 = [lista7; E_u];
 
