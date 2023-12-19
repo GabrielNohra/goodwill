@@ -1927,7 +1927,7 @@ while count <= sizeM
     lista6 = [lista5; E_c];
     lista7 = [lista6; E_u];
 
-    h1 = plot(lista2(count+1),lista1(count+1));
+    % h1 = plot(lista2(count+1),lista1(count+1));
 
     % saveas(h1, sprintf('results%0.0f.png',count));
 
