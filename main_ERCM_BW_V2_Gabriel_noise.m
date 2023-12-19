@@ -65,6 +65,7 @@ lista3 = [];
 lista4 = [];
 lista5 = [];
 lista6 = [];
+lista7 = [];
 
 while count <= sizeM
 
@@ -1920,12 +1921,12 @@ while count <= sizeM
     end
 
     lista1 = [lista1; mat_proprietes_identifies_moyennes_sub_zones];
-    lista2 = [listak; kappa];
-    lista3 = [lista2; N_mes*U_global((nb_DDL_K+1):end)];
-    lista4 = [lista3; U_global];
-    lista5 = [lista4; vec_U_mes];
-    lista6 = [lista5; E_c];
-    lista7 = [lista6; E_u];
+    lista2 = [lista2; kappa];
+    lista3 = [lista3; N_mes*U_global((nb_DDL_K+1):end)];
+    lista4 = [lista4; U_global];
+    lista5 = [lista5; vec_U_mes];
+    lista6 = [lista6; E_c];
+    lista7 = [lista7; E_u];
 
     % h1 = plot(lista2(count+1),lista1(count+1));
 
