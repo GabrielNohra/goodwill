@@ -21,9 +21,11 @@ disp(' ');
 %nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep.don';
 liste_LdC = creation_LdC_anisotrope_repere_global();
 
+
+
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/kappa',date)};
+            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/%s',date,datetime)};
 
 if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
@@ -1924,6 +1926,15 @@ while count <= sizeM
         flag = false;
 
     end
+
+    figure;
+    plot(liste_proprietes_iterations,'*b');
+    title('Material property behaviour (simulated)');
+    xlabel('Number of iterations');
+    ylabel('\mu [Pa]', 'interpreter', 'latex');
+    grid;
+    saveas(gcf,sprintf('results_%0.0f',count));
+    close gcf;
 
     lista1 = [lista1; mat_proprietes_identifies_moyennes_sub_zones];
     lista2 = [lista2; kappa];
