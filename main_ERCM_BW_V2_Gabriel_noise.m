@@ -29,7 +29,7 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 1e13 / power(1.5,7);
+kappa = 1e13 / power(1.5,17);
 
 
 % 1.0150e10     2588.00 Pa
@@ -1940,7 +1940,7 @@ while count <= sizeM
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa / 0.5; % / 1.5
+        kappa = kappa / 0.75; % / 1.5
     end
 
 end
