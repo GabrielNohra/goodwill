@@ -779,7 +779,7 @@ while count <= sizeM
         %         elem_sig_centre_sub_zone = liste_elem_sig{n_sig_sub_zone};
         n_sub_zone = n_sub_zone+1;
         vec_nn_sig_local = 1:length(vec_test_n_elem_sig_centre_sub_zone);
-        n_sig_sub_zone = vec_nn_sig_local(floor(length(vec_nn_sig_local)/2)+1);x    
+        n_sig_sub_zone = vec_nn_sig_local(floor(length(vec_nn_sig_local)/2)+1);    
         elem_sig_centre_sub_zone = liste_elem_sig{n_sig_sub_zone};
         
         i_sig_centre_sub_zone = elem_sig_centre_sub_zone.vec_ijk(1);
