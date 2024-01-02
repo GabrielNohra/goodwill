@@ -29,7 +29,7 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 1e13;
+kappa = 1e13 / power(1.5,7);
 colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0.57]',...
             '[0.03 0.46 0.02]'}; %, '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]' rgb colors
 
@@ -1935,7 +1935,7 @@ while count <= sizeM
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa / 1.5;
+        kappa = kappa / 0.75; % / 1.5
     end
 
 end
