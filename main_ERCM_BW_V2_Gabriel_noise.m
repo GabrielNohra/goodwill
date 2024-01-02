@@ -1927,14 +1927,16 @@ while count <= sizeM
 
     end
 
+    cd(path_dir{end});
     figure;
     plot(abs(valKappa(count,:)),'*b');
     title('Material property behaviour (simulated)');
     xlabel('Number of iterations');
     ylabel('\mu [Pa]', 'interpreter', 'latex');
     grid;
-    saveas(gcf,sprintf('results_%0.0f',count));
+    saveas(gcf,sprintf('results_%0.0f.png',count));
     close gcf;
+    cd(path_dir{2});
 
     lista1 = [lista1; mat_proprietes_identifies_moyennes_sub_zones];
     lista2 = [lista2; kappa];
