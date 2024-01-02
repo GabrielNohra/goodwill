@@ -1928,7 +1928,7 @@ while count <= sizeM
     end
 
     figure;
-    plot(liste_proprietes_iterations,'*b');
+    plot(abs(valKappa(count,:)),'*b');
     title('Material property behaviour (simulated)');
     xlabel('Number of iterations');
     ylabel('\mu [Pa]', 'interpreter', 'latex');
