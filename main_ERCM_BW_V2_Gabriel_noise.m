@@ -31,8 +31,8 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-k1 = 1e13 / power(1.5,18);
-k2 = 1e13 / power(1.5,17);
+k1 = 1e13 / power(1.5,17);
+k2 = 1e13 / power(1.5,16);
 
 sizeM = 100;
 stepSize = (k2 - k1)/sizeM;
