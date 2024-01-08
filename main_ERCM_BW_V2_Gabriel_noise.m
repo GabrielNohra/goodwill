@@ -31,13 +31,13 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-k_1 = 1e13 / power(1.5,18);
-k_2 = 1e13 / power(1.5,17);
+k1 = 1e13 / power(1.5,18);
+k2 = 1e13 / power(1.5,17);
 
 sizeM = 100;
-stepSize = (k_2 - k1)/sizeM;
+stepSize = (k2 - k1)/sizeM;
 
-kappa = k_1;
+kappa = k1;
 
 
 % 1.0150e10     2588.00 Pa
