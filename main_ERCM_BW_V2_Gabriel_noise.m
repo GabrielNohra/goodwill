@@ -31,7 +31,13 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 1e13 / power(1.5,17);
+k_1 = 1e13 / power(1.5,18);
+k_2 = 1e13 / power(1.5,17);
+
+sizeM = 100;
+stepSize = (k_2 - k1)/sizeM;
+
+kappa = k_1;
 
 
 % 1.0150e10     2588.00 Pa
@@ -53,8 +59,6 @@ tolerance_LDC = 1e-2;
 % nb_iter_LDC_max = 10;
 nb_iter_LDC_max = 200;
 % nb_iter_LDC_max = 200;
-
-sizeM = 25;
 
 valKappa = zeros(sizeM,nb_iter_LDC_max+1);
 
@@ -1953,7 +1957,7 @@ while count <= sizeM
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa / 0.75; % / 1.5
+        kappa = kappa + stepSize;
     end
 
 end
