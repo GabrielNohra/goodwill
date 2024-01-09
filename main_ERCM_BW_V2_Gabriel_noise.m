@@ -34,7 +34,7 @@ end
 k1 = 1e13 / power(1.5,17);
 k2 = 1e13 / power(1.5,16);
 
-sizeM = 100;
+sizeM = 200;
 stepSize = (k2 - k1)/sizeM;
 
 kappa = k1;
@@ -1933,10 +1933,11 @@ while count <= sizeM
 
     cd(path_dir{end});
     figure;
+    valKappa(valKappa==0)=NaN;
     plot(abs(valKappa(count,:)),'*b');
     title('Material property behaviour (simulated)');
     xlabel('Number of iterations');
-    ylabel('\mu [Pa]', 'interpreter', 'latex');
+    ylabel('$\mu$ [Pa]', 'interpreter', 'latex');
     grid;
     saveas(gcf,sprintf('results_%0.0f.png',count));
     close gcf;
