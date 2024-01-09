@@ -37,6 +37,8 @@ k2 = 1e13 / power(1.5,16);
 sizeM = 200;
 stepSize = (k2 - k1)/sizeM;
 
+% test
+
 kappa = k1;
 
 
