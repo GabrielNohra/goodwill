@@ -29,13 +29,9 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-% k1 = 1e13 / power(1.5,17);
-% k2 = 1e13 / power(1.5,16);
-
 sizeM = 200;
-% stepSize = (k2 - k1)/sizeM;
 
-kappa = 1e13; % k1;
+kappa = 1e13;
 
 
 % 1.0150e10     2588.00 Pa
@@ -1914,19 +1910,19 @@ while count <= sizeM
         %     zlabel('z (m)');
         %     title('maillage toutes sub-zones');
         
-        if n_iter_LDC > 1 % adaptive methodology
+        % if n_iter_LDC > 1 % adaptive methodology
 
-            if vec_difference_proprietes > 1 && vec_difference_proprietes < 2
-                kappa = kappa * (1 + 1.5*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
-            elseif vec_difference_proprietes > 2 && vec_difference_proprietes < 5
-                kappa = kappa * (1 + 3.5*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
-            elseif vec_difference_proprietes > 5 && vec_difference_proprietes < 10
-                kappa = kappa * (1 + 7.5*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
-            elseif vec_difference_proprietes > 10 && vec_difference_proprietes < 20
-                kappa = kappa * (1 + 15*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
-            end
+        %     if vec_difference_proprietes > 1 && vec_difference_proprietes < 2
+        %         kappa = kappa * (1 + 1.5*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
+        %     elseif vec_difference_proprietes > 2 && vec_difference_proprietes < 5
+        %         kappa = kappa * (1 + 3.5*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
+        %     elseif vec_difference_proprietes > 5 && vec_difference_proprietes < 10
+        %         kappa = kappa * (1 + 7.5*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
+        %     elseif vec_difference_proprietes > 10 && vec_difference_proprietes < 20
+        %         kappa = kappa * (1 + 15*rand(1)*abs(liste_proprietes_iterations{n_iter_LDC} - mat_proprietes_identifies_moyennes_sub_zones));
+        %     end
 
-        end
+        % end
         
         disp(['        norme 1 valeurs identifies = ' num2str(sum(abs(mat_proprietes_identifies_moyennes_sub_zones),2)/size(mat_proprietes_identifies_moyennes_sub_zones,2)) ', norme relative de la correction = ' num2str(norm(vec_difference_proprietes)/norm(liste_proprietes_iterations{n_iter_LDC}))]);
         disp(' ');
@@ -1969,9 +1965,9 @@ while count <= sizeM
 
     count = count + 1;
 
-    % if count <= sizeM
-    %     kappa = kappa + stepSize;
-    % end
+    if count <= sizeM
+        kappa = kappa / 1.05;
+    end
 
 end
 
