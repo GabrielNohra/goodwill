@@ -48,7 +48,7 @@ colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0
 % 'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'}
              
 % parametres de convergence sur l'identification materielle
-tolerance_LDC = 1e-4;
+tolerance_LDC = 1e-2;
 %nb_iter_LDC_max = 5;
 % nb_iter_LDC_max = 10;
 nb_iter_LDC_max = 200;
@@ -1928,9 +1928,7 @@ while count <= sizeM
             liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
             valKappa(count,n_iter_LDC) = liste_proprietes_iterations{n_iter_LDC};
-            
 
-            % processText(path_dir{end}, true, n_iter_LDC, mat_proprietes_identifies_moyennes_sub_zones, liste_proprietes_iterations, vec_difference_proprietes);
             flag = false;
 
         end
