@@ -48,7 +48,7 @@ colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0
 % 'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'}
              
 % parametres de convergence sur l'identification materielle
-tolerance_LDC = 1e-2;
+tolerance_LDC = 1e-4;
 %nb_iter_LDC_max = 5;
 % nb_iter_LDC_max = 10;
 nb_iter_LDC_max = 200;
@@ -72,9 +72,7 @@ lista5 = [];
 lista6 = [];
 lista7 = [];
 
-while i_count < 3
-
-    while count <= sizeM
+while count <= sizeM
 
         % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
         % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
@@ -114,10 +112,6 @@ while i_count < 3
 
         % mu_r0 = 1.5*1743; devFactor(i_param*(j_param-1)+i_flag*(2-j_param))*1743.; % [Pa] 1.5*1743.;
         % mu_i0 = 0.75*174.3; devFactor(i_param*(2-j_param)+i_flag*(j_param-1))*174.3; % [Pa] 0.75*174.3;
-
-
-
-
 
         vec_param_initialisation = [(lambda_r0+1i*lambda_i0) (mu_r0+1i*mu_i0) rho_0];
         % bornes d'identification
@@ -1970,16 +1964,6 @@ while i_count < 3
         if count <= sizeM
             kappa = kappa / 1.75;
         end
-
-    end
-
-    if i_count >= 1 && i_count < 2
-        kappa = 1e13 / power(10,2);
-    elseif i_count >= 2
-        kappa = 1e13 * power(10,2);
-    end
-
-    i_count = i_count + 1;
 
 end
 
