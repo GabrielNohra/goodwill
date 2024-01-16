@@ -25,7 +25,7 @@ i_count = 1;
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/%s/%s',date,datetime,i_count))};
+            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/%s/%s',date,datetime,i_count)};
 
 if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
