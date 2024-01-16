@@ -31,7 +31,7 @@ end
 
 sizeM = 200;
 
-kappa = 1e13;
+kappa = 1e13 / power(1.05,139);
 
 
 % 1.0150e10     2588.00 Pa
@@ -1966,7 +1966,7 @@ while count <= sizeM
     count = count + 1;
 
     if count <= sizeM
-        kappa = kappa / 1.05;
+        kappa = kappa / 0.55; % 1.05;
     end
 
 end
