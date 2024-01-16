@@ -106,7 +106,7 @@ while count <= sizeM
         lambda_i0 = 0.; % [Pa]
 
         muTheoretical = 1743 + 174.3*1i;
-        mu_r0 = 1.5 * real(muTheoretical);
+        mu_r0 = 5 * real(muTheoretical);
         mu_i0 = 0.75 * imag(muTheoretical);
         rho_0 = 1020.; % [kg/m^3]
 
