@@ -227,7 +227,8 @@ elem_sig_ref = liste_elem_ref{n_elem_sig};
 disp('LECTURE FICHIERS MESURES');
 t_ini = cputime;
 
-mat_data = load(nom_fichier_deplacement);
+mat_data = load(path_dir{1});
+cd(path_dir{2});
 mat_pos_mes = mat_data(:,1:3)';
 mat_U_mes = mat_data(:,4:2:9)'+1i*mat_data(:,5:2:9)';
 % prise en compte eventuelle du bruit rajoute
