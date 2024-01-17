@@ -8,13 +8,22 @@ close all;
 disp('INITIALISATION');
 disp(' ');
 
-% nom du fichier de mesures de deplacement
-%nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep.don';
-nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement.don';
-%nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz.don';
-%nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_bis.don';
-%nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_het.don';
-%nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/MRI/donnees_dep.don';
+% % nom du fichier de mesures de deplacement
+% %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep.don';
+% nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don';
+% %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz.don';
+% %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_bis.don';
+% %nom_fichier_deplacement = 'd:\Documents\Bureautique\Recherche\Theses\TheseSamuel\MFiles_ERCM\donnees_dep_cisaillement_80Hz_het.don';
+% %nom_fichier_deplacement = '/users/bionanonmri/nohra/Documents/MATLAB/MRI/donnees_dep.don';
+
+path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement_80Hz_bis.don', ...
+            '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
+            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/%s/',date,datetime)};
+
+if ~exist(path_dir{end},'dir')
+    mkdir(path_dir{end});
+end
+
 liste_LdC = creation_LdC_anisotrope_repere_global();
 
 % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
@@ -22,8 +31,8 @@ amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
 % amplitude_bruit_Gaussien_U = 0.05; % pourcentage de norme_U_max
 
 % frequence de l'essai
-f_mec = 35; % Defintion de la frequence de sollicitation [Hz]
-%f_mec = 80; % Defintion de la frequence de sollicitation [Hz]
+% f_mec = 35; % Defintion de la frequence de sollicitation [Hz]
+f_mec = 80; % Defintion de la frequence de sollicitation [Hz]
 
 % DEFINITION DES PARAMETRES DU COMPORTEMENT A IDENTIFIER
 % type de comportement � identifier => n_LdC_identification = 1 .. 12
@@ -1837,7 +1846,7 @@ while ( (~test_convergence_LDC) && ( n_iter_LDC <= nb_iter_LDC_max) ) % Debut du
 % mise a jour des proprietes
     n_iter_LDC = n_iter_LDC+1;
     liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
-    
+
 end
 
 n_iter_LDC_max = n_iter_LDC;
