@@ -59,7 +59,7 @@ kappa = 1e13;
 count = 1;
 sizeM = 200;
 
-listMat = zeros(1,sizeM);
+[listMat, listKappa] = deal(zeros(1,sizeM));
 
 while count < 200
 
