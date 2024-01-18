@@ -1893,6 +1893,7 @@ while count < 200
         listKappa(count) = kappa;
         kappa = kappa / 1.75; 
         count = count + 1;
+        cd(path_dir{2});
     end
 
 end
