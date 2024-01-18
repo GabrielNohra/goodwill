@@ -26,7 +26,7 @@ end
 
 kappa = 1e13;
 count = 1;
-sizeM = 200;
+sizeM = 20; % 200
 
 while count < 200
 
@@ -176,7 +176,7 @@ while count < 200
     facteur_tolerance_position = 10000.;
 
     % parametres de convergence sur l'identification materielle
-    tolerance_LDC = 1e-4;
+    tolerance_LDC = 1e-2; % 1e-4;
     %nb_iter_LDC_max = 5;
     %nb_iter_LDC_max = 10;
     %nb_iter_LDC_max = 20;
@@ -1891,7 +1891,7 @@ while count < 200
 
     if count < sizeM
         listKappa(count) = kappa;
-        kappa = kappa / 1.75; 
+        kappa = kappa / 10; 
         count = count + 1;
         cd(path_dir{2});
     end
