@@ -1898,6 +1898,7 @@ while count <= sizeM
 
 end
 
+cd(path_dir{end});
 cFig = figure;
 plot(abs(listMat),'*b');
 title('Material property identification');
