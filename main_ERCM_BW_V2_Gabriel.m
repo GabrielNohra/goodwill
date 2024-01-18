@@ -26,7 +26,7 @@ end
 
 kappa = 1e13;
 count = 1;
-sizeM = 20; % 200
+sizeM = 26; % 200
 
 [listMat, listKappa] = deal(zeros(1,sizeM));
 
@@ -174,7 +174,7 @@ while count <= sizeM
     facteur_tolerance_position = 10000.;
 
     % parametres de convergence sur l'identification materielle
-    tolerance_LDC = 1e-2; % 1e-4;
+    tolerance_LDC = 1e-4; % 1e-4;
     %nb_iter_LDC_max = 5;
     %nb_iter_LDC_max = 10;
     %nb_iter_LDC_max = 20;
@@ -1865,21 +1865,11 @@ while count <= sizeM
 
     close all;
 
-    for counter_row=1:size(liste_proprietes_iterations,1)
-        for counter_column=1:size(liste_proprietes_iterations,2)
-            if liste_proprietes_iterations{counter_row,counter_column}~=0
-                list(counter_column) = liste_proprietes_iterations{counter_row,counter_column};
-            else
-                break
-            end
-        end
-    end
-    
     listMat(1,count) = mat_proprietes_identifies_moyennes_sub_zones;
 
     cd(path_dir{end});
     cFig = figure;
-    plot(abs(list),'*b');
+    plot(abs(cell2mat(liste_proprietes_iterations)),'*b');
     title(sprintf('Material property identification (kappa = %0.2e)',kappa));
     xlabel('Number of iterations');
     ylabel('mu [Pa]');
@@ -1898,7 +1888,7 @@ end
 
 cd(path_dir{end});
 cFig = figure;
-plot(abs(listMat),'*b');
+plot(abs(listKappa),abs(listMat),'*b');
 title('Material property identification');
 xlabel('Kappa indices');
 ylabel('Convergence value of mu [Pa]');
