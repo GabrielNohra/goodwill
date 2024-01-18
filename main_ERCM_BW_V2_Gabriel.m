@@ -1881,7 +1881,7 @@ while count < 200
 
     cd(path_dir{end});
     cFig = figure;
-    plot(list,'*b');
+    plot(abs(list),'*b');
     title(sprintf('Material property identification (kappa = %0.2e)',kappa));
     xlabel('Number of iterations');
     ylabel('mu [Pa]');
@@ -1899,7 +1899,7 @@ while count < 200
 end
 
 cFig = figure;
-plot(listMat,'*b');
+plot(abs(listMat),'*b');
 title('Material property identification');
 xlabel('Kappa indices');
 ylabel('Convergence value of mu [Pa]');
