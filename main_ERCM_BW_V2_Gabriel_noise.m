@@ -25,7 +25,7 @@ i_count = 1;
 
 path_dir = {'/users/bionanonmri/nohra/Documents/MATLAB/data/donnees_dep_cisaillement.don', ...
             '/users/bionanonmri/nohra/Documents/MATLAB/goodwill',...
-            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/%s/%s',date,datetime,i_count)};
+            sprintf('/users/bionanonmri/nohra/Documents/MATLAB/results/%s/%s/',date,datetime)};
 
 if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
@@ -35,18 +35,6 @@ sizeM = 20;
 
 kappa = 1e13;
 
-% 1.0150e10     2588.00 Pa
-% 1.5225e10     260.33  Pa
-
-colorList = {'[0 0.03 1]', '[0.2 1 0]', '[0 0.57 0.85]', '[1 0 0.5]', '[0.90 0 0.57]',...
-            '[0.03 0.46 0.02]'}; %, '[0.85 0 0.48]', '[0 0.49 0.49]', '[0.67 0 0]' rgb colors
-
-% l_i = @(x) sprintf('\\kappa = %0.0e',x);
-
-% n_lg = {l_i(kappa(1)), l_i(kappa(2)), l_i(kappa(3)), l_i(kappa(4)), l_i(kappa(5))};
-
-% 'Re $\left( \tilde{\mu} \right)$', 'Im $\left( \tilde{\mu} \right)$','Re $\left( \mu \right)$','Im $\left( \mu \right)$'}
-             
 % parametres de convergence sur l'identification materielle
 tolerance_LDC = 1e-2;
 %nb_iter_LDC_max = 5;
@@ -106,7 +94,7 @@ while count <= sizeM
         lambda_i0 = 0.; % [Pa]
 
         muTheoretical = 1743 + 174.3*1i;
-        mu_r0 = 5 * real(muTheoretical);
+        mu_r0 = 1.5 * real(muTheoretical);
         mu_i0 = 0.75 * imag(muTheoretical);
         rho_0 = 1020.; % [kg/m^3]
 
