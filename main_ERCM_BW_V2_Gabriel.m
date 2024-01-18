@@ -24,44 +24,46 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-liste_LdC = creation_LdC_anisotrope_repere_global();
-
-% valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
-amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
-% amplitude_bruit_Gaussien_U = 0.05; % pourcentage de norme_U_max
-
-% frequence de l'essai
-% f_mec = 35; % Defintion de la frequence de sollicitation [Hz]
-f_mec = 80; % Defintion de la frequence de sollicitation [Hz]
-
-% DEFINITION DES PARAMETRES DU COMPORTEMENT A IDENTIFIER
-% type de comportement � identifier => n_LdC_identification = 1 .. 12
-%n_LdC_identification = 1;
-n_LdC_identification = 7;
-struct_param_comportement_a_identifier = liste_LdC{n_LdC_identification};
-vec_numeros_parametres_comportement = [1 2];
-vec_numeros_parametres_masse = [3];
-% definition des parametres a identifier et a conserver "tels quels"
-% vec_numeros_parametres_a_identifier = [1 2];
-vec_numeros_parametres_a_identifier = [2];
-vec_test_local = true(1,length(struct_param_comportement_a_identifier.liste_parametres_comportement)+length(struct_param_comportement_a_identifier.liste_parametres_masse));
-vec_test_local(vec_numeros_parametres_a_identifier) = false;
-vec_numeros_parametres_fixes = find ( vec_test_local );
-clear vec_test_local;
-% parametres d'initialisation
-% lambda_r0 = 40000.; % [Pa]
-% lambda_i0 = 0.; % [Pa]
-% mu_r0 = 1800.; % [Pa]
-% mu_i0 = 180.; % [Pa]
-% rho_0 = 1020.; % [kg/m^3]
-
-kappa = 1e13;
-count = 1;
-sizeM = 200;
-
-[listMat, listKappa] = deal(zeros(1,sizeM));
-
 while count < 200
+
+    liste_LdC = creation_LdC_anisotrope_repere_global();
+
+    % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
+    amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
+    % amplitude_bruit_Gaussien_U = 0.05; % pourcentage de norme_U_max
+
+    % frequence de l'essai
+    % f_mec = 35; % Defintion de la frequence de sollicitation [Hz]
+    f_mec = 80; % Defintion de la frequence de sollicitation [Hz]
+
+    % DEFINITION DES PARAMETRES DU COMPORTEMENT A IDENTIFIER
+    % type de comportement � identifier => n_LdC_identification = 1 .. 12
+    %n_LdC_identification = 1;
+    n_LdC_identification = 7;
+    struct_param_comportement_a_identifier = liste_LdC{n_LdC_identification};
+    vec_numeros_parametres_comportement = [1 2];
+    vec_numeros_parametres_masse = [3];
+    % definition des parametres a identifier et a conserver "tels quels"
+    % vec_numeros_parametres_a_identifier = [1 2];
+    vec_numeros_parametres_a_identifier = [2];
+    vec_test_local = true(1,length(struct_param_comportement_a_identifier.liste_parametres_comportement)+length(struct_param_comportement_a_identifier.liste_parametres_masse));
+    vec_test_local(vec_numeros_parametres_a_identifier) = false;
+    vec_numeros_parametres_fixes = find ( vec_test_local );
+    clear vec_test_local;
+    % parametres d'initialisation
+    % lambda_r0 = 40000.; % [Pa]
+    % lambda_i0 = 0.; % [Pa]
+    % mu_r0 = 1800.; % [Pa]
+    % mu_i0 = 180.; % [Pa]
+    % rho_0 = 1020.; % [kg/m^3]
+
+    kappa = 1e13;
+    count = 1;
+    sizeM = 200;
+
+    [listMat, listKappa] = deal(zeros(1,sizeM));
+
+
 
     if count ~= 1
         cd(path_dir{2});
