@@ -1867,7 +1867,7 @@ while count < 200
 
     for counter_row=1:size(liste_proprietes_iterations,1)
         for counter_column=1:size(liste_proprietes_iterations,2)
-            if liste_proprietes_iterations(counter_row,counter_column)~=0
+            if liste_proprietes_iterations{counter_row,counter_column}~=0
                 list(counter_column) = liste_proprietes_iterations{counter_row,counter_column};
             else
                 break
