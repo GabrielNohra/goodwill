@@ -28,7 +28,7 @@ kappa = 1e13;
 count = 1;
 sizeM = 20; % 200
 
-while count < 200
+while count <= sizeM
 
     liste_LdC = creation_LdC_anisotrope_repere_global();
 
@@ -1889,7 +1889,7 @@ while count < 200
     saveas(cFig,sprintf('results_%0.0f.png',count));
     close all;
 
-    if count < sizeM
+    if count <= sizeM
         listKappa(count) = kappa;
         kappa = kappa / 10; 
         count = count + 1;
@@ -1904,7 +1904,7 @@ title('Material property identification');
 xlabel('Kappa indices');
 ylabel('Convergence value of mu [Pa]');
 grid;
-saveas(cFig,sprintf('resConvergence.png',count));
+saveas(cFig,'resConv.png');
 close all;
 
 save('resultsKappa.mat');
