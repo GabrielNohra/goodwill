@@ -24,6 +24,10 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
+kappa = 1e13;
+count = 1;
+sizeM = 200;
+
 while count < 200
 
     liste_LdC = creation_LdC_anisotrope_repere_global();
@@ -56,10 +60,6 @@ while count < 200
     % mu_r0 = 1800.; % [Pa]
     % mu_i0 = 180.; % [Pa]
     % rho_0 = 1020.; % [kg/m^3]
-
-    kappa = 1e13;
-    count = 1;
-    sizeM = 200;
 
     [listMat, listKappa] = deal(zeros(1,sizeM));
 
