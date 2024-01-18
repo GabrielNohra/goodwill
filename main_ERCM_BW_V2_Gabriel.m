@@ -28,6 +28,8 @@ kappa = 1e13;
 count = 1;
 sizeM = 20; % 200
 
+[listMat, listKappa] = deal(zeros(1,sizeM));
+
 while count <= sizeM
 
     liste_LdC = creation_LdC_anisotrope_repere_global();
@@ -60,10 +62,6 @@ while count <= sizeM
     % mu_r0 = 1800.; % [Pa]
     % mu_i0 = 180.; % [Pa]
     % rho_0 = 1020.; % [kg/m^3]
-
-    [listMat, listKappa] = deal(zeros(1,sizeM));
-
-
 
     if count ~= 1
         cd(path_dir{2});
@@ -1877,7 +1875,7 @@ while count <= sizeM
         end
     end
     
-    listMat(count) = mat_proprietes_identifies_moyennes_sub_zones;
+    listMat(1,count) = mat_proprietes_identifies_moyennes_sub_zones;
 
     cd(path_dir{end});
     cFig = figure;
@@ -1890,7 +1888,7 @@ while count <= sizeM
     close all;
 
     if count <= sizeM
-        listKappa(count) = kappa;
+        listKappa(1,count) = kappa;
         kappa = kappa / 10; 
         count = count + 1;
         cd(path_dir{2});
