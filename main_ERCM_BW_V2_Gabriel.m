@@ -26,16 +26,20 @@ end
 
 kappa = 1e13;
 count = 1;
-sizeM = 26; % 200
+sizeM = 200;
+nb_iter_LDC_max = 200;
+amplitude_bruit_Gaussien_U = 0.005;
 
 [listMat, listKappa] = deal(zeros(1,sizeM));
+
+stoVar = zeros(sizeM,nb_iter_LDC_max);
 
 while count <= sizeM
 
     liste_LdC = creation_LdC_anisotrope_repere_global();
 
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
-    amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
+    % amplitude_bruit_Gaussien_U = 0; % pourcentage de norme_U_max
     % amplitude_bruit_Gaussien_U = 0.05; % pourcentage de norme_U_max
 
     % frequence de l'essai
@@ -174,11 +178,10 @@ while count <= sizeM
     facteur_tolerance_position = 10000.;
 
     % parametres de convergence sur l'identification materielle
-    tolerance_LDC = 1e-4; % 1e-4;
+    tolerance_LDC = 1e-3; % 1e-4;
     %nb_iter_LDC_max = 5;
     %nb_iter_LDC_max = 10;
     %nb_iter_LDC_max = 20;
-    nb_iter_LDC_max = 200;
 
     % % seuil permettant de definir les elements de phase "pas assez deformes" pour pouvoir y identifier des proprietes
     % seuil_NRJ = 0.1; % 0 : pas de filtre
@@ -1863,6 +1866,9 @@ while count <= sizeM
 
     end
 
+    sizeArray = nnz(cell2mat(liste_proprietes_iterations));
+    stoVar(count,1:sizeArray) = cell2mat(liste_proprietes_iterations);
+
     close all;
 
     listMat(1,count) = mat_proprietes_identifies_moyennes_sub_zones;
@@ -1879,7 +1885,7 @@ while count <= sizeM
 
     if count <= sizeM
         listKappa(1,count) = kappa;
-        kappa = kappa / 10; 
+        kappa = kappa / 1.75;
         count = count + 1;
         cd(path_dir{2});
     end
@@ -1888,9 +1894,9 @@ end
 
 cd(path_dir{end});
 cFig = figure;
-plot(abs(listKappa),abs(listMat),'*b');
+semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
 title('Material property identification');
-xlabel('Kappa indices');
+xlabel('Kappa');
 ylabel('Convergence value of mu [Pa]');
 grid;
 saveas(cFig,'resConv.png');
