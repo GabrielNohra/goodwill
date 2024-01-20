@@ -24,9 +24,9 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 1e13;
+kappa = 3.9579e9; % 1e13;
 count = 1;
-sizeM = 200;
+sizeM = 100;
 nb_iter_LDC_max = 200;
 amplitude_bruit_Gaussien_U = 0.005;
 
@@ -1885,7 +1885,7 @@ while count <= sizeM
 
     if count <= sizeM
         listKappa(1,count) = kappa;
-        kappa = kappa / 1.75;
+        kappa = kappa - 1.69e-2; % / 1.75;
         count = count + 1;
         cd(path_dir{2});
     end
@@ -1894,7 +1894,7 @@ end
 
 cd(path_dir{end});
 cFig = figure;
-semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
+semilogx(abs(listKappa),abs(listMat),'*b');
 title('Material property identification');
 xlabel('Kappa');
 ylabel('Convergence value of mu [Pa]');
@@ -1904,6 +1904,6 @@ close all;
 
 save('resultsKappa.mat');
 
-
+semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
 
 
