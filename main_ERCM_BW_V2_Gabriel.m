@@ -27,7 +27,7 @@ end
 kappa = 2.2617e9; % 1e13;
 count = 1;
 sizeM = 20;
-nb_iter_LDC_max = 400;
+nb_iter_LDC_max = 500;
 amplitude_bruit_Gaussien_U = 0.005;
 
 [listMat, listKappa] = deal(zeros(1,sizeM));
@@ -178,7 +178,7 @@ while count <= sizeM
     facteur_tolerance_position = 10000.;
 
     % parametres de convergence sur l'identification materielle
-    tolerance_LDC = 1e-4; % 1e-4;
+    tolerance_LDC = 1e-6; % 1e-4;
     %nb_iter_LDC_max = 5;
     %nb_iter_LDC_max = 10;
     %nb_iter_LDC_max = 20;
