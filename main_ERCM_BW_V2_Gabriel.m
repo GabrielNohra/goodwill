@@ -26,8 +26,8 @@ end
 
 kappa = 2.2617e9; % 1e13;
 count = 1;
-sizeM = 50;
-nb_iter_LDC_max = 200;
+sizeM = 20;
+nb_iter_LDC_max = 400;
 amplitude_bruit_Gaussien_U = 0.005;
 
 [listMat, listKappa] = deal(zeros(1,sizeM));
