@@ -24,7 +24,7 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 3.9579e9; % 1e13;
+kappa = 2.2617e9; % 1e13;
 count = 1;
 sizeM = 50;
 nb_iter_LDC_max = 200;
@@ -178,7 +178,7 @@ while count <= sizeM
     facteur_tolerance_position = 10000.;
 
     % parametres de convergence sur l'identification materielle
-    tolerance_LDC = 1e-3; % 1e-4;
+    tolerance_LDC = 1e-4; % 1e-4;
     %nb_iter_LDC_max = 5;
     %nb_iter_LDC_max = 10;
     %nb_iter_LDC_max = 20;
@@ -1885,7 +1885,7 @@ while count <= sizeM
 
     if count <= sizeM
         listKappa(1,count) = kappa;
-        kappa = kappa - 2.5558e7; % / 1.75; % / count;
+        kappa = kappa - 4.8464e7; % / 1.75; % / count;
         count = count + 1;
         cd(path_dir{2});
     end
