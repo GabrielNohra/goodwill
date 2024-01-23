@@ -10,17 +10,17 @@ function kappa = adaptive(teoMat,simMat,kappa)
 
     if imag(aux)/real(aux) > 0
         if exp ~= 0
-            kappa = kappa / power(10,exp);
+            kappa = kappa * power(10,exp);
         else
-            kappa = kappa / rand()*10;
+            kappa = kappa * rand()*10;
         end
     end
 
     if imag(aux)/real(aux) < 0
         if exp ~= 0
-            kappa = kappa * power(10,exp);
+            kappa = kappa / power(10,exp);
         else
-            kappa = kappa * rand()*10;
+            kappa = kappa / rand()*10;
         end
     end
     
