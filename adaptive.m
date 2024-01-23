@@ -4,9 +4,9 @@ function kappa = adaptive(teoMat,simMat,kappa)
     % simMat: simulated material property.
     % kappa: regularization parameter.
 
-    aux = teoMat - simMat;
+    aux = simMat - teoMat;
 
-    exp = floor(log10(abs(power(teoMat-simMat,2))));
+    exp = floor(log10(abs(power(simMat-teoMat,2))));
 
     if imag(aux)/real(aux) > 0
         if exp ~= 0
