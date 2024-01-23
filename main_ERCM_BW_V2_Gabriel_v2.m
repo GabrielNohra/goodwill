@@ -1864,15 +1864,17 @@ while count <= sizeM
     % mise a jour des proprietes
         n_iter_LDC = n_iter_LDC+1;
         liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
+        
+        kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
 
     end
 
-    sizeArray = nnz(cell2mat(liste_proprietes_iterations));
-    stoVar(count,1:sizeArray) = cell2mat(liste_proprietes_iterations);
+    % sizeArray = nnz(cell2mat(liste_proprietes_iterations));
+    % stoVar(count,1:sizeArray) = cell2mat(liste_proprietes_iterations);
 
-    close all;
+    % close all;
 
-    listMat(1,count) = mat_proprietes_identifies_moyennes_sub_zones;
+    % listMat(1,count) = mat_proprietes_identifies_moyennes_sub_zones;
 
     cd(path_dir{end});
     cFig = figure;
@@ -1884,13 +1886,13 @@ while count <= sizeM
     saveas(cFig,sprintf('results_%0.0f.png',count));
     close all;
 
-    if count <= sizeM
+    % if count <= sizeM
 
-        listKappa(1,count) = kappa;
-        kappa = adaptive(teoMat,simMat,kappa);
-        count = count + 1;
-        cd(path_dir{2});
-    end
+    %     listKappa(1,count) = kappa;
+    %     kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
+    %     count = count + 1;
+    %     cd(path_dir{2});
+    % end
 
 end
 
