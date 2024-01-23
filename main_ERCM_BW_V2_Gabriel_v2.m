@@ -1891,7 +1891,7 @@ while count <= sizeM
     %     listKappa(1,count) = kappa;
     %     kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
     %     count = count + 1;
-    %     cd(path_dir{2});
+    cd(path_dir{2});
     % end
 
 end
