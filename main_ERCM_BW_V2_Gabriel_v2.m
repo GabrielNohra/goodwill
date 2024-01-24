@@ -1880,8 +1880,10 @@ while count <= sizeM
     xlabel('Kappa');
     ylabel('mu [Pa]');
     grid;
-    saveas(cFig,'resConv.png');
+    saveas(cFig,sprintf('results_%0.0f.png',count));
     close all;
+
+    count = count + 1;
 
     % sizeArray = nnz(cell2mat(liste_proprietes_iterations));
     % stoVar(count,1:sizeArray) = cell2mat(liste_proprietes_iterations);
