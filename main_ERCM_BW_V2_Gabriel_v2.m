@@ -24,9 +24,9 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 2.2617e9; % 1e13;
+kappa = 1; % 2.2617e9; % 1e13;
 count = 1;
-sizeM = 20;
+sizeM = 6;
 nb_iter_LDC_max = 500;
 amplitude_bruit_Gaussien_U = 0.005;
 mu = 1743 + 1i*174.3;
@@ -1865,7 +1865,7 @@ while count <= sizeM
         n_iter_LDC = n_iter_LDC+1;
         liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
         
-        kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
+        % kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
 
     end
 
@@ -1886,13 +1886,14 @@ while count <= sizeM
     saveas(cFig,sprintf('results_%0.0f.png',count));
     close all;
 
-    % if count <= sizeM
+    if count <= sizeM
 
-    %     listKappa(1,count) = kappa;
-    %     kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
-    %     count = count + 1;
-    cd(path_dir{2});
-    % end
+        listKappa(1,count) = kappa;
+        kappa = kappa * power(10,3);
+        % kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
+        count = count + 1;
+        cd(path_dir{2});
+    end
 
 end
 
