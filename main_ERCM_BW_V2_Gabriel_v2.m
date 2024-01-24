@@ -1884,6 +1884,7 @@ while count <= sizeM
     close all;
 
     count = count + 1;
+    cd(path_dir{2});
 
     % sizeArray = nnz(cell2mat(liste_proprietes_iterations));
     % stoVar(count,1:sizeArray) = cell2mat(liste_proprietes_iterations);
