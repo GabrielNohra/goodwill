@@ -13,7 +13,7 @@ function kappa = adaptive(teoMat,simMat,kappa)
         if real(simMat) > real(teoMat)
             kappa = kappa * power(10,exp);
         else
-            kappa = kappa / power(10,exp);
+            kappa = kappa / power(10,floor(exp/2));
         end
 
     end
@@ -23,7 +23,7 @@ function kappa = adaptive(teoMat,simMat,kappa)
         if real(simMat) > real(teoMat)
             kappa = kappa * power(10,exp);
         else
-            kappa = kappa / power(10,exp);
+            kappa = kappa / power(10,floor(exp/2));
         end
 
 end
