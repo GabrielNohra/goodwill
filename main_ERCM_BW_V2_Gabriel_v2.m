@@ -1865,12 +1865,6 @@ while count <= sizeM
         n_iter_LDC = n_iter_LDC+1;
         liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
-        listKappa(1,n_iter_LDC) = kappa;
-        listMat(1,n_iter_LDC) = mat_proprietes_identifies_moyennes_sub_zones;
-        kappa = kappa * power(10,3);
-        
-        % kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
-
     end
 
     cd(path_dir{end});
@@ -1882,9 +1876,6 @@ while count <= sizeM
     grid;
     saveas(cFig,sprintf('results_%0.0f.png',count));
     close all;
-
-    count = count + 1;
-    cd(path_dir{2});
 
     % sizeArray = nnz(cell2mat(liste_proprietes_iterations));
     % stoVar(count,1:sizeArray) = cell2mat(liste_proprietes_iterations);
@@ -1903,14 +1894,13 @@ while count <= sizeM
     % saveas(cFig,sprintf('results_%0.0f.png',count));
     % close all;
 
-    % if count <= sizeM
+    if count <= sizeM
 
-    %     listKappa(1,count) = kappa;
-    %     kappa = kappa * power(10,3);
-    %     % kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
-    %     count = count + 1;
-    %     cd(path_dir{2});
-    % end
+        listKappa(1,count) = kappa;
+        kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
+        count = count + 1;
+        cd(path_dir{2});
+    end
 
 end
 
