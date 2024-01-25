@@ -24,7 +24,7 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 1; % 2.2617e9; % 1e13;
+kappa = 1e13; % 2.2617e9; % 1e13;
 count = 1;
 sizeM = 6;
 nb_iter_LDC_max = 500;
