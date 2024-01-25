@@ -1904,14 +1904,14 @@ while count <= sizeM
 
 end
 
-% cd(path_dir{end});
-% cFig = figure;
-% semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
-% title('Material property identification');
-% xlabel('Kappa');
-% ylabel('Convergence value of mu [Pa]');
-% grid;
-% saveas(cFig,'resConv.png');
-% close all;
+cd(path_dir{end});
+cFig = figure;
+semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
+title('Material property identification');
+xlabel('Kappa');
+ylabel('Convergence value of mu [Pa]');
+grid;
+saveas(cFig,'resConv.png');
+close all;
 
 save('resultsKappa.mat');
