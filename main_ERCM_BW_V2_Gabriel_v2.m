@@ -35,8 +35,6 @@ mu = 1743 + 1i*174.3;
 
 stoVar = zeros(sizeM,nb_iter_LDC_max);
 
-while count <= sizeM
-
     liste_LdC = creation_LdC_anisotrope_repere_global();
 
     % valeur de l'amplitude du bruit a rajouter (utile pour les donnees synthetiques uniquement)
@@ -1865,6 +1863,11 @@ while count <= sizeM
         n_iter_LDC = n_iter_LDC+1;
         liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
+        listKappa(1,n_iter_LDC) = kappa;
+        listMat(1,n_iter_LDC) = mat_proprietes_identifies_moyennes_sub_zones;
+
+        kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
+
     end
 
     cd(path_dir{end});
@@ -1874,7 +1877,7 @@ while count <= sizeM
     xlabel('Kappa');
     ylabel('mu [Pa]');
     grid;
-    saveas(cFig,sprintf('results_%0.0f.png',count));
+    saveas(cFig,sprintf('resConv.png',count));
     close all;
 
     % sizeArray = nnz(cell2mat(liste_proprietes_iterations));
@@ -1894,24 +1897,22 @@ while count <= sizeM
     % saveas(cFig,sprintf('results_%0.0f.png',count));
     % close all;
 
-    if count <= sizeM
+    % if count <= sizeM
 
-        listKappa(1,count) = kappa;
-        kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
-        count = count + 1;
-        cd(path_dir{2});
-    end
+    %     listKappa(1,count) = kappa;
+    %     kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
+    %     count = count + 1;
+    %     cd(path_dir{2});
+    % end
 
-end
-
-cd(path_dir{end});
-cFig = figure;
-semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
-title('Material property identification');
-xlabel('Kappa');
-ylabel('Convergence value of mu [Pa]');
-grid;
-saveas(cFig,'resConv.png');
-close all;
+% cd(path_dir{end});
+% cFig = figure;
+% semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
+% title('Material property identification');
+% xlabel('Kappa');
+% ylabel('Convergence value of mu [Pa]');
+% grid;
+% saveas(cFig,'resConv.png');
+% close all;
 
 save('resultsKappa.mat');
