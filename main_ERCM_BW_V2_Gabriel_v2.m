@@ -24,9 +24,9 @@ if ~exist(path_dir{end},'dir')
     mkdir(path_dir{end});
 end
 
-kappa = 1e12; % 2.2617e9; % 1e13;
+kappa = 1e15; % 2.2617e9; % 1e13;
 count = 1;
-sizeM = 6;
+sizeM = 8;
 nb_iter_LDC_max = 500;
 amplitude_bruit_Gaussien_U = 0.005;
 mu = 1743 + 1i*174.3;
