@@ -1870,8 +1870,6 @@ while count <= sizeM
         listKappa(1,n_iter_LDC) = kappa;
         listMat(1,n_iter_LDC) = mat_proprietes_identifies_moyennes_sub_zones;
 
-        kappa = adaptive(mu,mat_proprietes_identifies_moyennes_sub_zones,kappa);
-
     end
 
     % cd(path_dir{end});
