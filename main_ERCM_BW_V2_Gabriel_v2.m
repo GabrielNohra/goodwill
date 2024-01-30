@@ -26,7 +26,7 @@ end
 
 kappa = 1e12; % 2.2617e9; % 1e13;
 count = 1;
-sizeM = 3;
+sizeM = 6;
 nb_iter_LDC_max = 500;
 amplitude_bruit_Gaussien_U = 0.005;
 mu = 1743 + 1i*174.3;
