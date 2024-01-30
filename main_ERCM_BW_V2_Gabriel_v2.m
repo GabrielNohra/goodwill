@@ -1874,15 +1874,15 @@ while count <= sizeM
 
     end
 
-    cd(path_dir{end});
-    cFig = figure;
-    semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
-    title('Material property identification');
-    xlabel('Kappa');
-    ylabel('mu [Pa]');
-    grid;
-    saveas(cFig,sprintf('resConv.png',count));
-    close all;
+    % cd(path_dir{end});
+    % cFig = figure;
+    % semilogx(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
+    % title('Material property identification');
+    % xlabel('Kappa');
+    % ylabel('mu [Pa]');
+    % grid;
+    % saveas(cFig,sprintf('resConv.png',count));
+    % close all;
 
     % sizeArray = nnz(cell2mat(liste_proprietes_iterations));
     % stoVar(count,1:sizeArray) = cell2mat(liste_proprietes_iterations);
@@ -1912,14 +1912,14 @@ while count <= sizeM
 
 end
 
-% cd(path_dir{end});
-% cFig = figure;
-% loglog(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
-% title('Material property identification');
-% xlabel('Kappa');
-% ylabel('Convergence value of mu [Pa]');
-% grid;
-% saveas(cFig,'resConv.png');
-% close all;
+cd(path_dir{end});
+cFig = figure;
+loglog(abs(listKappa(1:nnz(listKappa))),abs(listMat(1:nnz(listMat))),'*b');
+title('Material property identification');
+xlabel('Kappa');
+ylabel('Convergence value of mu [Pa]');
+grid;
+saveas(cFig,'resConv.png');
+close all;
 
 save('resultsKappa.mat');
