@@ -26,16 +26,16 @@ end
 
 kappa = 1e12; % 2.2617e9; % 1e13;
 count = 1;
-sizeM = 6;
+sizeM = 3;
 nb_iter_LDC_max = 500;
 amplitude_bruit_Gaussien_U = 0.005;
 mu = 1743 + 1i*174.3;
 
 [listMat, listKappa] = deal(zeros(1,sizeM));
 
-stoVar = zeros(sizeM,nb_iter_LDC_max);
+listUglobal = zeros(14118,sizeM);
 
-sizeM = 3;
+stoVar = zeros(sizeM,nb_iter_LDC_max);
 
 while count <= sizeM
 
