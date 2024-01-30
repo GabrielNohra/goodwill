@@ -1904,7 +1904,7 @@ while count <= sizeM
     if count <= sizeM
 
         listKappa(1,count) = kappa;
-        listUglobal(1,count) = U_global;
+        listUglobal(:,count) = U_global;
         kappa = kappa / 10;
         count = count + 1;
         cd(path_dir{2});
