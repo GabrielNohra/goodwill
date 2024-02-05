@@ -1896,8 +1896,8 @@ while count <= sizeM
     % saveas(cFig,sprintf('results_%0.0f.png',count));
     % close all;
 
-    listKappa(1,n_iter_LDC) = kappa;
-    listMat(1,n_iter_LDC) = mat_proprietes_identifies_moyennes_sub_zones;
+    listKappa(1,count) = kappa;
+    listMat(1,count) = mat_proprietes_identifies_moyennes_sub_zones;
 
     if count <= sizeM
 
