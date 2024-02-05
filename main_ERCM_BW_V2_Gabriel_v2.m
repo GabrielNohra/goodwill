@@ -1867,9 +1867,6 @@ while count <= sizeM
         n_iter_LDC = n_iter_LDC+1;
         liste_proprietes_iterations{n_iter_LDC} = mat_proprietes_identifies_moyennes_sub_zones;
 
-        listKappa(1,n_iter_LDC) = kappa;
-        listMat(1,n_iter_LDC) = mat_proprietes_identifies_moyennes_sub_zones;
-
     end
 
     % cd(path_dir{end});
@@ -1898,6 +1895,9 @@ while count <= sizeM
     % grid;
     % saveas(cFig,sprintf('results_%0.0f.png',count));
     % close all;
+
+    listKappa(1,n_iter_LDC) = kappa;
+    listMat(1,n_iter_LDC) = mat_proprietes_identifies_moyennes_sub_zones;
 
     if count <= sizeM
 
